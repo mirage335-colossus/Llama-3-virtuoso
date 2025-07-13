@@ -1,0 +1,21 @@
+SPDX-License-Identifier: LicenseRef-CEL-1.00-or-later
+
+ConsumerEconomy License v1.00 or any later version
+Copyright © 2025 mirage335. All Rights Reserved.
+
+This file is licensed under ConsumerEconomy License v1.00 or any later version
+(see § 10.2 of CEL-1.00).
+
+Full license text (verbatim):  
+  https://raw.githubusercontent.com/mirage335-colossus/ConsumerEconomyLicense/main/LICENSE-CEL-1.00.md
+
+One-page summary (verbatim):  
+  https://raw.githubusercontent.com/mirage335-colossus/ConsumerEconomyLicense/main/SUMMARY-CEL-1.00.md
+
+Requirements for any distribution (including downloads, installers, containers, or external links):
+
+  1. Include verbatim copies of **both** the full license text and the one-page summary in the **same** user-facing element (per § 5.1).  
+  2. Display the links (or embedded texts) with **equal visual prominence** (per § 5.1-ter).  
+  3. Obtain **affirmative assent** (e.g. click-wrap or scroll-box) **before** granting access to or use of this file (per § 13).  
+
+By copying, modifying, distributing, or linking to this file, you agree to all applicable terms of CEL-1.00 or any later version.

@@ -1,0 +1,12 @@
+SPDX-License-Identifier: LicenseRef-Other
+
+# Third-party Aggregated Components
+
+These components are included in aggregated form within this repository.
+Each component retains its own original license under which it was distributed by its respective authors.
+
+To determine the applicable license for a given component, consult the license files and headers provided alongside that component in the third-party files or third‑party directories, etc.
+
+No provisions of the ConsumerEconomy License (CEL-1.00) apply to these files; they are governed solely by their upstream licenses.
+
+— End of LicenseRef-Other —

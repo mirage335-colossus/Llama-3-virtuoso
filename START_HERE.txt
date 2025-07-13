@@ -1,0 +1,6 @@
+Use of any part of this software, model, or dataset is governed by the
+ConsumerEconomy License (CEL-1.00). See LICENSE-CEL-1.00.md (or
+LICENSE-CEL-1.00.txt), SUMMARY-CEL-1.00.md (or SUMMARY-CEL-1.00.txt) or
+visit:
+https://raw.githubusercontent.com/mirage335-colossus/ConsumerEconomyLicense/refs/heads/main/LICENSE-CEL-1.00.md
+https://raw.githubusercontent.com/mirage335-colossus/ConsumerEconomyLicense/refs/heads/main/SUMMARY-CEL-1.00.md
