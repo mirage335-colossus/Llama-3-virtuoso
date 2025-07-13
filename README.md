@@ -42,11 +42,9 @@ One-page summary: [SUMMARY-CEL-1.00.md](https://raw.githubusercontent.com/mirage
 
 ## License - Llama
 
-Files under or possibly under "Llama" , etc, license obligations, will have adjacent, etc, text documentation, to announce that fact, and may be listed here as well.
+Foundational prompts with a `*.md` extension, code under the `_prog` or an `_ops*` directory with a '*.sh' extension, some AI agent or AI API calling Python code, has been developed with some occasional assistance from "Llama" , "Llama-3" , etc, AI models. Depending on interpretation of whether 'create, train, fine tune, or otherwise improve an AI model' is applied to broader AI systems (the author takes no position here on that), AI systems created using such prompts, source code, etc, may or may not be under the "Llama" , etc, license obligation to name with the prefix "Llama-3" , "Llama" , etc.
 
-Foundational prompts created by "Llama" models may or may not, depending on license interpretation, as well as AI models derived from "Llama" models, require naming resulting AI systems with a "Llama-3" , "Llama" , or similar prefix.
-
-Foundational prompt files are possibly simultaneously under both a "Llama" and a "ConsumerEconomyLicense" simultaneously, and also definitely under a "ConsumerEconomyLicense v1.00 or later" license, etc  .
+Such an obligation is simultaneous with your obligations under ConsumerEconomyLicense v1.00 (CEL-1.00) - your obligations especially including consumer-hardware use are still in effect.
 
 
 Llama 3.1 is licensed under the Llama 3.1 Community License, Copyright © Meta Platforms, Inc. All Rights Reserved.
@@ -240,6 +238,6 @@ Some emphasis may also be given to maximizing functionality, instead of ensuring
 Consequently, openly, publicly available, versions of this project may require additional development to use safely in production.
 
 
-Do NOT attempt to run the 'ubiquitous_bash.sh' script independently of the other files - unlike other some other projects using "ubiquitous_bash" concepts, resources in this otherwise portable directory are heavily relied upon at runtime !
+Do NOT attempt to run the 'ubiquitous_bash.sh' script independently of the other files - unlike other some other projects using "ubiquitous_bash" concepts, resources in this otherwise portable directory are heavily relied upon at runtime ! Also, long filenames may be (unusually) less avoided - beware locating this directory under a long path may cause failures !
 
 

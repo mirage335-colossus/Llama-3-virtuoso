@@ -52,15 +52,19 @@ License: LicenseRef-CEL-1.00-or-later
 
 
 # "ubiquitous_bash"
-Files: _lib/ubiquitous_bash/*
+Files: .retain-CC0
+       _lib/ubiquitous_bash/*
 Copyright: 2025 mirage335, various contributors
 License: LicenseRef-CC0
 
 
 # Third-party aggregated components , aggregated third-party files under other or conflicting non-CEL license not listed here nevertheless retain their original licenses.
-Files: _lib/ubiquitous_bash/_lib/.python_wheels/*
+Files: .retain-other
+       _lib/ubiquitous_bash/_lib/.python_wheels/*
        _lib/.python_wheels/*
        _bundle/*
+       license-llama/*
+       _ops-model-local/*
 Copyright: Various upstream authors
 Comment: These third-party components are included as aggregated distribution under section 1.18-bis. They retain their original licenses; consult individual files for details. They are not governed by CEL.
 License: LicenseRef-Other
