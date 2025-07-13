@@ -39,7 +39,7 @@ _ub_cksum_special_derivativeScripts_contents() {
 #export ub_setScriptChecksum_disable='true'
 ( [[ -e "$0".nck ]] || [[ "${BASH_SOURCE[0]}" != "${0}" ]] || [[ "$1" == '--profile' ]] || [[ "$1" == '--script' ]] || [[ "$1" == '--call' ]] || [[ "$1" == '--return' ]] || [[ "$1" == '--devenv' ]] || [[ "$1" == '--shell' ]] || [[ "$1" == '--bypass' ]] || [[ "$1" == '--parent' ]] || [[ "$1" == '--embed' ]] || [[ "$1" == '--compressed' ]] || [[ "$0" == "/bin/bash" ]] || [[ "$0" == "-bash" ]] || [[ "$0" == "/usr/bin/bash" ]] || [[ "$0" == "bash" ]] ) && export ub_setScriptChecksum_disable='true'
 export ub_setScriptChecksum_header='3620520443'
-export ub_setScriptChecksum_contents='3409564040'
+export ub_setScriptChecksum_contents='193275092'
 
 # CAUTION: Symlinks may cause problems. Disable this test for such cases if necessary.
 # WARNING: Performance may be crucial here.
@@ -7558,7 +7558,7 @@ CZXWXcRMTo8EmM8i4d
 _generate_compile_bash_prog() {
 	"$scriptAbsoluteLocation" _true
 	
-	return
+	#return
 	
 	rm "$scriptAbsoluteFolder"/ubiquitous_bash.sh
 	
@@ -9231,34 +9231,34 @@ _compile_bash_deps_prog() {
 		_deps_dev
 		_deps_dev_buildOps
 		
-		_deps_cloud_heavy
+		#_deps_cloud_heavy
 		
 		
 		
-		_deps_mount
+		#_deps_mount
 		
 		_deps_notLean
-		_deps_os_x11
+		#_deps_os_x11
 		
-		_deps_java
+		#_deps_java
 		
 		
-		_deps_x11
-		_deps_image
+		#_deps_x11
+		#_deps_image
 		
-		_deps_virt
-		_deps_virt_thick
+		#_deps_virt
+		#_deps_virt_thick
 
-		_deps_virt_translation_gui
+		#_deps_virt_translation_gui
 		
-		_deps_chroot
-		_deps_bios
-		_deps_qemu
-		_deps_vbox
+		#_deps_chroot
+		#_deps_bios
+		#_deps_qemu
+		#_deps_vbox
 		_deps_docker
-		_deps_wine
-		_deps_dosbox
-		_deps_msw
+		#_deps_wine
+		#_deps_dosbox
+		#_deps_msw
 		_deps_fakehome
 		_deps_abstractfs
 
@@ -9267,7 +9267,7 @@ _compile_bash_deps_prog() {
 		_deps_generic
 		
 		_deps_python
-		_deps_haskell
+		#_deps_haskell
 		
 		_deps_ai
 		_deps_ai_shortcuts
@@ -9291,35 +9291,35 @@ _compile_bash_deps_prog() {
 		_deps_metaengine
 		
 		_deps_git
-		_deps_bup
+		#_deps_bup
 		_deps_repo
 		
-		_deps_search
+		#_deps_search
 		
-		_deps_cloud
-		_deps_cloud_self
-		_deps_cloud_build
+		#_deps_cloud
+		#_deps_cloud_self
+		#_deps_cloud_build
 
 		_deps_github
 		
 		_deps_distro
 		_deps_getMinimal
 		_deps_get_npm
-		_deps_getVeracrypt
+		#_deps_getVeracrypt
 		
-		_deps_blockchain
+		#_deps_blockchain
 		
-		_deps_command
-		_deps_synergy
+		#_deps_command
+		#_deps_synergy
 		
 		_deps_hardware
-		_deps_measurement
+		#_deps_measurement
 		_deps_x220t
 		_deps_w540
 		_deps_gpd
 		_deps_peripherial
 		
-		_deps_user
+		#_deps_user
 		
 		_deps_proxy
 		_deps_proxy_special
@@ -9333,12 +9333,12 @@ _compile_bash_deps_prog() {
 		
 		_deps_linux
 		
-		_deps_disc
+		#_deps_disc
 		
 		_deps_build
 		
 		_deps_build_bash
-		_deps_build_bash_ubiquitous
+		#_deps_build_bash_ubiquitous
 		
 		return 0
 	fi
