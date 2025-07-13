@@ -39,7 +39,7 @@ _ub_cksum_special_derivativeScripts_contents() {
 #export ub_setScriptChecksum_disable='true'
 ( [[ -e "$0".nck ]] || [[ "${BASH_SOURCE[0]}" != "${0}" ]] || [[ "$1" == '--profile' ]] || [[ "$1" == '--script' ]] || [[ "$1" == '--call' ]] || [[ "$1" == '--return' ]] || [[ "$1" == '--devenv' ]] || [[ "$1" == '--shell' ]] || [[ "$1" == '--bypass' ]] || [[ "$1" == '--parent' ]] || [[ "$1" == '--embed' ]] || [[ "$1" == '--compressed' ]] || [[ "$0" == "/bin/bash" ]] || [[ "$0" == "-bash" ]] || [[ "$0" == "/usr/bin/bash" ]] || [[ "$0" == "bash" ]] ) && export ub_setScriptChecksum_disable='true'
 export ub_setScriptChecksum_header='3620520443'
-export ub_setScriptChecksum_contents='1461313921'
+export ub_setScriptChecksum_contents='2451055391'
 
 # CAUTION: Symlinks may cause problems. Disable this test for such cases if necessary.
 # WARNING: Performance may be crucial here.
@@ -60718,6 +60718,18 @@ _package() {
 
 
 
+
+
+
+
+_test_prog() {
+    
+
+    _getDep aria2c
+}
+
+
+
 ##### Core
 
 # ATTENTION
@@ -60868,6 +60880,9 @@ _main() {
 }
 
 
+_request_license_acceptance_CEL_1_00
+
+
 # ATTENTION: Must already have called:
 #_service_ollama
 
@@ -60876,6 +60891,8 @@ _main() {
 
 
 _get_downloadModel-file-HuggingFace() {
+    _messagePlain_nominal "${FUNCNAME[0]}"
+    
     #local current_file="$1"
     #local current_URL="$2"
     #local current_sha256="$3"
@@ -60884,22 +60901,27 @@ _get_downloadModel-file-HuggingFace() {
     mkdir -p "$scriptBundle"/ai_models/"$current_fileDir"
 
     local currentIteration=0
-    while [[ ! -e "$scriptBundle"/ai_models/"$current_fileDir"/"$current_file" ]] && ( [[ "$current_sha256" != "" ]] && [[ $(sha256sum "$scriptBundle"/ai_models/"$current_fileDir"/"$current_file" | head -c 64 | tr -dc 'a-fA-F0-9' 2>/dev/null) != "$current_sha256" ]] )
+    while [[ ! -e "$scriptBundle"/ai_models/"$current_fileDir"/"$current_file" ]] || ( [[ "$current_sha256" != "" ]] && [[ $(sha256sum "$scriptBundle"/ai_models/"$current_fileDir"/"$current_file" | head -c 64 | tr -dc 'a-fA-F0-9' 2>/dev/null) != $(echo "$current_sha256" | head -c 64 | tr -dc 'a-fA-F0-9' 2>/dev/null) ]] )
     do
-        rm -f "$scriptBundle"/ai_models/"$current_fileDir"/"$current_file"
+        #rm -f "$scriptBundle"/ai_models/"$current_fileDir"/"$current_file"*
         if [[ "$currentIteration" -gt 3 ]]
         then
+            _messagePlain_bad 'bad: '"$current_file"
             return 1
         fi
 
+        # Deliberately prefer always delay to show previous messages, unless download program (ie. 'aria2c') is sufficiently quiet. 
+        sleep 1
         [[ "$currentIteration" -gt 0 ]] && sleep 1
         
-        aria2c --log=- --log-level=info -x "3" --async-dns=false -o "$scriptBundle"/ai_models/"$current_fileDir"/"$current_file" "$current_URL"
-        [[ ! -e "$current_file" ]] && aria2c --log=- --log-level=info -x "3" --async-dns=false -o "$scriptBundle"/ai_models/"$current_fileDir"/"$current_file" "$current_URL" --disable-ipv6=true
+        aria2c --show-console-readout=false --log=- --log-level=warn --summary-interval=15 -x "3" --async-dns=false -d "$scriptBundle"/ai_models/"$current_fileDir" -o "$current_file" "$current_URL"
+        [[ ! -e "$scriptBundle"/ai_models/"$current_fileDir"/"$current_file" ]] && aria2c --show-console-readout=false --log=- --log-level=warn --summary-interval=15 -x "3" --async-dns=false -d "$scriptBundle"/ai_models/"$current_fileDir" -o "$current_file" "$current_URL" --disable-ipv6=true
 
         (( currentIteration++ ))
     done
 
+    _messagePlain_good 'good: '"$current_file"
+    rm -f "$scriptBundle"/ai_models/"$current_fileDir"/"$current_file".*
     return 0
 }
 

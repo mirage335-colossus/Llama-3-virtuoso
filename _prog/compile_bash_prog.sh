@@ -9,34 +9,34 @@ _compile_bash_deps_prog() {
 		_deps_dev
 		_deps_dev_buildOps
 		
-		_deps_cloud_heavy
+		#_deps_cloud_heavy
 		
 		
 		
-		_deps_mount
+		#_deps_mount
 		
 		_deps_notLean
-		_deps_os_x11
+		#_deps_os_x11
 		
-		_deps_java
+		#_deps_java
 		
 		
-		_deps_x11
-		_deps_image
+		#_deps_x11
+		#_deps_image
 		
-		_deps_virt
-		_deps_virt_thick
+		#_deps_virt
+		#_deps_virt_thick
 
-		_deps_virt_translation_gui
+		#_deps_virt_translation_gui
 		
-		_deps_chroot
-		_deps_bios
-		_deps_qemu
-		_deps_vbox
+		#_deps_chroot
+		#_deps_bios
+		#_deps_qemu
+		#_deps_vbox
 		_deps_docker
-		_deps_wine
-		_deps_dosbox
-		_deps_msw
+		#_deps_wine
+		#_deps_dosbox
+		#_deps_msw
 		_deps_fakehome
 		_deps_abstractfs
 
@@ -45,7 +45,7 @@ _compile_bash_deps_prog() {
 		_deps_generic
 		
 		_deps_python
-		_deps_haskell
+		#_deps_haskell
 		
 		_deps_ai
 		_deps_ai_shortcuts
@@ -69,29 +69,29 @@ _compile_bash_deps_prog() {
 		_deps_metaengine
 		
 		_deps_git
-		_deps_bup
+		#_deps_bup
 		_deps_repo
 		
-		_deps_search
+		#_deps_search
 		
-		_deps_cloud
-		_deps_cloud_self
-		_deps_cloud_build
+		#_deps_cloud
+		#_deps_cloud_self
+		#_deps_cloud_build
 
 		_deps_github
 		
 		_deps_distro
 		_deps_getMinimal
 		_deps_get_npm
-		_deps_getVeracrypt
+		#_deps_getVeracrypt
 		
-		_deps_blockchain
+		#_deps_blockchain
 		
-		_deps_command
-		_deps_synergy
+		#_deps_command
+		#_deps_synergy
 		
 		_deps_hardware
-		_deps_measurement
+		#_deps_measurement
 		_deps_x220t
 		_deps_w540
 		_deps_gpd
@@ -111,12 +111,12 @@ _compile_bash_deps_prog() {
 		
 		_deps_linux
 		
-		_deps_disc
+		#_deps_disc
 		
-		_deps_build
+		#_deps_build
 		
 		_deps_build_bash
-		_deps_build_bash_ubiquitous
+		#_deps_build_bash_ubiquitous
 		
 		return 0
 	fi

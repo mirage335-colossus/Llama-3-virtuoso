@@ -132,3 +132,6 @@ _main() {
 	
 	_stop
 }
+
+
+_request_license_acceptance_CEL_1_00
