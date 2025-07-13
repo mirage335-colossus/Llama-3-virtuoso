@@ -97,7 +97,7 @@ _compile_bash_deps_prog() {
 		_deps_gpd
 		_deps_peripherial
 		
-		_deps_user
+		#_deps_user
 		
 		_deps_proxy
 		_deps_proxy_special
@@ -113,7 +113,7 @@ _compile_bash_deps_prog() {
 		
 		#_deps_disc
 		
-		#_deps_build
+		_deps_build
 		
 		_deps_build_bash
 		#_deps_build_bash_ubiquitous
