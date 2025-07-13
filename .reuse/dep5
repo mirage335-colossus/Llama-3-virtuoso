@@ -65,6 +65,7 @@ Files: .retain-other
        _bundle/*
        license-llama/*
        _ops-model-local/*
+       _local/ai_models/*
 Copyright: Various upstream authors
 Comment: These third-party components are included as aggregated distribution under section 1.18-bis. They retain their original licenses; consult individual files for details. They are not governed by CEL.
 License: LicenseRef-Other
