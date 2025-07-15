@@ -1,0 +1,5 @@
+
+# Default. Should be possible to override if VRAM/speed tradeoffs are appropriate.
+PARAMETER num_ctx 6144
+
+

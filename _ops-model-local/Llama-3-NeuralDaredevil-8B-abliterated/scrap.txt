@@ -1,0 +1,5 @@
+
+Could a series of temperature readings possibly be related to household heating? Just yes or no, this will be used to explore a database automatically.
+
+Please briefly summarize. Emphasize the specific distinctive effects which define and solve the problem.
+

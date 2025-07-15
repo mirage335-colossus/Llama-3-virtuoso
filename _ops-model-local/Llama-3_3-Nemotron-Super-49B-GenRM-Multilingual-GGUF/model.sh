@@ -6,20 +6,22 @@
 
 # https://huggingface.co/nvidia/Llama-3_3-Nemotron-Super-49B-v1
 # https://huggingface.co/bartowski/nvidia_Llama-3_3-Nemotron-Super-49B-GenRM-Multilingual-GGUF
-_model-bartowski__nvidia__Llama-3_3-Nemotron-Super-49B-GenRM-Multilingual-GGUF() {
+_model-Llama-3_3-Nemotron-Super-49B-GenRM-Multilingual() {
     _messageNormal "${FUNCNAME[0]}"
 
 
     local current_file='nvidia_Llama-3_3-Nemotron-Super-49B-GenRM-Multilingual-IQ2_XXS.gguf'
     local current_URL='https://huggingface.co/bartowski/nvidia_Llama-3_3-Nemotron-Super-49B-GenRM-Multilingual-GGUF/resolve/main/nvidia_Llama-3_3-Nemotron-Super-49B-GenRM-Multilingual-IQ2_XXS.gguf'
     local current_sha256='d7737e1ca71e309517cd086536a0dbca2db58e6c6e2b80062c0cc7a5b1e46a02'
-    local current_fileDir='Llama-3_3-Nemotron-Super-49B-GenRM-Multilingual-GGUF'
+    local current_fileDir='Llama-3_3-Nemotron-Super-49B-GenRM-Multilingual'
 
     mkdir -p "$scriptBundle"/ai_models/"$current_fileDir"
     local currentModelConfigDir=$(_getAbsoluteFolder "${BASH_SOURCE[0]}")
     cp -f "$currentModelConfigDir"/* "$scriptBundle"/ai_models/"$current_fileDir"/
 
-    #! _get_downloadModel-file-HuggingFace && _messageFAIL
+    cp -f "$scriptAbsoluteFolder"/license-llama/Notice.txt "$scriptBundle"/ai_models/"$current_fileDir"/
+
+    ! _get_downloadModel-file-HuggingFace && _messageFAIL
     true
 
 
@@ -44,6 +46,12 @@ GOVERNING TERMS: Use of this model is governed by the NVIDIA Open Model License 
 https://www.llama.com/llama3_3/license/
 https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-open-model-license/
 
+https://huggingface.co/meta-llama/Llama-3.3-70B-Instruct
+ "Instruction tuned text only models"
+
+https://huggingface.co/nvidia/Llama-3_3-Nemotron-Super-49B-v1
+ "Llama-3.3-Nemotron-Super-49B-v1 is a large language model (LLM) which is a derivative of Meta Llama-3.3-70B-Instruct (AKA the reference model). It is a reasoning model that is post trained for reasoning, human chat preferences, and tasks, such as RAG and tool calling. The model supports a context length of 128K tokens."
+
 https://huggingface.co/bartowski/nvidia_Llama-3_3-Nemotron-Super-49B-GenRM-Multilingual-GGUF
 Quantized Model, System Prompt, inherits Llama and NVIDIA licenses, obligations, etc .
 
@@ -52,7 +60,7 @@ Quantized Model, System Prompt, inherits Llama and NVIDIA licenses, obligations,
     cat "$scriptAbsoluteFolder"/license-llama/LICENSE-Llama-3.3.txt >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
     echo '
 
-'
+' >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
     cat "$scriptAbsoluteFolder"/license-llama/USE-POLICY-Llama-3.3.txt >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
     echo '"""' >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
 
@@ -68,7 +76,7 @@ Quantized Model, System Prompt, inherits Llama and NVIDIA licenses, obligations,
 }
 
 
-_experiment-bartowski__nvidia__Llama-3_3-Nemotron-Super-49B-GenRM-Multilingual-GGUF() {
+_experiment-Llama-3_3-Nemotron-Super-49B-GenRM-Multilingual() {
     _stopwatch curl -X POST http://localhost:11434/api/chat \
     -H "Content-Type: application/json" \
     -d '{
