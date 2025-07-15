@@ -1,0 +1,10 @@
+
+
+#PARAMETER num_gpu 68
+#PARAMETER num_thread 14
+
+# Requires  >16GB_VRAM  <2560 num_ctx  .
+# Apparently does force effective use of eGPU (with the built-in GPU still having 16GB VRAM) in that situation .
+PARAMETER num_gpu 999
+PARAMETER num_thread 14
+

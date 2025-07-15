@@ -1,0 +1,18 @@
+
+
+# ~800 input tokens
+#
+# ~800 system prompt tokens
+#
+# + ~1300 output tokens
+
+# compact
+# ~515 system prompt tokens
+# ~1000 output tokens
+
+
+# Apparently, 1920 context causes ollama to report 'SIZE 29GB' instead of 2752 context causing 'SIZE 24GB' .
+
+
+PARAMETER num_keep 4096
+PARAMETER num_ctx 4096
