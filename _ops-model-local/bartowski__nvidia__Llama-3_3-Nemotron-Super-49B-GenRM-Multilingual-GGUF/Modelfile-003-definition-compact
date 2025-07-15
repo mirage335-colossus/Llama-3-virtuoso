@@ -66,8 +66,11 @@ PARAMETER stop <|start_header_id|>
 PARAMETER stop <|end_header_id|>
 PARAMETER stop <|eot_id|>
 
-PARAMETER temperature 0.7
-PARAMETER top_k 40
+# Official recommendation is  temperature 0  , top_k 7  .
+# Very slightly more randomness, otherwise nearly as little as possible, may be useful as dithering.
+
+PARAMETER temperature 0.04
+PARAMETER top_k 7
 
 PARAMETER repeat_penalty 1.1
 

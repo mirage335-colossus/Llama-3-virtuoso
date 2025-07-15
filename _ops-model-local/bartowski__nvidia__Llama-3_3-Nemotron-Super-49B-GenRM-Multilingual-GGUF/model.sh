@@ -79,8 +79,8 @@ _experiment-bartowski__nvidia__Llama-3_3-Nemotron-Super-49B-GenRM-Multilingual-G
         { "role": "assistant", "content": "Here is a brief fact about Canada:\n\nCanada has more lakes than any other country in the world, with over 2 million lakes covering about 8% of its land area." }
         ],
         "stream": false,
-        "temperature": 0.7,
-        "top_k": 40,
+        "temperature": 0.04,
+        "top_k": 7,
         "max_tokens": 2048
     }'
     echo
