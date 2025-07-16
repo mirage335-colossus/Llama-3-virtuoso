@@ -1,0 +1,19 @@
+
+CAUTION:
+
+This model 'Llama-3.1-Nemotron-Nano-8B-v1' does NOT reliably output correct answers when requested to output only the result for subsequent automatic script processing. The 'Llama-3-NeuralDaredevil-8B-abliterated' , 'Llama-3.1-8B-instruct-abliterated' , AI models, may have some track record for such use, whereas 'Llama-3.1-Nemotron-Nano-8B-v1' may not.
+
+That said, 'Llama-3.1-Nemotron-Nano-8B-v1' may have some benefits, and may be suitable either as a user interface, or may actually be suitable for automatic script processing if carefully used with a clearer track record.
+
+ie. More experimental usage of 'Llama-3.1-Nemotron-Nano-8B-v1' may be needed.
+
+
+BAD
+```
+Only the output yes or no will be helpful, any other output will be unhelpful, do not output more than one word.
+```
+
+GOOD
+```
+Please ensure the last word is either yes or no, as this will be used for automatic script processing.
+```

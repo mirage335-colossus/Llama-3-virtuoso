@@ -1,5 +1,7 @@
 
 Could a series of temperature readings possibly be related to household heating? Just yes or no, this will be used to explore a database automatically.
 
+Only the output yes or no will be helpful, any other output will be unhelpful, do not output more than one word.
+
 Please briefly summarize. Emphasize the specific distinctive effects which define and solve the problem.
 

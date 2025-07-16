@@ -4,14 +4,14 @@
 
 
 
-# https://huggingface.co/nvidia/Llama-3_3-Nemotron-Super-49B-v1
-_model-Llama-3_3-Nemotron-Super-49B-v1() {
+# https://huggingface.co/nvidia/Llama-3_1-Nemotron-Nano-8B-v1
+_model-Llama-3_1-Nemotron-Nano-8B-v1() {
     _messageNormal "${FUNCNAME[0]}"
 
-    local current_file='Llama-3_3-Nemotron-Super-49B-v1-IQ2_XXS.gguf'
-    local current_URL='https://huggingface.co/bartowski/nvidia_Llama-3_3-Nemotron-Super-49B-v1-GGUF/resolve/main/nvidia_Llama-3_3-Nemotron-Super-49B-v1-IQ2_XXS.gguf'
-    local current_sha256='e8d0c0186ba2e3deb914d17a23caf8e21a5ec885ccf4ccb54101ccbcd95c8a36'
-    local current_fileDir='Llama-3_3-Nemotron-Super-49B-v1'
+    local current_file='nvidia_Llama-3.1-Nemotron-Nano-8B-v1-Q6_K_L.gguf'
+    local current_URL='https://huggingface.co/bartowski/nvidia_Llama-3.1-Nemotron-Nano-8B-v1-GGUF/resolve/main/nvidia_Llama-3.1-Nemotron-Nano-8B-v1-Q6_K_L.gguf'
+    local current_sha256='b7e10bf3867aeefd6f6af4e4eeaaf52d1a5baedd07e17ec0ffed89c6c1639a26'
+    local current_fileDir='Llama-3_1-Nemotron-Nano-8B-v1'
 
     mkdir -p "$scriptBundle"/ai_models/"$current_fileDir"
     local currentModelConfigDir=$(_getAbsoluteFolder "${BASH_SOURCE[0]}")
@@ -44,24 +44,21 @@ _model-Llama-3_3-Nemotron-Super-49B-v1() {
     fi
 
     echo 'LICENSE """Built with Llama
-Llama 3.3 is licensed under the Llama 3.3 Community License, Copyright © Meta Platforms, Inc. All Rights Reserved.
+Llama 3.1 is licensed under the Llama 3.1 Community License, Copyright © Meta Platforms, Inc. All Rights Reserved.
 
 Licensed by NVIDIA Corporation under the NVIDIA Open Model License
 
-https://www.llama.com/llama3_3/license/
-https://www.llama.com/llama3_3/use-policy/
+https://www.llama.com/llama3_1/license/
+https://www.llama.com/llama3_1/use-policy/
 
-GOVERNING TERMS: Use of this model is governed by the NVIDIA Open Model License . Additional Information: Llama 3.3 Community License Agreement. Built with Llama.
-https://www.llama.com/llama3_3/license/
+GOVERNING TERMS: Your use of this model is governed by the NVIDIA Open Model License. Additional Information: Llama 3.1 Community License Agreement. Built with Llama.
+https://www.llama.com/llama3_1/license/
 https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-open-model-license/
 
-https://huggingface.co/meta-llama/Llama-3.3-70B-Instruct
- "Instruction tuned text only models"
+https://huggingface.co/nvidia/Llama-3.1-Nemotron-Nano-8B-v1
+ "Llama-3.1-Nemotron-Nano-8B-v1 is a large language model (LLM) which is a derivative of Meta Llama-3.1-8B-Instruct (AKA the reference model). It is a reasoning model that is post trained for reasoning, human chat preferences, and tasks, such as RAG and tool calling."
 
-https://huggingface.co/nvidia/Llama-3_3-Nemotron-Super-49B-v1
- "Llama-3.3-Nemotron-Super-49B-v1 is a large language model (LLM) which is a derivative of Meta Llama-3.3-70B-Instruct (AKA the reference model). It is a reasoning model that is post trained for reasoning, human chat preferences, and tasks, such as RAG and tool calling. The model supports a context length of 128K tokens."
-
-https://huggingface.co/bartowski/nvidia_Llama-3_3-Nemotron-Super-49B-v1-GGUF
+https://huggingface.co/bartowski/nvidia_Llama-3.1-Nemotron-Nano-8B-v1-GGUF/blob/main/nvidia_Llama-3.1-Nemotron-Nano-8B-v1-Q6_K_L.gguf
 Quantized Model, System Prompt, inherits Llama and NVIDIA licenses, obligations, etc .
 
 
@@ -76,11 +73,11 @@ Quantized Model, System Prompt, inherits Llama and NVIDIA licenses, obligations,
 
 
 ' >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
-    cat "$scriptAbsoluteFolder"/license-llama/LICENSE-Llama-3.3.txt >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
+    cat "$scriptAbsoluteFolder"/license-llama/LICENSE-Llama-3.1.txt >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
     echo '
 
 ' >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
-    cat "$scriptAbsoluteFolder"/license-llama/USE-POLICY-Llama-3.3.txt >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
+    cat "$scriptAbsoluteFolder"/license-llama/USE-POLICY-Llama-3.1.txt >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
     echo '"""' >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
 
 
@@ -89,17 +86,17 @@ Quantized Model, System Prompt, inherits Llama and NVIDIA licenses, obligations,
     (
         _messagePlain_nominal "${FUNCNAME[0]}"': ollama create'
         cd "$scriptBundle"/ai_models/"$current_fileDir"
-        ollama create Llama-3_3-Nemotron-Super-49B-v1-virtuoso -f Modelfile
+        ollama create Llama-3_1-Nemotron-Nano-8B-v1-virtuoso -f Modelfile
     )
     
 }
 
 
-_experiment-Llama-3_3-Nemotron-Super-49B-v1() {
+_experiment-Llama-3_1-Nemotron-Nano-8B-v1() {
     _stopwatch curl -X POST http://localhost:11434/api/chat \
     -H "Content-Type: application/json" \
     -d '{
-        "model": "Llama-3_3-Nemotron-Super-49B-v1-virtuoso",
+        "model": "Llama-3_1-Nemotron-Nano-8B-v1-virtuoso",
         "messages": [
         { "role": "user", "content": "Tell me about Canada." }
         ],

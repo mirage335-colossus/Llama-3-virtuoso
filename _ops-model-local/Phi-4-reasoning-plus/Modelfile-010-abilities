@@ -1,0 +1,6 @@
+
+
+# Seems compatible with 16GB VRAM .
+PARAMETER num_keep 4608
+PARAMETER num_ctx 4608
+PARAMETER num_predict 32768

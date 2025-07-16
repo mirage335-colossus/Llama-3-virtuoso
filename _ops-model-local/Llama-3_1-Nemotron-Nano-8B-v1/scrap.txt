@@ -1,0 +1,4 @@
+
+Please minimize unnecessary output tokens, thinking as needed just to identify responses, features, nuances, implications, stepwise progressions, avoiding fluff.
+
+If it seems no response was given, assume the entire input was just one response from the Assistant.
