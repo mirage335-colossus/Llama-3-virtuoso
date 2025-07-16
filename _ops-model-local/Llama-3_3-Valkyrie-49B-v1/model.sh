@@ -5,15 +5,28 @@
 
 
 # https://huggingface.co/nvidia/Llama-3_3-Nemotron-Super-49B-v1
-# https://huggingface.co/bartowski/nvidia_Llama-3_3-Nemotron-Super-49B-GenRM-Multilingual-GGUF
-_model-Llama-3_3-Nemotron-Super-49B-GenRM-Multilingual() {
+# https://huggingface.co/TheDrummer/Valkyrie-49B-v1
+# https://huggingface.co/bartowski/TheDrummer_Valkyrie-49B-v1-GGUF
+_model-Llama-3_3-Valkyrie-49B-v1() {
     _messageNormal "${FUNCNAME[0]}"
 
+    # Q2_K quantization of this model may have some track record, and may be an appropriate choice if I-Matrix quantization shows unreliability, etc.
+    # https://huggingface.co/TheDrummer/Valkyrie-49B-v1-GGUF/blob/main/Valkyrie-49B-v1a-Q2_K.gguf
 
-    local current_file='nvidia_Llama-3_3-Nemotron-Super-49B-GenRM-Multilingual-IQ2_XXS.gguf'
-    local current_URL='https://huggingface.co/bartowski/nvidia_Llama-3_3-Nemotron-Super-49B-GenRM-Multilingual-GGUF/resolve/main/nvidia_Llama-3_3-Nemotron-Super-49B-GenRM-Multilingual-IQ2_XXS.gguf'
-    local current_sha256='d7737e1ca71e309517cd086536a0dbca2db58e6c6e2b80062c0cc7a5b1e46a02'
-    local current_fileDir='Llama-3_3-Nemotron-Super-49B-GenRM-Multilingual'
+    # May be untested.
+    # https://huggingface.co/bartowski/TheDrummer_Valkyrie-49B-v1-GGUF/blob/main/TheDrummer_Valkyrie-49B-v1-IQ2_XXS.gguf
+    # https://huggingface.co/bartowski/TheDrummer_Valkyrie-49B-v1-GGUF/resolve/main/TheDrummer_Valkyrie-49B-v1-IQ2_XXS.gguf
+    # https://huggingface.co/bartowski/TheDrummer_Valkyrie-49B-v1-GGUF/resolve/main/TheDrummer_Valkyrie-49B-v1-IQ3_XXS.gguf
+
+    local current_file='TheDrummer_Valkyrie-49B-v1-IQ2_XXS.gguf'
+    local current_URL='https://huggingface.co/bartowski/TheDrummer_Valkyrie-49B-v1-GGUF/resolve/main/TheDrummer_Valkyrie-49B-v1-IQ2_XXS.gguf'
+    local current_sha256='f17f8c7152816a5ef3aabc157113717708575784d625f52884f1c2f811923f52'
+    local current_fileDir='Llama-3_3-Valkyrie-49B-v1'
+
+    #local current_file='Valkyrie-49B-v1a-Q2_K.gguf'
+    #local current_URL='https://huggingface.co/TheDrummer/Valkyrie-49B-v1-GGUF/resolve/main/Valkyrie-49B-v1a-Q2_K.gguf'
+    #local current_sha256='e9b7cc67d88a23f2adb9c787b4d611966efe80fe21a06a717fba5e143db60ac2'
+    #local current_fileDir='Llama-3_3-Valkyrie-49B-v1'
 
     mkdir -p "$scriptBundle"/ai_models/"$current_fileDir"
     local currentModelConfigDir=$(_getAbsoluteFolder "${BASH_SOURCE[0]}")
@@ -31,7 +44,7 @@ _model-Llama-3_3-Nemotron-Super-49B-GenRM-Multilingual() {
 
     rm -f "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
     
-    cat "$currentModelConfigDir"/Modelfile-003-definition-compact >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
+    cat "$currentModelConfigDir"/Modelfile-000-definition >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
 
     cat "$currentModelConfigDir"/Modelfile-010-abilities >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
 
@@ -63,7 +76,7 @@ https://huggingface.co/meta-llama/Llama-3.3-70B-Instruct
 https://huggingface.co/nvidia/Llama-3_3-Nemotron-Super-49B-v1
  "Llama-3.3-Nemotron-Super-49B-v1 is a large language model (LLM) which is a derivative of Meta Llama-3.3-70B-Instruct (AKA the reference model). It is a reasoning model that is post trained for reasoning, human chat preferences, and tasks, such as RAG and tool calling. The model supports a context length of 128K tokens."
 
-https://huggingface.co/bartowski/nvidia_Llama-3_3-Nemotron-Super-49B-GenRM-Multilingual-GGUF
+https://huggingface.co/bartowski/TheDrummer_Valkyrie-49B-v1-GGUF
 Quantized Model, System Prompt, inherits Llama and NVIDIA licenses, obligations, etc .
 
 
@@ -91,21 +104,19 @@ Quantized Model, System Prompt, inherits Llama and NVIDIA licenses, obligations,
     (
         _messagePlain_nominal "${FUNCNAME[0]}"': ollama create'
         cd "$scriptBundle"/ai_models/"$current_fileDir"
-        ollama create Llama-3_3-Nemotron-Super-49B-GenRM-Multilingual-virtuoso -f Modelfile
+        ollama create Llama-3_3-Valkyrie-49B-v1-virtuoso -f Modelfile
     )
     
 }
 
 
-_experiment-Llama-3_3-Nemotron-Super-49B-GenRM-Multilingual() {
+_experiment-LLlama-3_3-Valkyrie-49B-v1() {
     _stopwatch curl -X POST http://localhost:11434/api/chat \
     -H "Content-Type: application/json" \
     -d '{
-        "model": "Llama-3_3-Nemotron-Super-49B-GenRM-Multilingual-virtuoso",
+        "model": "Llama-3_3-Valkyrie-49B-v1-virtuoso",
         "messages": [
-        { "role": "user", "content": "Tell me about Canada." },
-        { "role": "assistant", "content": "Here is a brief fact about Canada:\n\nCanada is home to more lakes than any other country in the world, with over 2 million lakes covering about 8 % of its land area." },
-        { "role": "assistant", "content": "Here is a brief fact about Canada:\n\nCanada has more lakes than any other country in the world, with over 2 million lakes covering about 8% of its land area." }
+        { "role": "user", "content": "Tell me about Canada." }
         ],
         "stream": false,
         "temperature": 0.04,

@@ -1,7 +1,7 @@
 
 
 # https://huggingface.co/mlabonne/Meta-Llama-3.1-8B-Instruct-abliterated-GGUF
-_model-Llama-3.1-8B-Instruct-abliterated() {
+_model-Llama-3_1-8B-Instruct-abliterated() {
     _messageNormal "${FUNCNAME[0]}"
 
     # https://huggingface.co/QuantFactory/NeuralDaredevil-8B-abliterated-GGUF/resolve/main/NeuralDaredevil-8B-abliterated.Q3_K_M.gguf
@@ -9,7 +9,7 @@ _model-Llama-3.1-8B-Instruct-abliterated() {
     local current_file='meta-llama-3.1-8b-instruct-abliterated.Q8_0.gguf'
     local current_URL='https://huggingface.co/mlabonne/Meta-Llama-3.1-8B-Instruct-abliterated-GGUF/resolve/main/meta-llama-3.1-8b-instruct-abliterated.Q8_0.gguf'
     local current_sha256='7b4601d271b2988c5150ba081dfd9263197b5b7f2d39b25e8bad601380019031'
-    local current_fileDir='Llama-3.1-8B-Instruct-abliterated'
+    local current_fileDir='Llama-3_1-8B-Instruct-abliterated'
 
     mkdir -p "$scriptBundle"/ai_models/"$current_fileDir"
     local currentModelConfigDir=$(_getAbsoluteFolder "${BASH_SOURCE[0]}")
@@ -54,17 +54,17 @@ _model-Llama-3.1-8B-Instruct-abliterated() {
     (
         _messagePlain_nominal "${FUNCNAME[0]}"': ollama create'
         cd "$scriptBundle"/ai_models/"$current_fileDir"
-        ollama create Llama-3.1-8B-Instruct-abliterated-virtuoso -f Modelfile
+        ollama create Llama-3_1-8B-Instruct-abliterated-virtuoso -f Modelfile
     )
     
 }
 
 
-_experiment-Llama-3.1-8B-Instruct-abliterated() {
+_experiment-Llama-3_1-8B-Instruct-abliterated() {
     _stopwatch curl -X POST http://localhost:11434/api/chat \
     -H "Content-Type: application/json" \
     -d '{
-        "model": "Llama-3.1-8B-Instruct-abliterated-virtuoso",
+        "model": "Llama-3_1-8B-Instruct-abliterated-virtuoso",
         "messages": [
         { "role": "user", "content": "Tell me about Canada." }
         ],

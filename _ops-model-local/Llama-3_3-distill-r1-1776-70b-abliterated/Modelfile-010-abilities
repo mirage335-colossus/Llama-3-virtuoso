@@ -1,0 +1,4 @@
+
+PARAMETER num_ctx 2048
+PARAMETER num_keep 2048
+PARAMETER num_predict 6144
