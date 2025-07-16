@@ -17,6 +17,8 @@ _fetch_local() {
     _model-Llama-3_3-Nemotron-Super-49B-v1
 
     _model-microsoft/Phi-4-reasoning-plus
+
+    _model-Phi-4-mini-reasoning-abliterated
 }
 
 
