@@ -24,10 +24,6 @@ _model-Phi-4-reasoning-plus() {
 
     rm -f "$scriptBundle"/ai_models/"$current_fileDir"/Notice.txt
 
-    cat "$scriptAbsoluteFolder"/license-llama/Notice.txt >> "$scriptBundle"/ai_models/"$current_fileDir"/Notice.txt
-
-    cat "$scriptAbsoluteFolder"/license-nvidia/Notice.txt >> "$scriptBundle"/ai_models/"$current_fileDir"/Notice.txt
-
     ! _get_downloadModel-file-HuggingFace && _messageFAIL
     true
 
@@ -53,7 +49,8 @@ _model-Phi-4-reasoning-plus() {
     echo '"""' >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
 
 
-    [[ "$OLLAMA_HOST" == "" ]] && _service_ollama || _service_ollama_augment
+    [[ "$OLLAMA_HOST" == "" ]] && _service_ollama
+    _service_ollama_augment
 
     (
         _messagePlain_nominal "${FUNCNAME[0]}"': ollama create'

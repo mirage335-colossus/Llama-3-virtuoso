@@ -19,6 +19,12 @@ _fetch_local() {
     _model-microsoft/Phi-4-reasoning-plus
 
     _model-Phi-4-mini-reasoning-abliterated
+
+    _model-Qwen-2_5-VL-7B-Instruct
+
+    _model-Mistral-Small-3_2-24B-Instruct-2506
+
+    _model-Magistral-Small-2506
 }
 
 

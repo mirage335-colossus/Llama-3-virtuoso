@@ -1,0 +1,5 @@
+
+# WARNING: Setting 'num_thread' for this or similar AI models seems to drastically reduce speed, from ~30tokens/sec to ~2tokens/sec.
+PARAMETER num_gpu 41
+#PARAMETER num_thread 14
+

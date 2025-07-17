@@ -50,7 +50,8 @@ _model-Llama-3_3-distill-r1-1776-70b-abliterated() {
     echo '"""' >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
 
 
-    [[ "$OLLAMA_HOST" == "" ]] && _service_ollama || _service_ollama_augment
+    [[ "$OLLAMA_HOST" == "" ]] && _service_ollama
+    _service_ollama_augment
 
     (
         _messagePlain_nominal "${FUNCNAME[0]}"': ollama create'

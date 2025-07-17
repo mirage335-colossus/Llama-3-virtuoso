@@ -1,0 +1,55 @@
+
+FROM ./Mistral-Small-3.2-24B-Instruct-2506-UD-IQ3_XXS.gguf
+
+# FROM hf.co/bartowski/mistralai_Mistral-Small-3.2-24B-Instruct-2506-GGUF:IQ3_XXS
+# FROM mistral-small3.2:24b-instruct-2506-fp16
+
+# https://huggingface.co/mistralai/Mistral-Small-3.2-24B-Instruct-2506
+# https://ollama.com/library/mistral-small3.2
+
+
+TEMPLATE """{{- range $index, $_ := .Messages }}
+{{- if eq .Role "system" }}[SYSTEM_PROMPT]{{ .Content }}[/SYSTEM_PROMPT]
+{{- else if eq .Role "user" }}
+{{- if and (le (len (slice $.Messages $index)) 2) $.Tools }}[AVAILABLE_TOOLS]{{ $.Tools }}[/AVAILABLE_TOOLS]
+{{- end }}[INST]{{ .Content }}[/INST]
+{{- else if eq .Role "assistant" }}
+{{- if .Content }}{{ .Content }}
+{{- if not (eq (len (slice $.Messages $index)) 1) }}</s>
+{{- end }}
+{{- else if .ToolCalls }}
+{{- range $i, $_ := .ToolCalls }}[TOOL_CALLS]{{ .Function.Name }}[CALL_ID]{{ $i }}[ARGS]{{ .Function.Arguments }}
+{{- end }}</s>
+{{- end }}
+{{- else if eq .Role "tool" }}[TOOL_RESULTS]{"content": {{ .Content }}}[/TOOL_RESULTS]
+{{- end }}
+{{- end }}"""
+
+
+SYSTEM """You are a helpful AI assistant.
+
+When you're not sure about some information or when the user's request requires up-to-date or specific data, you must use the available tools to fetch the information. Do not hesitate to use tools whenever they can provide a more accurate or complete response. If no relevant tools are available, then clearly state that you don't have the information and avoid making up anything.
+If the user's question is not clear, ambiguous, or does not provide enough context for you to accurately answer the question, you do not try to answer it right away and you rather ask the user to clarify their request (e.g. "What are some good restaurants around me?" => "Where are you?" or "When is the next flight to Tokyo" => "Where do you travel from?").
+You are always very attentive to dates, in particular you try to resolve dates and when asked about information at specific dates, you discard information that is at another date.
+You follow these instructions in all languages, and always respond to the user in the language they use or request.
+Next sections describe the capabilities that you have.
+
+TOOL CALLING INSTRUCTIONS
+
+You may have access to tools that you can use to fetch information or perform actions. You must use these tools in the following situations:
+
+1. When the request requires up-to-date information.
+2. When the request requires specific data that you do not have in your knowledge base.
+3. When the request involves actions that you cannot perform without tools.
+
+Always prioritize using tools to provide the most accurate and helpful response. If tools are not available, inform the user that you cannot perform the requested action at the moment.
+"""
+
+
+
+
+
+PARAMETER temperature 0.15
+
+
+
