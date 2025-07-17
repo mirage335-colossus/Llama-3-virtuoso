@@ -9,7 +9,7 @@ _generate_compile_bash_prog() {
 	#"$scriptAbsoluteLocation" _compile_bash lean lean.sh
 	
 	#"$scriptAbsoluteLocation" _compile_bash core ubiquitous_bash.sh
-	"$scriptAbsoluteLocation" _compile_bash virtuoso ubiquitous_bash.sh
+	"$scriptAbsoluteLocation" _compile_bash virtuoso ubiquitous_bash-virtuoso.sh
 	
 	#"$scriptAbsoluteLocation" _compile_bash "" ""
 	#"$scriptAbsoluteLocation" _compile_bash ubiquitous_bash ubiquitous_bash.sh

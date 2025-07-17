@@ -1,13 +1,15 @@
 
 
+# WARNING: DANGER: Beware using this model as an INSTRUCT model can be less stable (ie. may cause infinite generation).
 
+# INSTRUCT (ie. REASONING off , aka. 'detailed thinking off') version of Llama-3.3-Valkyrie-49B-v1 . Faster generation of search terms, titles, etc.
 
 
 
 # https://huggingface.co/nvidia/Llama-3_3-Nemotron-Super-49B-v1
 # https://huggingface.co/TheDrummer/Valkyrie-49B-v1
 # https://huggingface.co/bartowski/TheDrummer_Valkyrie-49B-v1-GGUF
-_model-Llama-3_3-Valkyrie-49B-v1() {
+_model-Llama-3_3-Valkyrie-49B-v1-INSTRUCT() {
     _messageNormal "${FUNCNAME[0]}"
 
     # Q2_K quantization of this model may have some track record, and may be an appropriate choice if I-Matrix quantization shows unreliability, etc.
@@ -42,20 +44,20 @@ _model-Llama-3_3-Valkyrie-49B-v1() {
     true
 
 
-    rm -f "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
+    rm -f "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile-INSTRUCT
     
-    cat "$currentModelConfigDir"/Modelfile-000-definition >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
+    cat "$currentModelConfigDir"/Modelfile-000-definition-INSTRUCT >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile-INSTRUCT
 
-    cat "$currentModelConfigDir"/Modelfile-010-abilities >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
+    cat "$currentModelConfigDir"/Modelfile-010-abilities-INSTRUCT >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile-INSTRUCT
 
     if [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--6pCore_8eCore' ]]
     then
-        cat "$currentModelConfigDir"/Modelfile-100-16GB_14core-11GB_eGPU >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
+        cat "$currentModelConfigDir"/Modelfile-100-16GB_14core-11GB_eGPU >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile-INSTRUCT
     fi
 
     if [[ "$AI_acceleration" == '16GB_internal--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--6pCore_8eCore' ]]
     then
-        cat "$currentModelConfigDir"/Modelfile-100-16GB_14core >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
+        cat "$currentModelConfigDir"/Modelfile-100-16GB_14core >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile-INSTRUCT
     fi
 
     echo 'LICENSE """Built with Llama
@@ -80,23 +82,23 @@ https://huggingface.co/bartowski/TheDrummer_Valkyrie-49B-v1-GGUF
 Quantized Model, System Prompt, inherits Llama and NVIDIA licenses, obligations, etc .
 
 
-' >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
-    cat "$scriptAbsoluteFolder"/'license-nvidia/NVIDIA_Open_Model_License_Agreement-2025-06-16.txt' >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
+' >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile-INSTRUCT
+    cat "$scriptAbsoluteFolder"/'license-nvidia/NVIDIA_Open_Model_License_Agreement-2025-06-16.txt' >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile-INSTRUCT
     echo '
 
 
-' >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
-    cat "$scriptAbsoluteFolder"/'license-nvidia/NVIDIA_Agreements_Trustworthy_AI-2024-06-27.txt' >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
+' >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile-INSTRUCT
+    cat "$scriptAbsoluteFolder"/'license-nvidia/NVIDIA_Agreements_Trustworthy_AI-2024-06-27.txt' >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile-INSTRUCT
     echo '
 
 
-' >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
-    cat "$scriptAbsoluteFolder"/license-llama/LICENSE-Llama-3.3.txt >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
+' >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile-INSTRUCT
+    cat "$scriptAbsoluteFolder"/license-llama/LICENSE-Llama-3.3.txt >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile-INSTRUCT
     echo '
 
-' >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
-    cat "$scriptAbsoluteFolder"/license-llama/USE-POLICY-Llama-3.3.txt >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
-    echo '"""' >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
+' >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile-INSTRUCT
+    cat "$scriptAbsoluteFolder"/license-llama/USE-POLICY-Llama-3.3.txt >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile-INSTRUCT
+    echo '"""' >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile-INSTRUCT
 
 
     [[ "$OLLAMA_HOST" == "" ]] && _service_ollama
@@ -105,23 +107,23 @@ Quantized Model, System Prompt, inherits Llama and NVIDIA licenses, obligations,
     (
         _messagePlain_nominal "${FUNCNAME[0]}"': ollama create'
         cd "$scriptBundle"/ai_models/"$current_fileDir"
-        ollama create Llama-3_3-Valkyrie-49B-v1-virtuoso -f Modelfile
+        ollama create Llama-3_3-Valkyrie-49B-v1-INSTRUCT-virtuoso -f Modelfile-INSTRUCT
     )
     
 }
 
 
-_experiment-LLlama-3_3-Valkyrie-49B-v1() {
+_experiment-LLlama-3_3-Valkyrie-49B-v1-INSTRUCT() {
     _stopwatch curl -X POST http://localhost:11434/api/chat \
     -H "Content-Type: application/json" \
     -d '{
-        "model": "Llama-3_3-Valkyrie-49B-v1-virtuoso",
+        "model": "Llama-3_3-Valkyrie-49B-v1-INSTRUCT-virtuoso",
         "messages": [
         { "role": "user", "content": "Tell me about Canada." }
         ],
         "stream": false,
-        "temperature": 0.6,
-        "top_p": 0.95,
+        "temperature": 0.04,
+        "top_k": 7,
         "max_tokens": 2048
     }'
     echo
