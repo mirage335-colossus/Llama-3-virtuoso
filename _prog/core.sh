@@ -64,6 +64,11 @@ _setupVirtuoso() {
         Environment="OLLAMA_NUM_PARALLEL=4"
         Environment="OLLAMA_SCHED_SPREAD=1"' | sudo -n tee /etc/systemd/system/ollama.service.d/override.conf > /dev/null
 
+        sudo -n chmod 755 /etc/systemd/system/ollama.service.d
+        sudo -n chmod 644 /etc/systemd/system/ollama.service.d/override.conf
+    fi
+    if ( [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--6pCore_8eCore' ]] )
+    then
         echo 'export="OLLAMA_NUM_THREADS=18"
         export="OLLAMA_FLASH_ATTENTION=1"
         export="OLLAMA_KV_CACHE_TYPE=q8_0"
@@ -71,9 +76,6 @@ _setupVirtuoso() {
         export="OLLAMA_NOHISTORY=true"
         export="OLLAMA_NUM_PARALLEL=4"
         export="OLLAMA_SCHED_SPREAD=1"' > "$virtuosoHookFile"
-
-        sudo -n chmod 755 /etc/systemd/system/ollama.service.d
-        sudo -n chmod 644 /etc/systemd/system/ollama.service.d/override.conf
     fi
     if ! _if_cygwin && ! ( [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--6pCore_8eCore' ]] )
     then
@@ -87,15 +89,17 @@ _setupVirtuoso() {
         Environment="OLLAMA_NUM_PARALLEL=4"
         Environment="OLLAMA_SCHED_SPREAD=1"' | sudo -n tee /etc/systemd/system/ollama.service.d/override.conf > /dev/null
 
+        sudo -n chmod 755 /etc/systemd/system/ollama.service.d
+        sudo -n chmod 644 /etc/systemd/system/ollama.service.d/override.conf
+    fi
+    if ! ( [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--6pCore_8eCore' ]] )
+    then
         echo 'export="OLLAMA_FLASH_ATTENTION=1"
         export="OLLAMA_KV_CACHE_TYPE=q8_0"
         export="OLLAMA_NEW_ENGINE=true"
         export="OLLAMA_NOHISTORY=true"
         export="OLLAMA_NUM_PARALLEL=4"
         export="OLLAMA_SCHED_SPREAD=1"' > "$virtuosoHookFile"
-
-        sudo -n chmod 755 /etc/systemd/system/ollama.service.d
-        sudo -n chmod 644 /etc/systemd/system/ollama.service.d/override.conf
     fi
 
     # DUBIOUS . More project-specific hook.
