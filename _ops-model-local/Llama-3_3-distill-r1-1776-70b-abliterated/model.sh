@@ -27,10 +27,20 @@ _model-Llama-3_3-distill-r1-1776-70b-abliterated() {
 
     if [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--12t6pCore_8eCore' ]]
     then
-        cat "$currentModelConfigDir"/Modelfile-100-16GB_18core >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
+        cat "$currentModelConfigDir"/Modelfile-100-16GB_18core-11GB_eGPU >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
     fi
 
     if [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--6pCore_8eCore' ]]
+    then
+        cat "$currentModelConfigDir"/Modelfile-100-16GB_14core-11GB_eGPU >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
+    fi
+
+    if [[ "$AI_acceleration" == '16GB_internal--12t6pCore_8eCore' ]]
+    then
+        cat "$currentModelConfigDir"/Modelfile-100-16GB_18core >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
+    fi
+
+    if [[ "$AI_acceleration" == '16GB_internal--6pCore_8eCore' ]]
     then
         cat "$currentModelConfigDir"/Modelfile-100-16GB_14core >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
     fi

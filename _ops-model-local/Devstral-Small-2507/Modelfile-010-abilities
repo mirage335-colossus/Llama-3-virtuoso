@@ -3,3 +3,9 @@
 PARAMETER num_keep 3072
 PARAMETER num_ctx 3072
 PARAMETER num_predict 8096
+
+
+
+### Temporary override suggested for 'workspace' defined 'model' in OpenWebUI, etc, for Retrieval Augmented Generation, etc.
+##PARAMETER num_ctx 18432
+##PARAMETER num_gpu 256

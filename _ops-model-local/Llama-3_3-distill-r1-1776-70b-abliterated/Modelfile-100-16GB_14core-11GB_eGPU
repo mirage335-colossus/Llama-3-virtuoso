@@ -1,0 +1,8 @@
+
+PARAMETER num_batch 512
+
+#PARAMETER num_gpu 68
+PARAMETER num_thread 14
+
+PARAMETER num_gpu 256
+
