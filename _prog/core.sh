@@ -3,9 +3,42 @@
 # ATTENTION
 #_request_license_acceptance_CEL_1_00
 
+# Usually a dedicated Linux inference server... which may alternatively be manually configured instead of using ollama, etc.
+# WARNING: May be untested.
+# ATTENTION: Override with 'ops.sh' or similar. Maybe override with '.env' if actually appropriate.
+_setupVirtuoso-server() {
+    _setupVirtuoso
 
+    _messageNormal "${FUNCNAME[0]}" "$objectName"
+
+
+    # WARNING: Beware even with dedicated hardware and presumably otherwise adequate VRAM, very large or unusual models (eg. Kimi-K2-Instruct), increasing PARALLEL may still use prohibitive amounts of VRAM !
+
+
+    _if_cygwin && _messagePlain_bad 'bad: _setupVirtuoso-server does not support MSWindows, etc' && _messageFAIL && return 1
+
+    sed -i '/OLLAMA_NUM_PARALLEL/d' "$HOME"/.virtuoso/virtuoso_hook.sh
+    echo 'export OLLAMA_NUM_PARALLEL=4' >> "$HOME"/.virtuoso/virtuoso_hook.sh
+    
+    sudo -n mkdir -p /etc/systemd/system/ollama.service.d
+
+    sed -i '/OLLAMA_NUM_PARALLEL/d' /etc/systemd/system/ollama.service.d/override.conf
+    echo 'Environment="OLLAMA_NUM_PARALLEL=4"' | sudo -n tee -a /etc/systemd/system/ollama.service.d/override.conf > /dev/null
+
+    sudo -n chmod 755 /etc/systemd/system/ollama.service.d
+    sudo -n chmod 644 /etc/systemd/system/ollama.service.d/override.conf
+}
+
+# ATTENTION: Override with 'ops.sh' or similar. Maybe override with '.env' if actually appropriate.
 _setupVirtuoso() {
     _messageNormal "${FUNCNAME[0]}" "$objectName"
+
+
+    # WARNING: These variables are the result of iterative testing to minimize the *risk* of such subtle issues as 'Llama-3_3-Nemotron-Super-49B-v1' causing 'freezing' (ie. non-responsive desktop UI and slow generation) possibly due to sparse layers offloading to shared GPU memory, etc.
+    # In particular, after doing most testing with 'OLLAMA_NUM_PARALLEL=4', resulting in mostly tolerant context window settings, etc, 'OLLAMA_NUM_PARALLEL=1' was made default to prevent issues occurring in some less usual situations (such as having configured all models with '_fetch_local' with '.env' configured for an eGPU, then unplugged the eGPU).
+    # ATTENTION: Not all models are guaranteed to work in such situations as eGPU detachment, nor with OLLAMA_NUM_PARALLEL=4, however, it is *VERY IMPORTANT* that at least some models used for gathering information from a client device (eg. _ops-model-local/Qwen-2_5-VL-7B-Instruct) can resume working without intervention after unexected eGPU detachment (eg. power failure), etc.
+    # ATTENTION: 'OLLAMA_NUM_PARALLEL' in particular has drastic consequences: multiplying the VRAM used by the context window!
+
 
     # Generic hook . Recent versions of any 'virtuoso' project should set the same variables by the same rules, etc.
     mkdir -p "$HOME"/.virtuoso
@@ -24,15 +57,21 @@ _setupVirtuoso() {
         setx OLLAMA_KV_CACHE_TYPE q8_0 /m
         setx OLLAMA_NEW_ENGINE true /m
         setx OLLAMA_NOHISTORY true /m
-        setx OLLAMA_NUM_PARALLEL 4 /m
+        setx OLLAMA_NUM_PARALLEL 1 /m
         setx OLLAMA_SCHED_SPREAD 1 /m
 
         setx OLLAMA_FLASH_ATTENTION 1
         setx OLLAMA_KV_CACHE_TYPE q8_0
         setx OLLAMA_NEW_ENGINE true
         setx OLLAMA_NOHISTORY true
-        setx OLLAMA_NUM_PARALLEL 4
+        setx OLLAMA_NUM_PARALLEL 1
         setx OLLAMA_SCHED_SPREAD 1
+
+        setx OLLAMA_MAX_LOADED_MODELS 1 /m
+        setx OLLAMA_MAX_LOADED_MODELS 1
+
+        setx OLLAMA_GPU_OVERHEAD 603979776 /m
+        setx OLLAMA_GPU_OVERHEAD 603979776
     fi
     if _if_cygwin && ! ( [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--6pCore_8eCore' ]] )
     then
@@ -40,15 +79,21 @@ _setupVirtuoso() {
         setx OLLAMA_KV_CACHE_TYPE q8_0 /m
         setx OLLAMA_NEW_ENGINE true /m
         setx OLLAMA_NOHISTORY true /m
-        setx OLLAMA_NUM_PARALLEL 4 /m
+        setx OLLAMA_NUM_PARALLEL 1 /m
         setx OLLAMA_SCHED_SPREAD 1 /m
 
         setx OLLAMA_FLASH_ATTENTION 1
         setx OLLAMA_KV_CACHE_TYPE q8_0
         setx OLLAMA_NEW_ENGINE true
         setx OLLAMA_NOHISTORY true
-        setx OLLAMA_NUM_PARALLEL 4
+        setx OLLAMA_NUM_PARALLEL 1
         setx OLLAMA_SCHED_SPREAD 1
+
+        setx OLLAMA_MAX_LOADED_MODELS 1 /m
+        setx OLLAMA_MAX_LOADED_MODELS 1
+
+        setx OLLAMA_GPU_OVERHEAD 603979776 /m
+        setx OLLAMA_GPU_OVERHEAD 603979776
     fi
 
     if ! _if_cygwin && ( [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--6pCore_8eCore' ]] )
@@ -61,21 +106,25 @@ _setupVirtuoso() {
         Environment="OLLAMA_KV_CACHE_TYPE=q8_0"
         Environment="OLLAMA_NEW_ENGINE=true"
         Environment="OLLAMA_NOHISTORY=true"
-        Environment="OLLAMA_NUM_PARALLEL=4"
-        Environment="OLLAMA_SCHED_SPREAD=1"' | sudo -n tee /etc/systemd/system/ollama.service.d/override.conf > /dev/null
+        Environment="OLLAMA_NUM_PARALLEL=1"
+        Environment="OLLAMA_SCHED_SPREAD=1"
+        Environment="OLLAMA_MAX_LOADED_MODELS=1"
+        Environment="OLLAMA_GPU_OVERHEAD=603979776"' | sudo -n tee /etc/systemd/system/ollama.service.d/override.conf > /dev/null
 
         sudo -n chmod 755 /etc/systemd/system/ollama.service.d
         sudo -n chmod 644 /etc/systemd/system/ollama.service.d/override.conf
     fi
     if ( [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--6pCore_8eCore' ]] )
     then
-        echo 'export="OLLAMA_NUM_THREADS=18"
-        export="OLLAMA_FLASH_ATTENTION=1"
-        export="OLLAMA_KV_CACHE_TYPE=q8_0"
-        export="OLLAMA_NEW_ENGINE=true"
-        export="OLLAMA_NOHISTORY=true"
-        export="OLLAMA_NUM_PARALLEL=4"
-        export="OLLAMA_SCHED_SPREAD=1"' > "$virtuosoHookFile"
+        echo 'export OLLAMA_NUM_THREADS=18
+        export OLLAMA_FLASH_ATTENTION=1
+        export OLLAMA_KV_CACHE_TYPE=q8_0
+        export OLLAMA_NEW_ENGINE=true
+        export OLLAMA_NOHISTORY=true
+        export OLLAMA_NUM_PARALLEL=1
+        export OLLAMA_SCHED_SPREAD=1
+        export OLLAMA_MAX_LOADED_MODELS=1
+        export OLLAMA_GPU_OVERHEAD=603979776' > "$virtuosoHookFile"
     fi
     if ! _if_cygwin && ! ( [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--6pCore_8eCore' ]] )
     then
@@ -86,20 +135,24 @@ _setupVirtuoso() {
         Environment="OLLAMA_KV_CACHE_TYPE=q8_0"
         Environment="OLLAMA_NEW_ENGINE=true"
         Environment="OLLAMA_NOHISTORY=true"
-        Environment="OLLAMA_NUM_PARALLEL=4"
-        Environment="OLLAMA_SCHED_SPREAD=1"' | sudo -n tee /etc/systemd/system/ollama.service.d/override.conf > /dev/null
+        Environment="OLLAMA_NUM_PARALLEL=1"
+        Environment="OLLAMA_SCHED_SPREAD=1"
+        Environment="OLLAMA_MAX_LOADED_MODELS=1"
+        Environment="OLLAMA_GPU_OVERHEAD=603979776"' | sudo -n tee /etc/systemd/system/ollama.service.d/override.conf > /dev/null
 
         sudo -n chmod 755 /etc/systemd/system/ollama.service.d
         sudo -n chmod 644 /etc/systemd/system/ollama.service.d/override.conf
     fi
     if ! ( [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--6pCore_8eCore' ]] )
     then
-        echo 'export="OLLAMA_FLASH_ATTENTION=1"
-        export="OLLAMA_KV_CACHE_TYPE=q8_0"
-        export="OLLAMA_NEW_ENGINE=true"
-        export="OLLAMA_NOHISTORY=true"
-        export="OLLAMA_NUM_PARALLEL=4"
-        export="OLLAMA_SCHED_SPREAD=1"' > "$virtuosoHookFile"
+        echo 'export OLLAMA_FLASH_ATTENTION=1
+        export OLLAMA_KV_CACHE_TYPE=q8_0
+        export OLLAMA_NEW_ENGINE=true
+        export OLLAMA_NOHISTORY=true
+        export OLLAMA_NUM_PARALLEL=1
+        export OLLAMA_SCHED_SPREAD=1
+        export OLLAMA_MAX_LOADED_MODELS=1
+        export OLLAMA_GPU_OVERHEAD=603979776' > "$virtuosoHookFile"
     fi
 
     # DUBIOUS . More project-specific hook.
