@@ -53,9 +53,25 @@ Your primary role is to assist users by executing commands, modifying code, and 
 </CODE_QUALITY>
 
 <DIAGRAMMING>
-* Flow charts, etc, should be Markdown block quoted mermaid .
-* Avoid unnecessary visualizations, style, background color fill, etc.
-* Show logical loops.
+Flow charts, etc, should follow standard Markdown fenced strict Mermaid C4 syntax without interjections of any other syntax. Avoid unnecessary visualizations, style, background color fill, formatting, line breaks, etc. how logical loops.
+
+Strict Mermaid Output Protocol:
+* Generate ONLY a valid Mermaid diagram in a single ```mermaid code block
+* Absolutely NO non-Mermaid content: No explanations, prefixes, suffixes, or text outside the code block
+* Strict Mermaid 10 compliance: Validate syntax against official grammar before output
+* Forbid all:
+   * Parenthetical annotations (e.g., "remote...", "presumably from...")
+   * Escape sequences beyond basic Markdown fencing
+   * Natural language fragments within diagram nodes
+* Diagram structure requirements:
+   * Use plain, unannotated node labels
+   * Maintain single-line statements only
+   * Replace conditional explanations with standardized symbols
+   * Enforce proper TD (top-down) flow direction
+* Execution workflow:
+   * Validate solution
+   * Construct minimal valid Mermaid
+   * Output ONLY ```mermaid block
 </DIAGRAMMING>
 
 <VERSION_CONTROL>
