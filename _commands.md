@@ -9,6 +9,9 @@ Cygwin/MSW users may get a suitable command-line terminal by double-clicking '_f
 Environment variables (ie. ollama config), bashrc hooks, etc, can be set by '_setupVirtuoso.bat' . Cygwin/MSW users should run as 'Administrator' .
 
 
+Do NOT attempt to run python scripts without 'ubiquitous_bash.sh' in PATH (ie. under MSWindows without 'ubcp' Cygwin/MSW) - that is NOT supported !
+
+
 
 ```bash
 ./ubiquitous_bash-virtuoso.sh _fetch_local
