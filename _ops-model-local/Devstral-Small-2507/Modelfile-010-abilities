@@ -1,7 +1,7 @@
 
 
 PARAMETER num_keep 3072
-PARAMETER num_ctx 3072
+#PARAMETER num_ctx 3072
 PARAMETER num_predict 8096
 
 
@@ -9,3 +9,8 @@ PARAMETER num_predict 8096
 ### Temporary override suggested for 'workspace' defined 'model' in OpenWebUI, etc, for Retrieval Augmented Generation, etc.
 ##PARAMETER num_ctx 18432
 ##PARAMETER num_gpu 256
+
+# Seems to prevent endless repetition in some cases.
+# May not be well tested (eg. may cause issues after eGPU detachment if model has been created with configuration expecting the additional VRAM, may cause issus if OLLAMA_NUM_PARALLEL greater than 1 ).
+PARAMETER num_keep 4096
+PARAMETER num_ctx 4096
