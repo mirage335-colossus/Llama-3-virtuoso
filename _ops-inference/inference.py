@@ -588,7 +588,7 @@ if is_windows and not use_colorama:
 
 
 
-# TODO: Foundational - call appropriate models with appropriate prompts (eg. decompositon) , detect gibberish (including empty) output, compare multiple results (ie. Llama-3_3-Nemotron-Super-49B-GenRM-Multilingual ) , output best result.
+# TODO: Foundational - call appropriate models with appropriate prompts (eg. decompositon) , simplify (ie. remove problem restatement, etc), detect gibberish (including empty) output, compare multiple results (ie. Llama-3_3-Nemotron-Super-49B-GenRM-Multilingual ) , output best result.
 
 
 
