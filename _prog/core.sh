@@ -174,6 +174,8 @@ _facade() {
 }
 
 _refresh_anchors() {
+    cp -a "$scriptAbsoluteFolder"/_anchor.bat "$scriptAbsoluteFolder"/_fetch_local.bat
+
     cp -a "$scriptAbsoluteFolder"/_anchor.bat "$scriptAbsoluteFolder"/_facade.bat
     cp -a "$scriptAbsoluteFolder"/_anchor.bat "$scriptAbsoluteFolder"/_setupVirtuoso.bat
 }

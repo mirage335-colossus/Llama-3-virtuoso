@@ -9,3 +9,6 @@ PARAMETER num_thread 14
 #PARAMETER num_gpu 999
 #PARAMETER num_thread 14
 
+# Unusual. Preferable to minimize such exceptions relying on OLLAMA_NUM_PARALLEL=1 , etc.
+PARAMETER num_gpu 999
+
