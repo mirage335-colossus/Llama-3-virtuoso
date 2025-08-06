@@ -25,6 +25,13 @@ _fetch_local() {
     _model-Mistral-Small-3_2-24B-Instruct-2506
 
     _model-Magistral-Small-2506
+
+    _model-gpt-oss-20b
+}
+
+_fetch_local_large() {
+    # gpt-oss-120b
+    _model-gpt-oss-120b
 }
 
 

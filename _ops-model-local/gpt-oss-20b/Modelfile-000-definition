@@ -1,0 +1,8 @@
+
+
+FROM gpt-oss:20b
+
+# https://ollama.com/library/gpt-oss
+
+
+
