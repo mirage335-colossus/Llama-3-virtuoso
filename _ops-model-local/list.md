@@ -1,5 +1,5 @@
 
-unsloth/Kimi-K2-Instruct-GGUF
+unsloth/Kimi-K2-Instruct-0905-GGUF
 
 
 

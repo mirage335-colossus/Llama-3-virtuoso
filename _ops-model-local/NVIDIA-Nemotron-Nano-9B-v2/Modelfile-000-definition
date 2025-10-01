@@ -1,0 +1,21 @@
+FROM nvidia_NVIDIA-Nemotron-Nano-9B-v2-Q6_K_L.gguf
+
+# [Quantized Model, System Prompt, inherits Llama and NVIDIA licenses, obligations, etc .](https://huggingface.co/bartowski/nvidia_NVIDIA-Nemotron-Nano-9B-v2-GGUF)
+# https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-open-model-license/
+
+SYSTEM "/think"
+
+TEMPLATE """
+"""
+
+# Appropriate for REASONING (ie. /think) .
+PARAMETER temperature 0.6
+PARAMETER top_p 0.95
+#PARAMETER top_k 40
+
+# May be appropriate for smaller i-Matrix IQ quants, etc.
+#PARAMETER repeat_penalty 1.1
+
+
+
+

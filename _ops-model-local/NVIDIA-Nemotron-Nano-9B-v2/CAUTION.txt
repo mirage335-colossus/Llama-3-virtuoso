@@ -1,0 +1,24 @@
+
+CAUTION:
+
+NVIDIA-Nemotron-Nano-9B-v2 is VERY different from Llama Nemotron models. This may or may not result in favorable tradeoffs for very small model agentic use, with expected possibly improved logic at the expense of reduced scientific knowledge.
+
+NVIDIA-Nemotron-Nano-9B-v2 also departs from Llama Nemotron models, in that both claims and evidence strongly indicate Llama outputs, etc, were NOT in any way used in training, curation, etc - the Llama license terms are reasonably firmly concluded to not apply.
+
+
+This model 'NVIDIA-Nemotron-Nano-9B-v2' is NOT known to reliably output correct answers when requested to output only the result for subsequent automatic script processing. The 'Llama-3-NeuralDaredevil-8B-abliterated' , 'Llama-3.1-8B-instruct-abliterated' , AI models, may have some track record for such use, whereas this may not.
+
+That said, this may have some benefits, and may be suitable either as a user interface, or may actually be suitable for automatic script processing if carefully used with a clearer track record.
+
+ie. More experimental usage may be needed.
+
+
+BAD ?
+```
+Only the output yes or no will be helpful, any other output will be unhelpful, do not output more than one word.
+```
+
+GOOD ?
+```
+Please ensure the last word is either yes or no, as this will be used for automatic script processing.
+```
