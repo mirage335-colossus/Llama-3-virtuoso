@@ -1,0 +1,10 @@
+
+
+#PARAMETER num_gpu 999
+#PARAMETER num_thread 14
+
+
+
+#PARAMETER num_gpu 28
+#PARAMETER num_thread 14
+

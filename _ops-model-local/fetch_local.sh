@@ -32,6 +32,8 @@ _fetch_local() {
 _fetch_local_large() {
     # gpt-oss-120b
     _model-gpt-oss-120b
+
+    _model-gpt-oss-abliterated-120b
 }
 
 
