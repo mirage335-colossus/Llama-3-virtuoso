@@ -8,7 +8,9 @@ _fetch_local() {
 
     _model-Llama-3-NeuralDaredevil-8B-abliterated
 
-    _model-Llama-3_1-Nemotron-Nano-8B-v1
+    #_model-Llama-3_1-Nemotron-Nano-8B-v1
+
+    _model-NVIDIA-Nemotron-Nano-9B-v2
 
     _model-Llama-3_3-distill-r1-1776-70b-abliterated
 
