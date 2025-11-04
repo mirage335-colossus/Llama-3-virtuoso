@@ -4,44 +4,20 @@ FROM nvidia_Llama-3_3-Nemotron-Super-49B-v1_5-IQ2_XXS.gguf
 # https://www.llama.com/llama3_3/license/
 # https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-open-model-license/
 
-SYSTEM "detailed thinking on"
-
-TEMPLATE """{{- if or .System .Tools }}<|start_header_id|>system<|end_header_id|>
-{{- if .System }}
+TEMPLATE "{{ if .System }}<|begin_of_text|><|start_header_id|>system<|end_header_id|>
 
 {{ .System }}
-{{- end }}
-{{- if .Tools }}
 
-Available Tools:
-{{ range $.Tools }}{{- . }}
-{{ end }}
-{{ end }}<|eot_id|>
-{{- end }}
-{{- range $i, $_ := .Messages }}
-{{- $last := eq (len (slice $.Messages $i)) 1 }}
-{{- if eq .Role "user" }}<|start_header_id|>user<|end_header_id|>
+<|eot_id|>{{ end }}{{ if .Prompt }}<|start_header_id|>user<|end_header_id|>
 
-{{ .Content }}<|eot_id|>{{ if $last }}<|start_header_id|>assistant<|end_header_id|>
+{{ .Prompt }}<|eot_id|>{{ end }}<|start_header_id|>assistant<|end_header_id|>
 
-{{ end }}
-{{- else if eq .Role "assistant" }}<|start_header_id|>assistant<|end_header_id|>
-{{- if .ToolCalls }}
-{{ range .ToolCalls }}
-<tool_call>
-{"name": "{{ .Function.Name }}", "arguments": {{ .Function.Arguments }}}
-</tool_call>{{ end }}
-{{- else }}
-
-{{ .Content }}
-{{- end }}{{ if not $last }}<|eot_id|>{{ end }}
-{{- else if eq .Role "tool" }}<|start_header_id|>ipython<|end_header_id|>
-
-{"content": "{{ .Content }}"}<|eot_id|>{{ if $last }}<|start_header_id|>assistant<|end_header_id|>
-
-{{ end }}
-{{- end }}
-{{- end }}"""
+{{ .Response }}<|eot_id|>"
+PARAMETER stop <|begin_of_text|>
+PARAMETER stop <|start_header_id|>
+PARAMETER stop <|end_header_id|>
+PARAMETER stop <|eot_id|>
+PARAMETER stop <|start_header_id|>user<|end_header_id|>
 
 # Appropriate for REASONING (ie. detailed thinking on) .
 PARAMETER temperature 0.6
