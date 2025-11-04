@@ -28,8 +28,8 @@ _model-NVIDIA-Nemotron-Nano-9B-v2() {
     true
 
     
-    _messagePlain_warn 'warn: DISABLED: Not yet supported by ollama. Maybe use the GGUF file with LMStudio.'
-    return 0
+    #_messagePlain_warn 'warn: DISABLED: Not yet supported by ollama. Maybe use the GGUF file with LMStudio.'
+    #return 0
 
 
     rm -f "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
@@ -63,7 +63,8 @@ https://huggingface.co/nvidia/NVIDIA-Nemotron-Nano-12B-v2
 
 
 ' >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
-    cat "$scriptAbsoluteFolder"/'license-nvidia/NVIDIA_Agreements_Trustworthy_AI-2024-06-27.txt' >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
+    #cat "$scriptAbsoluteFolder"/'license-nvidia/NVIDIA_Agreements_Trustworthy_AI-2024-06-27.txt' >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
+    cat "$scriptAbsoluteFolder"/'license-nvidia/NVIDIA_Open_Model_License_Agreement-2025-10-24.txt' >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
 if false
 then
     echo '

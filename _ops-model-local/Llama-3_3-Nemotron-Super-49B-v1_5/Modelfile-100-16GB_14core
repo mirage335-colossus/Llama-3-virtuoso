@@ -1,0 +1,12 @@
+
+
+PARAMETER num_gpu 68
+PARAMETER num_thread 14
+
+# May be untested.
+#PARAMETER num_gpu 999
+#PARAMETER num_thread 14
+
+# Unusual. Preferable to minimize such exceptions relying on OLLAMA_NUM_PARALLEL=1 , etc.
+PARAMETER num_gpu 999
+

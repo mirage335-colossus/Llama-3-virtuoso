@@ -5,8 +5,21 @@ FROM nvidia_NVIDIA-Nemotron-Nano-9B-v2-Q6_K_L.gguf
 
 SYSTEM "/think"
 
-TEMPLATE """
-"""
+TEMPLATE "{{ if .System }}<SPECIAL_10>System
+{{ .System }}
+{{ end }}{{ if .Prompt }}_11>User
+{{ .Prompt }}
+{{ end }}<SPECIAL_11>Assistant
+<think>
+{{ .Response }}
+<SPECIAL_12>
+"
+
+PARAMETER stop <SPECIAL_10>
+PARAMETER stop <SPECIAL_11>
+PARAMETER stop <think>
+PARAMETER stop <SPECIAL_12>
+PARAMETER stop _11>User
 
 # Appropriate for REASONING (ie. /think) .
 PARAMETER temperature 0.6

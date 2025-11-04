@@ -1,0 +1,17 @@
+
+
+# Seems compatible with 16GB VRAM .
+#PARAMETER num_keep 1512
+#PARAMETER num_ctx 1512
+#PARAMETER num_predict 3584
+
+
+# Some track record with 16GB VRAM , at least with num_gpu 68.
+PARAMETER num_keep 3584
+PARAMETER num_ctx 3584
+
+
+# Should be possible to override if VRAM/speed tradeoffs are appropriate.
+#PARAMETER num_keep 4096
+#PARAMETER num_ctx 4096
+PARAMETER num_predict 8192

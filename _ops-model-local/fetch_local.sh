@@ -14,7 +14,7 @@ _fetch_local() {
 
     _model-Llama-3_3-Valkyrie-49B-v1
 
-    _model-Llama-3_3-Nemotron-Super-49B-v1
+    _model-Llama-3_3-Nemotron-Super-49B-v1_5
 
     _model-Phi-4-reasoning-plus
 
