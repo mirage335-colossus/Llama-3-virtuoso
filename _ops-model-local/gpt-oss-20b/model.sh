@@ -36,25 +36,31 @@ _model-gpt-oss-20b() {
 
         local current_OLLAMA_MODELS_msw=$(cygpath -w "$current_OLLAMA_MODELS")
 
-        taskkill /IM "ollama app.exe" /F
-        taskkill /IM ollama.exe /F
-        sleep 3
-        (
+        #taskkill /IM "ollama app.exe" /F
+        #taskkill /IM ollama.exe /F
+        #sleep 3
+        #(
             _messagePlain_probe 'service...'
-            export OLLAMA_MODELS="$current_OLLAMA_MODELS_msw"
-            [[ "$OLLAMA_HOST" == "" ]] && _service_ollama
-            _service_ollama_augment
-            sleep 3
-            env OLLAMA_MODELS="$current_OLLAMA_MODELS_msw" ollama ls
+            #export OLLAMA_MODELS="$current_OLLAMA_MODELS_msw"
+            #[[ "$OLLAMA_HOST" == "" ]] && _service_ollama
+            #_service_ollama_augment
+            #sleep 3
+            #env OLLAMA_MODELS="$current_OLLAMA_MODELS_msw" ollama ls
 
-            echo "$current_OLLAMA_MODELS"
-            echo "$current_OLLAMA_MODELS_msw"
-            exit
-        )
+            #echo "$current_OLLAMA_MODELS"
+            #echo "$current_OLLAMA_MODELS_msw"
+            #exit
+        #)
+
+        _messagePlain_probe 'copy...'
+        rsync --size-only -r -v "$current_OLLAMA_MODELS"/. "$current_user_OLLAMA_MODELS"/.
+
+        ollama ls gpt-oss:20b
         
         _messagePlain_probe 'while... ollama pull'
         local currentIteration=0
-        while ( [[ ! -e "$current_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/gpt-oss/20b ]] || [[ ! -e "$current_OLLAMA_MODELS"/get_gpt-oss-20b ]] ) && ( ! env OLLAMA_MODELS="$current_OLLAMA_MODELS_msw" ollama pull gpt-oss:20b || ! env OLLAMA_MODELS="$current_OLLAMA_MODELS_msw" ollama ls | grep -i 'gpt-oss:20b' )
+        #while ( [[ ! -e "$current_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/gpt-oss/20b ]] || [[ ! -e "$current_OLLAMA_MODELS"/get_gpt-oss-20b ]] ) && ( ! env OLLAMA_MODELS="$current_OLLAMA_MODELS_msw" ollama pull gpt-oss:20b || ! env OLLAMA_MODELS="$current_OLLAMA_MODELS_msw" ollama ls | grep -i 'gpt-oss:20b' )
+        while ( [[ ! -e "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/gpt-oss/20b ]] || [[ ! -e "$current_user_OLLAMA_MODELS"/get_gpt-oss-20b ]] ) && ( ! ollama pull gpt-oss:20b || ! ollama ls | grep -i 'gpt-oss:20b' )
         do
             _messagePlain_probe 'iteration'
             (( currentIteration++ ))
@@ -70,16 +76,29 @@ _model-gpt-oss-20b() {
             sleep 1
             [[ "$currentIteration" -gt 0 ]] && sleep 1
         done
+        [[ -e "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/gpt-oss/20b ]] && mkdir -p "$current_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/gpt-oss && rsync --size-only -r -v "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/gpt-oss/. "$current_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/gpt-oss/.
+        [[ ! -e "$current_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/gpt-oss/20b ]] && _messageFAIL
+
+        local currentBlobHash
+        grep -aoE 'sha256:[0-9a-f]{64}' "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/gpt-oss/20b | tr ':' '-' | while IFS= read -r currentBlobHash; do
+        if [[ -e "$current_user_OLLAMA_MODELS"/blobs/"$currentBlobHash" ]]
+        then
+            ! mkdir -p "$current_OLLAMA_MODELS"/blobs && _messageFAIL
+            rsync --size-only -v "$current_user_OLLAMA_MODELS"/blobs/"$currentBlobHash" "$current_OLLAMA_MODELS"/blobs/
+        else
+            _messagePlain_warn "warn: missing: blob: ""$current_user_OLLAMA_MODELS"/blobs/"$currentBlobHash"
+        fi
+        done
 
 
-        taskkill /IM "ollama app.exe" /F
-        taskkill /IM ollama.exe /F
-        sleep 3
+        #taskkill /IM "ollama app.exe" /F
+        #taskkill /IM ollama.exe /F
+        #sleep 3
         
-        _messagePlain_probe 'copy...'
+        #_messagePlain_probe 'copy...'
         #cp -r -f "$current_OLLAMA_MODELS"/* "$current_user_OLLAMA_MODELS"/
         #rsync -ax "$current_OLLAMA_MODELS"/. "$current_user_OLLAMA_MODELS"/.
-        rsync --size-only -r -v "$current_OLLAMA_MODELS"/. "$current_user_OLLAMA_MODELS"/.
+        #rsync --size-only -r -v "$current_OLLAMA_MODELS"/. "$current_user_OLLAMA_MODELS"/.
 
         
         _messagePlain_probe 'service...'
@@ -110,28 +129,32 @@ _model-gpt-oss-20b() {
 
         [[ -e "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/gpt-oss/20b ]] && current_origModelInstalled='true' && echo current_origModelInstalled
 
-        sudo -n systemctl stop ollama
-        sudo -n pkill ollama
-        pkill ollama
-        sleep 1
-        sudo -n pkill -KILL ollama
-        pkill -KILL ollama
-        sleep 3
-        (
+        #sudo -n systemctl stop ollama
+        #sudo -n pkill ollama
+        #pkill ollama
+        #sleep 1
+        #sudo -n pkill -KILL ollama
+        #pkill -KILL ollama
+        #sleep 3
+        #(
             _messagePlain_probe 'service...'
-            export OLLAMA_MODELS="$current_OLLAMA_MODELS"
-            [[ "$OLLAMA_HOST" == "" ]] && _service_ollama
-            _service_ollama_augment
-            sleep 3
-            env OLLAMA_MODELS="$current_OLLAMA_MODELS" ollama ls
+            #export OLLAMA_MODELS="$current_OLLAMA_MODELS"
+            #[[ "$OLLAMA_HOST" == "" ]] && _service_ollama
+            #_service_ollama_augment
+            #sleep 3
+            #env OLLAMA_MODELS="$current_OLLAMA_MODELS" ollama ls
 
-            echo "$current_OLLAMA_MODELS"
-            exit
-        )
+            #echo "$current_OLLAMA_MODELS"
+            #exit
+        #)
+
+        _messagePlain_probe 'copy...'
+        rsync --size-only -r -v "$current_OLLAMA_MODELS"/. "$current_user_OLLAMA_MODELS"/.
         
         _messagePlain_probe 'while... ollama pull'
         local currentIteration=0
-        while ( [[ ! -e "$current_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/gpt-oss/20b ]] || [[ ! -e "$current_OLLAMA_MODELS"/get_gpt-oss-20b ]] ) && ( ! env OLLAMA_MODELS="$current_OLLAMA_MODELS" ollama pull gpt-oss:20b || ! env OLLAMA_MODELS="$current_OLLAMA_MODELS" ollama ls | grep -i 'gpt-oss:20b' )
+        #while ( [[ ! -e "$current_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/gpt-oss/20b ]] || [[ ! -e "$current_OLLAMA_MODELS"/get_gpt-oss-20b ]] ) && ( ! env OLLAMA_MODELS="$current_OLLAMA_MODELS" ollama pull gpt-oss:20b || ! env OLLAMA_MODELS="$current_OLLAMA_MODELS" ollama ls | grep -i 'gpt-oss:20b' )
+        while ( [[ ! -e "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/gpt-oss/20b ]] || [[ ! -e "$current_user_OLLAMA_MODELS"/get_gpt-oss-20b ]] ) && ( ! ollama pull gpt-oss:20b || ! ollama ls | grep -i 'gpt-oss:20b' )
         do
             _messagePlain_probe 'iteration'
             (( currentIteration++ ))
@@ -147,17 +170,30 @@ _model-gpt-oss-20b() {
             sleep 1
             [[ "$currentIteration" -gt 0 ]] && sleep 1
         done
+        [[ -e "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/gpt-oss/20b ]] && mkdir -p "$current_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/gpt-oss && rsync --size-only -r -v "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/gpt-oss/. "$current_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/gpt-oss/.
+        [[ ! -e "$current_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/gpt-oss/20b ]] && _messageFAIL
+
+        local currentBlobHash
+        grep -aoE 'sha256:[0-9a-f]{64}' "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/gpt-oss/20b | tr ':' '-' | while IFS= read -r currentBlobHash; do
+        if [[ -e "$current_user_OLLAMA_MODELS"/blobs/"$currentBlobHash" ]]
+        then
+            ! mkdir -p "$current_OLLAMA_MODELS"/blobs && _messageFAIL
+            rsync --size-only -v "$current_user_OLLAMA_MODELS"/blobs/"$currentBlobHash" "$current_OLLAMA_MODELS"/blobs/
+        else
+            _messagePlain_warn "warn: missing: blob: ""$current_user_OLLAMA_MODELS"/blobs/"$currentBlobHash"
+        fi
+        done
 
 
-        sudo -n systemctl stop ollama
-        sudo -n pkill ollama
-        pkill ollama
-        sleep 1
-        sudo -n pkill -KILL ollama
-        pkill -KILL ollama
-        sleep 3
+        #sudo -n systemctl stop ollama
+        #sudo -n pkill ollama
+        #pkill ollama
+        #sleep 1
+        #sudo -n pkill -KILL ollama
+        #pkill -KILL ollama
+        #sleep 3
         
-        _messagePlain_probe 'copy...'
+        #_messagePlain_probe 'copy...'
         #cp -r -f "$current_OLLAMA_MODELS"/* "$current_user_OLLAMA_MODELS"/
         #rsync -ax "$current_OLLAMA_MODELS"/. "$current_user_OLLAMA_MODELS"/.
         #rsync --size-only -r -v "$current_OLLAMA_MODELS"/. "$current_user_OLLAMA_MODELS"/.
