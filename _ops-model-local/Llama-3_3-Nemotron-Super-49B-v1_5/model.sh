@@ -156,6 +156,9 @@ _model-Llama-3_3-Nemotron-Super-49B-v1_5() {
             #echo "$current_OLLAMA_MODELS"
             #exit
         #)
+
+        _messagePlain_probe 'copy...'
+        rsync --size-only -r -v "$current_OLLAMA_MODELS"/. "$current_user_OLLAMA_MODELS"/.
         
         _messagePlain_probe 'while... ollama pull'
         local currentIteration=0
@@ -176,8 +179,19 @@ _model-Llama-3_3-Nemotron-Super-49B-v1_5() {
             sleep 1
             [[ "$currentIteration" -gt 0 ]] && sleep 1
         done
-        [[ -e "$current_user_OLLAMA_MODELS"/manifests/hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF/IQ2_XXS ]] && mkdir -p "$current_OLLAMA_MODELS"/manifests/hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF && ! rsync --size-only -r -v "$current_user_OLLAMA_MODELS"/manifests/hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF/. "$current_OLLAMA_MODELS"/manifests/hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF/.
+        [[ -e "$current_user_OLLAMA_MODELS"/manifests/hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF/IQ2_XXS ]] && mkdir -p "$current_OLLAMA_MODELS"/manifests/hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF && rsync --size-only -r -v "$current_user_OLLAMA_MODELS"/manifests/hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF/. "$current_OLLAMA_MODELS"/manifests/hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF/.
         [[ ! -e "$current_OLLAMA_MODELS"/manifests/hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF/IQ2_XXS ]] && _messageFAIL
+
+        local currentBlobHash
+        grep -aoE 'sha256:[0-9a-f]{64}' "$current_user_OLLAMA_MODELS"/manifests/hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF/IQ2_XXS | tr ':' '-' | while IFS= read -r currentBlobHash; do
+        if [[ -e "$current_user_OLLAMA_MODELS"/blobs/"$currentBlobHash" ]]
+        then
+            ! mkdir -p "$current_OLLAMA_MODELS"/blobs && _messageFAIL
+            rsync --size-only -v "$current_user_OLLAMA_MODELS"/blobs/"$currentBlobHash" "$current_OLLAMA_MODELS"/blobs/
+        else
+            _messagePlain_warn "warn: missing: blob: ""$current_user_OLLAMA_MODELS"/blobs/"$currentBlobHash"
+        fi
+        done
 
 
         #sudo -n systemctl stop ollama
@@ -188,7 +202,7 @@ _model-Llama-3_3-Nemotron-Super-49B-v1_5() {
         #pkill -KILL ollama
         #sleep 3
         
-        _messagePlain_probe 'copy...'
+        #_messagePlain_probe 'copy...'
         #cp -r -f "$current_OLLAMA_MODELS"/* "$current_user_OLLAMA_MODELS"/
         #rsync -ax "$current_OLLAMA_MODELS"/. "$current_user_OLLAMA_MODELS"/.
         #rsync --size-only -r -v "$current_OLLAMA_MODELS"/. "$current_user_OLLAMA_MODELS"/.

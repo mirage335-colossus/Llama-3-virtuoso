@@ -39,25 +39,31 @@ _model-Qwen-2_5-VL-7B-Instruct() {
 
         local current_OLLAMA_MODELS_msw=$(cygpath -w "$current_OLLAMA_MODELS")
 
-        taskkill /IM "ollama app.exe" /F
-        taskkill /IM ollama.exe /F
-        sleep 3
-        (
+        #taskkill /IM "ollama app.exe" /F
+        #taskkill /IM ollama.exe /F
+        #sleep 3
+        #(
             _messagePlain_probe 'service...'
-            export OLLAMA_MODELS="$current_OLLAMA_MODELS_msw"
-            [[ "$OLLAMA_HOST" == "" ]] && _service_ollama
-            _service_ollama_augment
-            sleep 3
-            env OLLAMA_MODELS="$current_OLLAMA_MODELS_msw" ollama ls
+            #export OLLAMA_MODELS="$current_OLLAMA_MODELS_msw"
+            #[[ "$OLLAMA_HOST" == "" ]] && _service_ollama
+            #_service_ollama_augment
+            #sleep 3
+            #env OLLAMA_MODELS="$current_OLLAMA_MODELS_msw" ollama ls
 
-            echo "$current_OLLAMA_MODELS"
-            echo "$current_OLLAMA_MODELS_msw"
-            exit
-        )
+            #echo "$current_OLLAMA_MODELS"
+            #echo "$current_OLLAMA_MODELS_msw"
+            #exit
+        #)
+
+        _messagePlain_probe 'copy...'
+        rsync --size-only -r -v "$current_OLLAMA_MODELS"/. "$current_user_OLLAMA_MODELS"/.
+
+        ollama ls qwen2.5vl:7b-q4_K_M
         
         _messagePlain_probe 'while... ollama pull'
         local currentIteration=0
-        while ( [[ ! -e "$current_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen2.5vl/7b-q4_K_M ]] || [[ ! -e "$current_OLLAMA_MODELS"/get_qwen2.5vl ]] ) && ( ! env OLLAMA_MODELS="$current_OLLAMA_MODELS_msw" ollama pull qwen2.5vl:7b-q4_K_M || ! env OLLAMA_MODELS="$current_OLLAMA_MODELS_msw" ollama ls | grep -i 'qwen2.5vl:7b-q4_K_M' )
+        #while ( [[ ! -e "$current_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen2.5vl/7b-q4_K_M ]] || [[ ! -e "$current_OLLAMA_MODELS"/get_qwen2.5vl ]] ) && ( ! env OLLAMA_MODELS="$current_OLLAMA_MODELS_msw" ollama pull qwen2.5vl:7b-q4_K_M || ! env OLLAMA_MODELS="$current_OLLAMA_MODELS_msw" ollama ls | grep -i 'qwen2.5vl:7b-q4_K_M' )
+        while ( [[ ! -e "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen2.5vl/7b-q4_K_M ]] || [[ ! -e "$current_user_OLLAMA_MODELS"/get_qwen2.5vl ]] ) && ( ! ollama pull qwen2.5vl:7b-q4_K_M || ! ollama ls | grep -i 'qwen2.5vl:7b-q4_K_M' )
         do
             _messagePlain_probe 'iteration'
             (( currentIteration++ ))
@@ -73,16 +79,29 @@ _model-Qwen-2_5-VL-7B-Instruct() {
             sleep 1
             [[ "$currentIteration" -gt 0 ]] && sleep 1
         done
+        [[ -e "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen2.5vl/7b-q4_K_M ]] && mkdir -p "$current_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen2.5vl && rsync --size-only -r -v "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen2.5vl/. "$current_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen2.5vl/.
+        [[ ! -e "$current_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen2.5vl/7b-q4_K_M ]] && _messageFAIL
+
+        local currentBlobHash
+        grep -aoE 'sha256:[0-9a-f]{64}' "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen2.5vl/7b-q4_K_M | tr ':' '-' | while IFS= read -r currentBlobHash; do
+        if [[ -e "$current_user_OLLAMA_MODELS"/blobs/"$currentBlobHash" ]]
+        then
+            ! mkdir -p "$current_OLLAMA_MODELS"/blobs && _messageFAIL
+            rsync --size-only -v "$current_user_OLLAMA_MODELS"/blobs/"$currentBlobHash" "$current_OLLAMA_MODELS"/blobs/
+        else
+            _messagePlain_warn "warn: missing: blob: ""$current_user_OLLAMA_MODELS"/blobs/"$currentBlobHash"
+        fi
+        done
 
 
-        taskkill /IM "ollama app.exe" /F
-        taskkill /IM ollama.exe /F
-        sleep 3
+        #taskkill /IM "ollama app.exe" /F
+        #taskkill /IM ollama.exe /F
+        #sleep 3
         
-        _messagePlain_probe 'copy...'
+        #_messagePlain_probe 'copy...'
         #cp -r -f "$current_OLLAMA_MODELS"/* "$current_user_OLLAMA_MODELS"/
         #rsync -ax "$current_OLLAMA_MODELS"/. "$current_user_OLLAMA_MODELS"/.
-        rsync --size-only -r -v "$current_OLLAMA_MODELS"/. "$current_user_OLLAMA_MODELS"/.
+        #rsync --size-only -r -v "$current_OLLAMA_MODELS"/. "$current_user_OLLAMA_MODELS"/.
 
         
         _messagePlain_probe 'service...'
@@ -113,28 +132,32 @@ _model-Qwen-2_5-VL-7B-Instruct() {
 
         [[ -e "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen2.5vl/7b-q4_K_M ]] && current_origModelInstalled='true' && echo current_origModelInstalled
 
-        sudo -n systemctl stop ollama
-        sudo -n pkill ollama
-        pkill ollama
-        sleep 1
-        sudo -n pkill -KILL ollama
-        pkill -KILL ollama
-        sleep 3
-        (
+        #sudo -n systemctl stop ollama
+        #sudo -n pkill ollama
+        #pkill ollama
+        #sleep 1
+        #sudo -n pkill -KILL ollama
+        #pkill -KILL ollama
+        #sleep 3
+        #(
             _messagePlain_probe 'service...'
-            export OLLAMA_MODELS="$current_OLLAMA_MODELS"
-            [[ "$OLLAMA_HOST" == "" ]] && _service_ollama
-            _service_ollama_augment
-            sleep 3
-            env OLLAMA_MODELS="$current_OLLAMA_MODELS" ollama ls
+            #export OLLAMA_MODELS="$current_OLLAMA_MODELS"
+            #[[ "$OLLAMA_HOST" == "" ]] && _service_ollama
+            #_service_ollama_augment
+            #sleep 3
+            #env OLLAMA_MODELS="$current_OLLAMA_MODELS" ollama ls
 
-            echo "$current_OLLAMA_MODELS"
-            exit
-        )
+            #echo "$current_OLLAMA_MODELS"
+            #exit
+        #)
+
+        _messagePlain_probe 'copy...'
+        rsync --size-only -r -v "$current_OLLAMA_MODELS"/. "$current_user_OLLAMA_MODELS"/.
         
         _messagePlain_probe 'while... ollama pull'
         local currentIteration=0
-        while ( [[ ! -e "$current_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen2.5vl/7b-q4_K_M ]] || [[ ! -e "$current_OLLAMA_MODELS"/get_qwen2.5vl ]] ) && ( ! env OLLAMA_MODELS="$current_OLLAMA_MODELS" ollama pull qwen2.5vl:7b-q4_K_M || ! env OLLAMA_MODELS="$current_OLLAMA_MODELS" ollama ls | grep -i 'qwen2.5vl:7b-q4_K_M' )
+        #while ( [[ ! -e "$current_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen2.5vl/7b-q4_K_M ]] || [[ ! -e "$current_OLLAMA_MODELS"/get_qwen2.5vl ]] ) && ( ! env OLLAMA_MODELS="$current_OLLAMA_MODELS" ollama pull qwen2.5vl:7b-q4_K_M || ! env OLLAMA_MODELS="$current_OLLAMA_MODELS" ollama ls | grep -i 'qwen2.5vl:7b-q4_K_M' )
+        while ( [[ ! -e "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen2.5vl/7b-q4_K_M ]] || [[ ! -e "$current_user_OLLAMA_MODELS"/get_qwen2.5vl ]] ) && ( ! ollama pull qwen2.5vl:7b-q4_K_M || ! ollama ls | grep -i 'qwen2.5vl:7b-q4_K_M' )
         do
             _messagePlain_probe 'iteration'
             (( currentIteration++ ))
@@ -150,17 +173,30 @@ _model-Qwen-2_5-VL-7B-Instruct() {
             sleep 1
             [[ "$currentIteration" -gt 0 ]] && sleep 1
         done
+        [[ -e "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen2.5vl/7b-q4_K_M ]] && mkdir -p "$current_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen2.5vl && rsync --size-only -r -v "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen2.5vl/. "$current_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen2.5vl/.
+        [[ ! -e "$current_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen2.5vl/7b-q4_K_M ]] && _messageFAIL
+
+        local currentBlobHash
+        grep -aoE 'sha256:[0-9a-f]{64}' "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen2.5vl/7b-q4_K_M | tr ':' '-' | while IFS= read -r currentBlobHash; do
+        if [[ -e "$current_user_OLLAMA_MODELS"/blobs/"$currentBlobHash" ]]
+        then
+            ! mkdir -p "$current_OLLAMA_MODELS"/blobs && _messageFAIL
+            rsync --size-only -v "$current_user_OLLAMA_MODELS"/blobs/"$currentBlobHash" "$current_OLLAMA_MODELS"/blobs/
+        else
+            _messagePlain_warn "warn: missing: blob: ""$current_user_OLLAMA_MODELS"/blobs/"$currentBlobHash"
+        fi
+        done
 
 
-        sudo -n systemctl stop ollama
-        sudo -n pkill ollama
-        pkill ollama
-        sleep 1
-        sudo -n pkill -KILL ollama
-        pkill -KILL ollama
-        sleep 3
+        #sudo -n systemctl stop ollama
+        #sudo -n pkill ollama
+        #pkill ollama
+        #sleep 1
+        #sudo -n pkill -KILL ollama
+        #pkill -KILL ollama
+        #sleep 3
         
-        _messagePlain_probe 'copy...'
+        #_messagePlain_probe 'copy...'
         #cp -r -f "$current_OLLAMA_MODELS"/* "$current_user_OLLAMA_MODELS"/
         #rsync -ax "$current_OLLAMA_MODELS"/. "$current_user_OLLAMA_MODELS"/.
         #rsync --size-only -r -v "$current_OLLAMA_MODELS"/. "$current_user_OLLAMA_MODELS"/.
@@ -216,7 +252,7 @@ _model-Qwen-2_5-VL-7B-Instruct() {
     (
         _messagePlain_nominal "${FUNCNAME[0]}"': ollama create'
         cd "$scriptBundle"/ai_models/"$current_fileDir"
-        ollama create Qwen-2_5-VL-7B-Instruct-virtuoso -f Modelfile && echo > "$current_OLLAMA_MODELS"/get_qwen2.5vl
+        ollama create Qwen-2_5-VL-7B-Instruct-virtuoso -f Modelfile && echo > "$current_user_OLLAMA_MODELS"/get_qwen2.5vl
     )
 
 
