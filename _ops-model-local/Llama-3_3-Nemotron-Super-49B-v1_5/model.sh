@@ -62,6 +62,9 @@ _model-Llama-3_3-Nemotron-Super-49B-v1_5() {
             #exit
         #)
 
+        _messagePlain_probe 'copy...'
+        rsync --size-only -r -v "$current_OLLAMA_MODELS"/. "$current_user_OLLAMA_MODELS"/.
+
         ollama ls hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF:IQ2_XXS
         
         _messagePlain_probe 'while... ollama pull'
@@ -86,14 +89,25 @@ _model-Llama-3_3-Nemotron-Super-49B-v1_5() {
         [[ -e "$current_user_OLLAMA_MODELS"/manifests/hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF/IQ2_XXS ]] && mkdir -p "$current_OLLAMA_MODELS"/manifests/hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF && rsync --size-only -r -v "$current_user_OLLAMA_MODELS"/manifests/hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF/. "$current_OLLAMA_MODELS"/manifests/hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF/.
         [[ ! -e "$current_OLLAMA_MODELS"/manifests/hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF/IQ2_XXS ]] && _messageFAIL
 
+        local currentBlobHash
+        grep -aoE 'sha256:[0-9a-f]{64}' "$current_user_OLLAMA_MODELS"/manifests/hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF/IQ2_XXS | tr ':' '-' | while IFS= read -r currentBlobHash; do
+        if [[ -e "$current_user_OLLAMA_MODELS"/blobs/"$currentBlobHash" ]]
+        then
+            ! mkdir -p "$current_OLLAMA_MODELS"/blobs && _messageFAIL
+            rsync --size-only -v "$current_user_OLLAMA_MODELS"/blobs/"$currentBlobHash" "$current_OLLAMA_MODELS"/blobs/
+        else
+            _messagePlain_warn "warn: missing: blob: ""$current_user_OLLAMA_MODELS"/blobs/"$currentBlobHash"
+        fi
+        done
+
         #taskkill /IM "ollama app.exe" /F
         #taskkill /IM ollama.exe /F
         #sleep 3
         
-        _messagePlain_probe 'copy...'
+        #_messagePlain_probe 'copy...'
         #cp -r -f "$current_OLLAMA_MODELS"/* "$current_user_OLLAMA_MODELS"/
         #rsync -ax "$current_OLLAMA_MODELS"/. "$current_user_OLLAMA_MODELS"/.
-        rsync --size-only -r -v "$current_OLLAMA_MODELS"/. "$current_user_OLLAMA_MODELS"/.
+        #rsync --size-only -r -v "$current_OLLAMA_MODELS"/. "$current_user_OLLAMA_MODELS"/.
 
         
         _messagePlain_probe 'service...'
@@ -301,7 +315,7 @@ Quantized Model, System Prompt, inherits Llama and NVIDIA licenses, obligations,
     (
         _messagePlain_nominal "${FUNCNAME[0]}"': ollama create'
         cd "$scriptBundle"/ai_models/"$current_fileDir"
-        ollama create Llama-3_3-Nemotron-Super-49B-v1_5-virtuoso -f Modelfile
+        ollama create Llama-3_3-Nemotron-Super-49B-v1_5-virtuoso -f Modelfile && [[ "$current_OLLAMA_MODELS" != "" ]] && echo > "$current_user_OLLAMA_MODELS"/get_Llama-3_3-Nemotron-Super-49B-v1_5
     )
 
     [[ "$current_origModelInstalled" != "true" ]] && ollama rm hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF:IQ2_XXS
