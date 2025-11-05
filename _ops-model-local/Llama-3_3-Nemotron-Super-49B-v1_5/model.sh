@@ -9,15 +9,9 @@
 _model-Llama-3_3-Nemotron-Super-49B-v1_5() {
     _messageNormal "${FUNCNAME[0]}"
 
-    #local current_file='Llama-3_3-Nemotron-Super-49B-v1-IQ2_XXS.gguf'
-    #local current_URL='https://huggingface.co/bartowski/nvidia_Llama-3_3-Nemotron-Super-49B-v1-GGUF/resolve/main/nvidia_Llama-3_3-Nemotron-Super-49B-v1-IQ2_XXS.gguf'
-    #local current_sha256='e8d0c0186ba2e3deb914d17a23caf8e21a5ec885ccf4ccb54101ccbcd95c8a36'
-    #local current_fileDir='Llama-3_3-Nemotron-Super-49B-v1'
-    
-    local current_file='nvidia_Llama-3_3-Nemotron-Super-49B-v1_5-IQ2_XXS.gguf'
-    local current_URL='https://huggingface.co/bartowski/nvidia_Llama-3_3-Nemotron-Super-49B-v1_5-GGUF/resolve/main/nvidia_Llama-3_3-Nemotron-Super-49B-v1_5-IQ2_XXS.gguf'
-    local current_sha256='a4f8438e649c1f7215632731fcc59dbdab2530dfe1b38b7102cac9089d6474a3'
+
     local current_fileDir='Llama-3_3-Nemotron-Super-49B-v1_5'
+
 
     mkdir -p "$scriptBundle"/ai_models/"$current_fileDir"
     local currentModelConfigDir=$(_getAbsoluteFolder "${BASH_SOURCE[0]}")
@@ -29,9 +23,219 @@ _model-Llama-3_3-Nemotron-Super-49B-v1_5() {
 
     cat "$scriptAbsoluteFolder"/license-nvidia/Notice.txt >> "$scriptBundle"/ai_models/"$current_fileDir"/Notice.txt
 
-    ! _get_downloadModel-file-HuggingFace && _messageFAIL
-    true
 
+
+
+
+
+
+
+    local current_OLLAMA_MODELS="$scriptBundle"/ai_models/"$current_fileDir"/OLLAMA_MODELS
+    mkdir -p "$current_OLLAMA_MODELS"
+
+    local current_origModelInstalled='false'
+
+    if _if_cygwin
+    then
+        _messagePlain_nominal '(cygwin)' ollama pull hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF:IQ2_XXS
+
+        local current_user_OLLAMA_MODELS=$(cygpath -u "$USERPROFILE")
+        current_user_OLLAMA_MODELS="$current_user_OLLAMA_MODELS"/.ollama/models
+
+        [[ -e "$current_user_OLLAMA_MODELS"/manifests/hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF/IQ2_XXS ]] && current_origModelInstalled='true' && echo current_origModelInstalled
+
+        local current_OLLAMA_MODELS_msw=$(cygpath -w "$current_OLLAMA_MODELS")
+
+        #taskkill /IM "ollama app.exe" /F
+        #taskkill /IM ollama.exe /F
+        #sleep 3
+        #(
+            _messagePlain_probe 'service...'
+            #export OLLAMA_MODELS="$current_OLLAMA_MODELS_msw"
+            #[[ "$OLLAMA_HOST" == "" ]] && _service_ollama
+            #_service_ollama_augment
+            #sleep 3
+            #env OLLAMA_MODELS="$current_OLLAMA_MODELS_msw" ollama ls
+
+            #echo "$current_OLLAMA_MODELS"
+            #echo "$current_OLLAMA_MODELS_msw"
+            #exit
+        #)
+
+        ollama ls hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF:IQ2_XXS
+        
+        _messagePlain_probe 'while... ollama pull'
+        local currentIteration=0
+        #while ( [[ ! -e "$current_OLLAMA_MODELS"/manifests/hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF/IQ2_XXS ]] || [[ ! -e "$current_OLLAMA_MODELS"/get_Llama-3_3-Nemotron-Super-49B-v1_5 ]] ) && ( ! env OLLAMA_MODELS="$current_OLLAMA_MODELS_msw" ollama pull hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF:IQ2_XXS || ! env OLLAMA_MODELS="$current_OLLAMA_MODELS_msw" ollama ls | grep -i 'hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF:IQ2_XXS' )
+        while ( [[ ! -e "$current_user_OLLAMA_MODELS"/manifests/hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF/IQ2_XXS ]] || [[ ! -e "$current_user_OLLAMA_MODELS"/get_Llama-3_3-Nemotron-Super-49B-v1_5 ]] ) && ( ! ollama pull hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF:IQ2_XXS || ! ollama ls | grep -i 'hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF:IQ2_XXS' )
+        do
+            _messagePlain_probe 'iteration'
+            (( currentIteration++ ))
+
+            if [[ "$currentIteration" -gt 3 ]]
+            then
+                _messagePlain_bad 'bad: ''ollama pull hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF:IQ2_XXS'
+                _messageFAIL
+                #return 1
+            fi
+
+            # Deliberately prefer always delay to show previous messages, unless download program (ie. 'aria2c') is sufficiently quiet. 
+            sleep 1
+            [[ "$currentIteration" -gt 0 ]] && sleep 1
+        done
+        [[ -e "$current_user_OLLAMA_MODELS"/manifests/hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF/IQ2_XXS ]] && mkdir -p "$current_OLLAMA_MODELS"/manifests/hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF && rsync --size-only -r -v "$current_user_OLLAMA_MODELS"/manifests/hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF/. "$current_OLLAMA_MODELS"/manifests/hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF/.
+        [[ ! -e "$current_OLLAMA_MODELS"/manifests/hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF/IQ2_XXS ]] && _messageFAIL
+
+        #taskkill /IM "ollama app.exe" /F
+        #taskkill /IM ollama.exe /F
+        #sleep 3
+        
+        _messagePlain_probe 'copy...'
+        #cp -r -f "$current_OLLAMA_MODELS"/* "$current_user_OLLAMA_MODELS"/
+        #rsync -ax "$current_OLLAMA_MODELS"/. "$current_user_OLLAMA_MODELS"/.
+        rsync --size-only -r -v "$current_OLLAMA_MODELS"/. "$current_user_OLLAMA_MODELS"/.
+
+        
+        _messagePlain_probe 'service...'
+        (
+            #export OLLAMA_MODELS="$current_OLLAMA_MODELS"
+            [[ "$OLLAMA_HOST" == "" ]] && _service_ollama
+            _service_ollama_augment
+            sleep 3
+        )
+        
+        _messagePlain_probe 'ls...'
+        ! ollama ls | grep -i 'hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF:IQ2_XXS' && _messageFAIL
+    fi
+
+
+    # WARNING: May be untested.
+    if ! _if_cygwin
+    then
+        _messagePlain_nominal ollama pull hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF:IQ2_XXS
+
+        local current_user_OLLAMA_MODELS
+        [[ -e "$HOME"/.ollama/models ]] && current_user_OLLAMA_MODELS="$HOME"/.ollama/models
+        [[ -e /var/lib/ollama/.ollama ]] && current_user_OLLAMA_MODELS=/var/lib/ollama/.ollama/models
+        [[ -e /usr/share/ollama/.ollama ]] && current_user_OLLAMA_MODELS=/usr/share/ollama/.ollama/models
+        [[ "$current_user_OLLAMA_MODELS" == "" ]] && _messagePlain_bad 'bad: ollama models dir' && _messageFAIL
+        sudo -n -u ollama mkdir -p "$current_user_OLLAMA_MODELS"
+        mkdir -p "$current_user_OLLAMA_MODELS"
+
+        [[ -e "$current_user_OLLAMA_MODELS"/manifests/hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF/IQ2_XXS ]] && current_origModelInstalled='true' && echo current_origModelInstalled
+
+        #sudo -n systemctl stop ollama
+        #sudo -n pkill ollama
+        #pkill ollama
+        #sleep 1
+        #sudo -n pkill -KILL ollama
+        #pkill -KILL ollama
+        #sleep 3
+        #(
+            _messagePlain_probe 'service...'
+            #export OLLAMA_MODELS="$current_OLLAMA_MODELS"
+            #[[ "$OLLAMA_HOST" == "" ]] && _service_ollama
+            #_service_ollama_augment
+            #sleep 3
+            #env OLLAMA_MODELS="$current_OLLAMA_MODELS" ollama ls
+
+            #echo "$current_OLLAMA_MODELS"
+            #exit
+        #)
+        
+        _messagePlain_probe 'while... ollama pull'
+        local currentIteration=0
+        #while ( [[ ! -e "$current_OLLAMA_MODELS"/manifests/hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF/IQ2_XXS ]] || [[ ! -e "$current_OLLAMA_MODELS"/get_Llama-3_3-Nemotron-Super-49B-v1_5 ]] ) && ( ! env OLLAMA_MODELS="$current_OLLAMA_MODELS" ollama pull hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF:IQ2_XXS || ! env OLLAMA_MODELS="$current_OLLAMA_MODELS" ollama ls | grep -i 'hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF:IQ2_XXS' )
+        while ( [[ ! -e "$current_user_OLLAMA_MODELS"/manifests/hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF/IQ2_XXS ]] || [[ ! -e "$current_user_OLLAMA_MODELS"/get_Llama-3_3-Nemotron-Super-49B-v1_5 ]] ) && ( ! ollama pull hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF:IQ2_XXS || ! ollama ls | grep -i 'hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF:IQ2_XXS' )
+        do
+            _messagePlain_probe 'iteration'
+            (( currentIteration++ ))
+
+            if [[ "$currentIteration" -gt 3 ]]
+            then
+                _messagePlain_bad 'bad: ''ollama pull hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF:IQ2_XXS'
+                _messageFAIL
+                #return 1
+            fi
+
+            # Deliberately prefer always delay to show previous messages, unless download program (ie. 'aria2c') is sufficiently quiet. 
+            sleep 1
+            [[ "$currentIteration" -gt 0 ]] && sleep 1
+        done
+        [[ -e "$current_user_OLLAMA_MODELS"/manifests/hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF/IQ2_XXS ]] && mkdir -p "$current_OLLAMA_MODELS"/manifests/hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF && ! rsync --size-only -r -v "$current_user_OLLAMA_MODELS"/manifests/hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF/. "$current_OLLAMA_MODELS"/manifests/hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF/.
+        [[ ! -e "$current_OLLAMA_MODELS"/manifests/hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF/IQ2_XXS ]] && _messageFAIL
+
+
+        #sudo -n systemctl stop ollama
+        #sudo -n pkill ollama
+        #pkill ollama
+        #sleep 1
+        #sudo -n pkill -KILL ollama
+        #pkill -KILL ollama
+        #sleep 3
+        
+        _messagePlain_probe 'copy...'
+        #cp -r -f "$current_OLLAMA_MODELS"/* "$current_user_OLLAMA_MODELS"/
+        #rsync -ax "$current_OLLAMA_MODELS"/. "$current_user_OLLAMA_MODELS"/.
+        #rsync --size-only -r -v "$current_OLLAMA_MODELS"/. "$current_user_OLLAMA_MODELS"/.
+        
+        sudo -n -u ollama rsync --size-only -r -v "$current_OLLAMA_MODELS"/. "$current_user_OLLAMA_MODELS"/.
+        rsync --size-only -r -v "$current_OLLAMA_MODELS"/. "$current_user_OLLAMA_MODELS"/.
+
+        
+        _messagePlain_probe 'service...'
+        (
+            #export OLLAMA_MODELS="$current_OLLAMA_MODELS"
+            [[ "$OLLAMA_HOST" == "" ]] && _service_ollama
+            _service_ollama_augment
+            sleep 3
+        )
+        
+        _messagePlain_probe 'ls...'
+        ! ollama ls | grep -i 'hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF:IQ2_XXS' && _messageFAIL
+    fi
+    
+
+
+
+
+
+
+
+
+
+    ##local current_file='Llama-3_3-Nemotron-Super-49B-v1-IQ2_XXS.gguf'
+    ##local current_URL='https://huggingface.co/bartowski/nvidia_Llama-3_3-Nemotron-Super-49B-v1-GGUF/resolve/main/nvidia_Llama-3_3-Nemotron-Super-49B-v1-IQ2_XXS.gguf'
+    ##local current_sha256='e8d0c0186ba2e3deb914d17a23caf8e21a5ec885ccf4ccb54101ccbcd95c8a36'
+    ##local current_fileDir='Llama-3_3-Nemotron-Super-49B-v1'
+    
+    ##local current_file='nvidia_Llama-3_3-Nemotron-Super-49B-v1_5-IQ2_XXS.gguf'
+    ##local current_URL='https://huggingface.co/bartowski/nvidia_Llama-3_3-Nemotron-Super-49B-v1_5-GGUF/resolve/main/nvidia_Llama-3_3-Nemotron-Super-49B-v1_5-IQ2_XXS.gguf'
+    ##local current_sha256='a4f8438e649c1f7215632731fcc59dbdab2530dfe1b38b7102cac9089d6474a3'
+    ##local current_fileDir='Llama-3_3-Nemotron-Super-49B-v1_5'
+    
+    #local current_file='Llama-3_3-Nemotron-Super-49B-v1_5-UD-IQ2_XXS.gguf'
+    #local current_URL='https://huggingface.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF/resolve/main/Llama-3_3-Nemotron-Super-49B-v1_5-UD-IQ2_XXS.gguf'
+    #local current_sha256='94340f0a2e67c8167eb6e038338e5baaa70dafaabd0dcbc2daca9c6e011564b7'
+    #local current_fileDir='Llama-3_3-Nemotron-Super-49B-v1_5'
+
+    #mkdir -p "$scriptBundle"/ai_models/"$current_fileDir"
+    #local currentModelConfigDir=$(_getAbsoluteFolder "${BASH_SOURCE[0]}")
+    #cp -f "$currentModelConfigDir"/* "$scriptBundle"/ai_models/"$current_fileDir"/
+
+    #rm -f "$scriptBundle"/ai_models/"$current_fileDir"/Notice.txt
+
+    #cat "$scriptAbsoluteFolder"/license-llama/Notice.txt >> "$scriptBundle"/ai_models/"$current_fileDir"/Notice.txt
+
+    #cat "$scriptAbsoluteFolder"/license-nvidia/Notice.txt >> "$scriptBundle"/ai_models/"$current_fileDir"/Notice.txt
+
+    #! _get_downloadModel-file-HuggingFace && _messageFAIL
+    #true
+
+
+    _messagePlain_nominal 'ollama create Llama-3_3-Nemotron-Super-49B-v1_5-virtuoso'
+
+    _messagePlain_probe 'write...'
 
     rm -f "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
     
@@ -67,7 +271,7 @@ https://huggingface.co/meta-llama/Llama-3.3-70B-Instruct
 https://huggingface.co/nvidia/Llama-3_3-Nemotron-Super-49B-v1_5
  "LLlama-3.3-Nemotron-Super-49B-v1.5 is a significantly upgraded version of Llama-3.3-Nemotron-Super-49B-v1 and is a large language model (LLM) which is a derivative of Meta Llama-3.3-70B-Instruct (AKA the reference model). It is a reasoning model that is post trained for reasoning, human chat preferences, and agentic tasks, such as RAG and tool calling. The model supports a context length of 128K tokens."
 
-https://huggingface.co/bartowski/nvidia_Llama-3_3-Nemotron-Super-49B-v1_5-GGUF/blob/main/nvidia_Llama-3_3-Nemotron-Super-49B-v1_5-IQ2_XXS.gguf
+https://huggingface.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF/blob/main/Llama-3_3-Nemotron-Super-49B-v1_5-UD-IQ2_XXS.gguf
 Quantized Model, System Prompt, inherits Llama and NVIDIA licenses, obligations, etc .
 
 
@@ -90,6 +294,7 @@ Quantized Model, System Prompt, inherits Llama and NVIDIA licenses, obligations,
     echo '"""' >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
 
 
+    _messagePlain_probe 'service...'
     [[ "$OLLAMA_HOST" == "" ]] && _service_ollama
     _service_ollama_augment
 
@@ -98,7 +303,9 @@ Quantized Model, System Prompt, inherits Llama and NVIDIA licenses, obligations,
         cd "$scriptBundle"/ai_models/"$current_fileDir"
         ollama create Llama-3_3-Nemotron-Super-49B-v1_5-virtuoso -f Modelfile
     )
-    
+
+    [[ "$current_origModelInstalled" != "true" ]] && ollama rm hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF:IQ2_XXS
+    #rm -f "$current_user_OLLAMA_MODELS"/manifests/hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF/IQ2_XXS
 }
 
 
