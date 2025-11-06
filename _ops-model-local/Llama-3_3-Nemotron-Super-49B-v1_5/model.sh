@@ -329,6 +329,7 @@ Quantized Model, System Prompt, inherits Llama and NVIDIA licenses, obligations,
     (
         _messagePlain_nominal "${FUNCNAME[0]}"': ollama create'
         cd "$scriptBundle"/ai_models/"$current_fileDir"
+        dos2unix Modelfile
         ollama create Llama-3_3-Nemotron-Super-49B-v1_5-virtuoso -f Modelfile && [[ "$current_OLLAMA_MODELS" != "" ]] && echo > "$current_user_OLLAMA_MODELS"/get_Llama-3_3-Nemotron-Super-49B-v1_5
     )
 
