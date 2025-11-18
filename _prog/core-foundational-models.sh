@@ -30,7 +30,7 @@ _get_downloadModel-file-HuggingFace() {
         sleep 1
         [[ "$currentIteration" -gt 0 ]] && sleep 1
         
-        aria2c --show-console-readout=false --log=- --log-level=warn --summary-interval=15 -x "3" --async-dns=false -d "$scriptBundle"/ai_models/"$current_fileDir" -o "$current_file" "$current_URL"
+        aria2c --auto-file-renaming=false --allow-overwrite=true --show-console-readout=false --log=- --log-level=warn --summary-interval=15 -x "3" --async-dns=false -d "$scriptBundle"/ai_models/"$current_fileDir" -o "$current_file" "$current_URL"
         [[ ! -e "$scriptBundle"/ai_models/"$current_fileDir"/"$current_file" ]] && aria2c --show-console-readout=false --log=- --log-level=warn --summary-interval=15 -x "3" --async-dns=false -d "$scriptBundle"/ai_models/"$current_fileDir" -o "$current_file" "$current_URL" --disable-ipv6=true
 
         (( currentIteration++ ))

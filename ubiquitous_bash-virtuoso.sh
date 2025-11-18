@@ -39,7 +39,7 @@ _ub_cksum_special_derivativeScripts_contents() {
 #export ub_setScriptChecksum_disable='true'
 ( [[ -e "$0".nck ]] || [[ "${BASH_SOURCE[0]}" != "${0}" ]] || [[ "$1" == '--profile' ]] || [[ "$1" == '--script' ]] || [[ "$1" == '--call' ]] || [[ "$1" == '--return' ]] || [[ "$1" == '--devenv' ]] || [[ "$1" == '--shell' ]] || [[ "$1" == '--bypass' ]] || [[ "$1" == '--parent' ]] || [[ "$1" == '--embed' ]] || [[ "$1" == '--compressed' ]] || [[ "$0" == "/bin/bash" ]] || [[ "$0" == "-bash" ]] || [[ "$0" == "/usr/bin/bash" ]] || [[ "$0" == "bash" ]] ) && export ub_setScriptChecksum_disable='true'
 export ub_setScriptChecksum_header='3620520443'
-export ub_setScriptChecksum_contents='2617001387'
+export ub_setScriptChecksum_contents='889080285'
 
 # CAUTION: Symlinks may cause problems. Disable this test for such cases if necessary.
 # WARNING: Performance may be crucial here.
@@ -51371,7 +51371,7 @@ _get_downloadModel-file-HuggingFace() {
         sleep 1
         [[ "$currentIteration" -gt 0 ]] && sleep 1
         
-        aria2c --show-console-readout=false --log=- --log-level=warn --summary-interval=15 -x "3" --async-dns=false -d "$scriptBundle"/ai_models/"$current_fileDir" -o "$current_file" "$current_URL"
+        aria2c --auto-file-renaming=false --allow-overwrite=true --show-console-readout=false --log=- --log-level=warn --summary-interval=15 -x "3" --async-dns=false -d "$scriptBundle"/ai_models/"$current_fileDir" -o "$current_file" "$current_URL"
         [[ ! -e "$scriptBundle"/ai_models/"$current_fileDir"/"$current_file" ]] && aria2c --show-console-readout=false --log=- --log-level=warn --summary-interval=15 -x "3" --async-dns=false -d "$scriptBundle"/ai_models/"$current_fileDir" -o "$current_file" "$current_URL" --disable-ipv6=true
 
         (( currentIteration++ ))
