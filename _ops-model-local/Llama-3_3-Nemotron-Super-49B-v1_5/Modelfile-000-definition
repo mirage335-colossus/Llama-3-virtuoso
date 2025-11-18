@@ -1,4 +1,5 @@
-FROM nvidia_Llama-3_3-Nemotron-Super-49B-v1_5-IQ2_XXS.gguf
+FROM hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF:IQ2_XXS
+#FROM nvidia_Llama-3_3-Nemotron-Super-49B-v1_5-IQ2_XXS.gguf
 
 # [Quantized Model, System Prompt, inherits Llama and NVIDIA licenses, obligations, etc .](https://huggingface.co/bartowski/TheDrummer_Valkyrie-49B-v1-GGUF)
 # https://www.llama.com/llama3_3/license/

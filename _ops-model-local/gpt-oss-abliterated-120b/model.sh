@@ -21,24 +21,39 @@ _model-gpt-oss-abliterated-120b() {
     rm -f "$scriptBundle"/ai_models/"$current_fileDir"/Notice.txt
 
 
-    local current_file='Huihui-gpt-oss-120b-BF16-abliterated.i1-IQ4_XS.gguf.part1of2'
-    local current_URL='https://huggingface.co/mradermacher/Huihui-gpt-oss-120b-BF16-abliterated-i1-GGUF/resolve/main/Huihui-gpt-oss-120b-BF16-abliterated.i1-IQ4_XS.gguf.part1of2'
-    local current_sha256='eb52c49c902f905838d06341ada8684621d69227694bc01f87568dea0e699812'
+
+    local current_file_concatenated='Huihui-gpt-oss-120b-BF16-abliterated.i1-IQ4_XS.gguf'
+    local current_sha256_concatenated='1c9705b0cfeed6241b241d0ad90158f8224bd2bbe841d69e2443b9079b4e17f4'
     local current_fileDir='gpt-oss-abliterated-120b'
+    local currentIteration=0
+    if [[ ! -e "$scriptBundle"/ai_models/"$current_fileDir"/"$current_file_concatenated" ]] || ( [[ "$current_sha256_concatenated" != "" ]] && [[ $(sha256sum "$scriptBundle"/ai_models/"$current_fileDir"/"$current_file_concatenated" | head -c 64 | tr -dc 'a-fA-F0-9' 2>/dev/null) != $(echo "$current_sha256_concatenated" | head -c 64 | tr -dc 'a-fA-F0-9' 2>/dev/null) ]] )
+    then
 
-    ! _get_downloadModel-file-HuggingFace && _messageFAIL
-    true
+        local current_file='Huihui-gpt-oss-120b-BF16-abliterated.i1-IQ4_XS.gguf.part1of2'
+        local current_URL='https://huggingface.co/mradermacher/Huihui-gpt-oss-120b-BF16-abliterated-i1-GGUF/resolve/main/Huihui-gpt-oss-120b-BF16-abliterated.i1-IQ4_XS.gguf.part1of2'
+        local current_sha256='eb52c49c902f905838d06341ada8684621d69227694bc01f87568dea0e699812'
 
-    local current_file='Huihui-gpt-oss-120b-BF16-abliterated.i1-IQ4_XS.gguf.part2of2'
-    local current_URL='https://huggingface.co/mradermacher/Huihui-gpt-oss-120b-BF16-abliterated-i1-GGUF/resolve/main/Huihui-gpt-oss-120b-BF16-abliterated.i1-IQ4_XS.gguf.part2of2'
-    local current_sha256='79cf43862e04a51d94c993b852c8ff130a1391a7f18b1d0eed0fb021ecfb5686'
-    local current_fileDir='gpt-oss-abliterated-120b'
+        ! _get_downloadModel-file-HuggingFace && _messageFAIL
+        true
 
-    ! _get_downloadModel-file-HuggingFace && _messageFAIL
-    true
+        local current_file='Huihui-gpt-oss-120b-BF16-abliterated.i1-IQ4_XS.gguf.part2of2'
+        local current_URL='https://huggingface.co/mradermacher/Huihui-gpt-oss-120b-BF16-abliterated-i1-GGUF/resolve/main/Huihui-gpt-oss-120b-BF16-abliterated.i1-IQ4_XS.gguf.part2of2'
+        local current_sha256='79cf43862e04a51d94c993b852c8ff130a1391a7f18b1d0eed0fb021ecfb5686'
+
+        ! _get_downloadModel-file-HuggingFace && _messageFAIL
+        true
 
 
-    cat "$scriptBundle"/ai_models/"$current_fileDir"/Huihui-gpt-oss-120b-BF16-abliterated.i1-IQ4_XS.gguf.part1of2 "$scriptBundle"/ai_models/"$current_fileDir"/Huihui-gpt-oss-120b-BF16-abliterated.i1-IQ4_XS.gguf.part2of2 > "$scriptBundle"/ai_models/"$current_fileDir"/Huihui-gpt-oss-120b-BF16-abliterated.i1-IQ4_XS.gguf
+        cat "$scriptBundle"/ai_models/"$current_fileDir"/Huihui-gpt-oss-120b-BF16-abliterated.i1-IQ4_XS.gguf.part1of2 "$scriptBundle"/ai_models/"$current_fileDir"/Huihui-gpt-oss-120b-BF16-abliterated.i1-IQ4_XS.gguf.part2of2 > "$scriptBundle"/ai_models/"$current_fileDir"/Huihui-gpt-oss-120b-BF16-abliterated.i1-IQ4_XS.gguf
+
+    else
+
+        _messagePlain_good 'good: '"$current_file_concatenated"
+
+    fi
+
+    rm -f "$scriptBundle"/ai_models/"$current_fileDir"/Huihui-gpt-oss-120b-BF16-abliterated.i1-IQ4_XS.gguf.part1of2
+    rm -f "$scriptBundle"/ai_models/"$current_fileDir"/Huihui-gpt-oss-120b-BF16-abliterated.i1-IQ4_XS.gguf.part2of2
 
 
     rm -f "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
@@ -71,6 +86,15 @@ _model-gpt-oss-abliterated-120b() {
         cd "$scriptBundle"/ai_models/"$current_fileDir"
         #ollama create -q q3_k_s mistral-small3.2:24b-instruct-2506-virtuoso -f Modelfile
         ollama create gpt-oss-abliterated-120b-virtuoso -f Modelfile
+        currentExitStatus="$?"
+
+        echo "FROM gpt-oss-abliterated-120b-virtuoso:latest" > Modelfile-128k
+        echo "PARAMETER num_ctx 131072" >> Modelfile-128k
+        echo "PARAMETER num_keep 131072" >> Modelfile-128k
+        echo "PARAMETER num_predict 24576" >> Modelfile-128k
+        ollama create gpt-oss-abliterated-120b-128k-virtuoso -f Modelfile-128k
+
+        [[ "$?" == "0" ]] && [[ "$currentExitStatus" == "0" ]]
     )
 
 

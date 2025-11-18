@@ -250,6 +250,15 @@ _model-gpt-oss-20b() {
         _messagePlain_nominal "${FUNCNAME[0]}"': ollama create'
         cd "$scriptBundle"/ai_models/"$current_fileDir"
         ollama create gpt-oss-20b-virtuoso -f Modelfile && echo > "$current_OLLAMA_MODELS"/get_gpt-oss-20b
+        currentExitStatus="$?"
+
+        echo "FROM gpt-oss-20b-virtuoso:latest" > Modelfile-128k
+        echo "PARAMETER num_ctx 131072" >> Modelfile-128k
+        echo "PARAMETER num_keep 131072" >> Modelfile-128k
+        echo "PARAMETER num_predict 131072" >> Modelfile-128k
+        ollama create gpt-oss-20b-128k-virtuoso -f Modelfile-128k
+
+        [[ "$?" == "0" ]] && [[ "$currentExitStatus" == "0" ]]
     )
 
 

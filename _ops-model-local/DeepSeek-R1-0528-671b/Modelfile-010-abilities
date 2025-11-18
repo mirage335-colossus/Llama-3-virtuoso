@@ -1,0 +1,6 @@
+
+
+#PARAMETER num_keep 8192
+#PARAMETER num_ctx 8192
+#PARAMETER num_predict 19456
+

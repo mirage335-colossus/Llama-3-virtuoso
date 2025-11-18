@@ -87,10 +87,20 @@ fi
         _messagePlain_nominal "${FUNCNAME[0]}"': ollama create'
         cd "$scriptBundle"/ai_models/"$current_fileDir"
         ollama create NVIDIA-Nemotron-Nano-9B-v2-virtuoso -f Modelfile
+        currentExitStatus="$?"
+
+        echo "FROM NVIDIA-Nemotron-Nano-9B-v2-virtuoso:latest" > Modelfile-128k
+        echo "PARAMETER num_ctx 131072" >> Modelfile-128k
+        echo "PARAMETER num_keep 131072" >> Modelfile-128k
+        echo "PARAMETER num_predict 131072" >> Modelfile-128k
+        echo "PARAMETER num_gpu 999" >> Modelfile-128k
+        ollama create NVIDIA-Nemotron-Nano-9B-v2-128k-virtuoso -f Modelfile-128k
+
+        [[ "$?" == "0" ]] && [[ "$currentExitStatus" == "0" ]]
     )
     
 }
-
+``
 
 _experiment-NVIDIA-Nemotron-Nano-9B-v2() {
     _stopwatch curl -X POST http://localhost:11434/api/chat \

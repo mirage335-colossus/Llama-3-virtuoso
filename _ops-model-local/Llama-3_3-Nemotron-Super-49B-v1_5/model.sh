@@ -331,6 +331,23 @@ Quantized Model, System Prompt, inherits Llama and NVIDIA licenses, obligations,
         cd "$scriptBundle"/ai_models/"$current_fileDir"
         dos2unix Modelfile
         ollama create Llama-3_3-Nemotron-Super-49B-v1_5-virtuoso -f Modelfile && [[ "$current_OLLAMA_MODELS" != "" ]] && echo > "$current_user_OLLAMA_MODELS"/get_Llama-3_3-Nemotron-Super-49B-v1_5
+        currentExitStatus="$?"
+
+        echo "FROM Llama-3_3-Nemotron-Super-49B-v1_5-virtuoso" > Modelfile-12k
+        echo "PARAMETER num_ctx 12288" >> Modelfile-12k
+        echo "PARAMETER num_keep 12288" >> Modelfile-12k
+        echo "PARAMETER num_predict 24576" >> Modelfile-12k
+        echo "PARAMETER num_gpu 999" >> Modelfile-12k
+        ollama create Llama-3_3-Nemotron-Super-49B-v1_5-12k-virtuoso -f Modelfile-12k
+
+        echo "FROM Llama-3_3-Nemotron-Super-49B-v1_5-virtuoso" > Modelfile-128k
+        echo "PARAMETER num_ctx 131072" >> Modelfile-128k
+        echo "PARAMETER num_keep 131072" >> Modelfile-128k
+        echo "PARAMETER num_predict 24576" >> Modelfile-128k
+        echo "PARAMETER num_gpu 0" >> Modelfile-128k
+        ollama create Llama-3_3-Nemotron-Super-49B-v1_5-128k-virtuoso -f Modelfile-128k
+
+        [[ "$?" == "0" ]] && [[ "$currentExitStatus" == "0" ]]
     )
 
     [[ "$current_origModelInstalled" != "true" ]] && ollama rm hf.co/unsloth/Llama-3_3-Nemotron-Super-49B-v1_5-GGUF:IQ2_XXS

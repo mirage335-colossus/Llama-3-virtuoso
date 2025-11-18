@@ -64,9 +64,18 @@ _model-Llama-3-NeuralDaredevil-8B-abliterated() {
     _service_ollama_augment
 
     (
-        _messagePlain_nominal "${FUNCNAME[0]}"': ollama create'
+       _messagePlain_nominal "${FUNCNAME[0]}"': ollama create'
         cd "$scriptBundle"/ai_models/"$current_fileDir"
         ollama create Llama-3-NeuralDaredevil-8B-abliterated-virtuoso -f Modelfile
+        currentExitStatus="$?"
+
+        echo "FROM Llama-3-NeuralDaredevil-8B-abliterated-virtuoso:latest" > Modelfile-128k
+        echo "PARAMETER num_ctx 131072" >> Modelfile-128k
+        echo "PARAMETER num_keep 131072" >> Modelfile-128k
+        echo "PARAMETER num_predict 131072" >> Modelfile-128k
+        ollama create Llama-3-NeuralDaredevil-8B-abliterated-128k-virtuoso -f Modelfile-128k
+
+        [[ "$?" == "0" ]] && [[ "$currentExitStatus" == "0" ]]
     )
     
 }

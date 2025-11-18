@@ -90,6 +90,16 @@ _model-Mistral-Small-3_2-24B-Instruct-2506() {
         cd "$scriptBundle"/ai_models/"$current_fileDir"
         #ollama create -q q3_k_s mistral-small3.2:24b-instruct-2506-virtuoso -f Modelfile
         ollama create Mistral-Small-3_2-24B-Instruct-2506-virtuoso -f Modelfile
+        currentExitStatus="$?"
+
+        echo "FROM Mistral-Small-3_2-24B-Instruct-2506-virtuoso" > Modelfile-128k
+        echo "PARAMETER num_ctx 131072" >> Modelfile-128k
+        echo "PARAMETER num_keep 131072" >> Modelfile-128k
+        echo "PARAMETER num_predict 24576" >> Modelfile-128k
+        echo "PARAMETER num_gpu 999" >> Modelfile-128k
+        ollama create Mistral-Small-3_2-24B-Instruct-2506-128k-virtuoso -f Modelfile-128k
+
+        [[ "$?" == "0" ]] && [[ "$currentExitStatus" == "0" ]]
     )
 
 
