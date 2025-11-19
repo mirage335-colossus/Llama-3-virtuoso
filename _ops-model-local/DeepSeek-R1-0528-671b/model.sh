@@ -77,11 +77,11 @@ _model-DeepSeek-R1-0528-671b() {
 
     fi
 
-    rm -f "$scriptBundle"/ai_models/"$current_fileDir"/DeepSeek-R1-0528-UD-IQ2_XXS-00001-of-00005.gguf
-    rm -f "$scriptBundle"/ai_models/"$current_fileDir"/DeepSeek-R1-0528-UD-IQ2_XXS-00002-of-00005.gguf
-    rm -f "$scriptBundle"/ai_models/"$current_fileDir"/DeepSeek-R1-0528-UD-IQ2_XXS-00003-of-00005.gguf
-    rm -f "$scriptBundle"/ai_models/"$current_fileDir"/DeepSeek-R1-0528-UD-IQ2_XXS-00004-of-00005.gguf
-    rm -f "$scriptBundle"/ai_models/"$current_fileDir"/DeepSeek-R1-0528-UD-IQ2_XXS-00005-of-00005.gguf
+    #rm -f "$scriptBundle"/ai_models/"$current_fileDir"/DeepSeek-R1-0528-UD-IQ2_XXS-00001-of-00005.gguf
+    #rm -f "$scriptBundle"/ai_models/"$current_fileDir"/DeepSeek-R1-0528-UD-IQ2_XXS-00002-of-00005.gguf
+    #rm -f "$scriptBundle"/ai_models/"$current_fileDir"/DeepSeek-R1-0528-UD-IQ2_XXS-00003-of-00005.gguf
+    #rm -f "$scriptBundle"/ai_models/"$current_fileDir"/DeepSeek-R1-0528-UD-IQ2_XXS-00004-of-00005.gguf
+    #rm -f "$scriptBundle"/ai_models/"$current_fileDir"/DeepSeek-R1-0528-UD-IQ2_XXS-00005-of-00005.gguf
 
 
     rm -f "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
