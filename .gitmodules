@@ -2,3 +2,6 @@
 	path = _lib/ubiquitous_bash
 	url = git@github.com:mirage335-colossus/ubiquitous_bash.git
 	shallow = true
+[submodule "_lib/gguf-core"]
+	path = _lib/gguf-core
+	url = git@github.com:calcuis/gguf-core.git
