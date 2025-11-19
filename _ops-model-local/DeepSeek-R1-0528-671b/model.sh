@@ -17,7 +17,7 @@ _model-DeepSeek-R1-0528-671b() {
 
 
     local current_file_concatenated='DeepSeek-R1-0528-UD-IQ2_XXS.gguf'
-    local current_sha256_concatenated='38c524ed76a60173485340d3e6e49055b199129ce78984ee153731c2852d9c19'
+    local current_sha256_concatenated=''
     local current_fileDir='DeepSeek-R1-0528-671b'
     local currentIteration=0
     if [[ ! -e "$scriptBundle"/ai_models/"$current_fileDir"/"$current_file_concatenated" ]] || ( [[ "$current_sha256_concatenated" != "" ]] && [[ $(sha256sum "$scriptBundle"/ai_models/"$current_fileDir"/"$current_file_concatenated" | head -c 64 | tr -dc 'a-fA-F0-9' 2>/dev/null) != $(echo "$current_sha256_concatenated" | head -c 64 | tr -dc 'a-fA-F0-9' 2>/dev/null) ]] )
@@ -60,6 +60,7 @@ _model-DeepSeek-R1-0528-671b() {
 
         #cat "$scriptBundle"/ai_models/"$current_fileDir"/DeepSeek-R1-0528-UD-IQ2_XXS-00001-of-00005.gguf "$scriptBundle"/ai_models/"$current_fileDir"/DeepSeek-R1-0528-UD-IQ2_XXS-00002-of-00005.gguf "$scriptBundle"/ai_models/"$current_fileDir"/DeepSeek-R1-0528-UD-IQ2_XXS-00003-of-00005.gguf "$scriptBundle"/ai_models/"$current_fileDir"/DeepSeek-R1-0528-UD-IQ2_XXS-00004-of-00005.gguf "$scriptBundle"/ai_models/"$current_fileDir"/DeepSeek-R1-0528-UD-IQ2_XXS-00005-of-00005.gguf > "$scriptBundle"/ai_models/"$current_fileDir"/DeepSeek-R1-0528-UD-IQ2_XXS.gguf
 
+        rm -f "$scriptBundle"/ai_models/"$current_fileDir"/DeepSeek-R1-0528-UD-IQ2_XXS.gguf
         if _if_cygwin
         then
             "$scriptLib"/llama_cpp/llama-b7097-bin-win-cpu-x64/llama-gguf-split.exe --merge "$scriptBundle"/ai_models/"$current_fileDir"/DeepSeek-R1-0528-UD-IQ2_XXS-00001-of-00005.gguf "$scriptBundle"/ai_models/"$current_fileDir"/DeepSeek-R1-0528-UD-IQ2_XXS.gguf
