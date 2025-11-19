@@ -17,7 +17,7 @@ _model-DeepSeek-R1-0528-671b() {
 
 
     local current_file_concatenated='DeepSeek-R1-0528-UD-IQ2_XXS.gguf'
-    local current_sha256_concatenated=''
+    local current_sha256_concatenated='38c524ed76a60173485340d3e6e49055b199129ce78984ee153731c2852d9c19'
     local current_fileDir='DeepSeek-R1-0528-671b'
     local currentIteration=0
     if [[ ! -e "$scriptBundle"/ai_models/"$current_fileDir"/"$current_file_concatenated" ]] || ( [[ "$current_sha256_concatenated" != "" ]] && [[ $(sha256sum "$scriptBundle"/ai_models/"$current_fileDir"/"$current_file_concatenated" | head -c 64 | tr -dc 'a-fA-F0-9' 2>/dev/null) != $(echo "$current_sha256_concatenated" | head -c 64 | tr -dc 'a-fA-F0-9' 2>/dev/null) ]] )
@@ -102,7 +102,7 @@ _model-DeepSeek-R1-0528-671b() {
         _messagePlain_nominal "${FUNCNAME[0]}"': ollama create'
         cd "$scriptBundle"/ai_models/"$current_fileDir"
         #ollama create -q q3_k_s mistral-small3.2:24b-instruct-2506-virtuoso -f Modelfile
-        ollama create DeepSeek-R1-0528-671b -f Modelfile
+        ollama create DeepSeek-R1-0528-671b-virtuoso -f Modelfile
         currentExitStatus="$?"
 
         echo "FROM DeepSeek-R1-0528-671b-virtuoso:latest" > Modelfile-128k
