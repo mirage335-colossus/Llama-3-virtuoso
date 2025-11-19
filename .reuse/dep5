@@ -66,6 +66,8 @@ Files: .retain-other
        license-llama/*
        _ops-model-local/*
        _local/ai_models/*
+       _lib/llama_cpp/*
+       _lib/gguf-core/*
 Copyright: Various upstream authors
 Comment: These third-party components are included as aggregated distribution under section 1.18-bis. They retain their original licenses; consult individual files for details. They are not governed by CEL.
 License: LicenseRef-Other
