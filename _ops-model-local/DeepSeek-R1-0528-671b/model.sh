@@ -17,7 +17,7 @@ _model-DeepSeek-R1-0528-671b() {
 
 
     local current_file_concatenated='DeepSeek-R1-0528-UD-IQ2_XXS.gguf'
-    local current_sha256_concatenated=''
+    local current_sha256_concatenated='7fe55351a65e22b16dcf392ad6d8e7de0d5b2a0891e5d29c048344f2b203021c'
     local current_fileDir='DeepSeek-R1-0528-671b'
     local currentIteration=0
     if [[ ! -e "$scriptBundle"/ai_models/"$current_fileDir"/"$current_file_concatenated" ]] || ( [[ "$current_sha256_concatenated" != "" ]] && [[ $(sha256sum "$scriptBundle"/ai_models/"$current_fileDir"/"$current_file_concatenated" | head -c 64 | tr -dc 'a-fA-F0-9' 2>/dev/null) != $(echo "$current_sha256_concatenated" | head -c 64 | tr -dc 'a-fA-F0-9' 2>/dev/null) ]] )
@@ -78,11 +78,16 @@ _model-DeepSeek-R1-0528-671b() {
 
     fi
 
-    #rm -f "$scriptBundle"/ai_models/"$current_fileDir"/DeepSeek-R1-0528-UD-IQ2_XXS-00001-of-00005.gguf
-    #rm -f "$scriptBundle"/ai_models/"$current_fileDir"/DeepSeek-R1-0528-UD-IQ2_XXS-00002-of-00005.gguf
-    #rm -f "$scriptBundle"/ai_models/"$current_fileDir"/DeepSeek-R1-0528-UD-IQ2_XXS-00003-of-00005.gguf
-    #rm -f "$scriptBundle"/ai_models/"$current_fileDir"/DeepSeek-R1-0528-UD-IQ2_XXS-00004-of-00005.gguf
-    #rm -f "$scriptBundle"/ai_models/"$current_fileDir"/DeepSeek-R1-0528-UD-IQ2_XXS-00005-of-00005.gguf
+    if [[ $(sha256sum "$scriptBundle"/ai_models/"$current_fileDir"/"$current_file_concatenated" | head -c 64 | tr -dc 'a-fA-F0-9' 2>/dev/null) == $(echo "$current_sha256_concatenated" | head -c 64 | tr -dc 'a-fA-F0-9' 2>/dev/null) ]]
+    then
+        _messagePlain_good 'match: hash: merged'
+        _messagePlain_probe 'rm ... part files'
+        rm -f "$scriptBundle"/ai_models/"$current_fileDir"/DeepSeek-R1-0528-UD-IQ2_XXS-00001-of-00005.gguf
+        rm -f "$scriptBundle"/ai_models/"$current_fileDir"/DeepSeek-R1-0528-UD-IQ2_XXS-00002-of-00005.gguf
+        rm -f "$scriptBundle"/ai_models/"$current_fileDir"/DeepSeek-R1-0528-UD-IQ2_XXS-00003-of-00005.gguf
+        rm -f "$scriptBundle"/ai_models/"$current_fileDir"/DeepSeek-R1-0528-UD-IQ2_XXS-00004-of-00005.gguf
+        rm -f "$scriptBundle"/ai_models/"$current_fileDir"/DeepSeek-R1-0528-UD-IQ2_XXS-00005-of-00005.gguf
+    fi
 
 
     rm -f "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
