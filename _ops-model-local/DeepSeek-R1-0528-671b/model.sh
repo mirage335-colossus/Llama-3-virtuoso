@@ -68,6 +68,7 @@ _model-DeepSeek-R1-0528-671b() {
 
         if ! _if_cygwin
         then
+            chmod ugoa+x "$scriptLib"/llama_cpp/llama-b7097-bin-ubuntu-x64/build/bin/llama-gguf-split
             "$scriptLib"/llama_cpp/llama-b7097-bin-ubuntu-x64/build/bin/llama-gguf-split --merge "$scriptBundle"/ai_models/"$current_fileDir"/DeepSeek-R1-0528-UD-IQ2_XXS-00001-of-00005.gguf "$scriptBundle"/ai_models/"$current_fileDir"/DeepSeek-R1-0528-UD-IQ2_XXS.gguf
         fi
 
