@@ -1,5 +1,7 @@
 
 
 PARAMETER num_predict 16384
-PARAMETER num_ctx 65536
+#PARAMETER num_ctx 65536
+
+PARAMETER num_ctx 16384
 
