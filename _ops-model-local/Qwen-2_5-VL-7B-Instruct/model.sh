@@ -152,6 +152,7 @@ _model-Qwen-2_5-VL-7B-Instruct() {
         #)
 
         _messagePlain_probe 'copy...'
+        sudo -n -u ollama rsync --size-only -r -v "$current_OLLAMA_MODELS"/. "$current_user_OLLAMA_MODELS"/.
         rsync --size-only -r -v "$current_OLLAMA_MODELS"/. "$current_user_OLLAMA_MODELS"/.
         
         _messagePlain_probe 'while... ollama pull'
