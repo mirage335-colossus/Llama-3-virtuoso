@@ -1,4 +1,5 @@
 
+# ATTENTION: NOTICE: Essential, dependencies.
 _fetch_local() {
     _messageNormal '@ '"${FUNCNAME[0]}"
 
@@ -31,6 +32,7 @@ _fetch_local() {
     _model-gpt-oss-20b
 }
 
+# ATTENTION: NOTICE: VERY STRONGLY RECOMMENDED.
 _fetch_local_large() {
     # gpt-oss-120b
     _model-gpt-oss-120b
@@ -39,9 +41,13 @@ _fetch_local_large() {
 }
 
 
-_fetch_local_huge() {
-    # Kimi K2
+# WARNING: Agentic AI necessitates fast input prompt processing, which, even for MoE, especially in the case of DeepSeek-R1, etc, usually requires the model to actually fit in VRAM.
+# At least >6-8X consumer GPUs required, with still prohibitive limits on context length for relevant use cases.
+#_fetch_local_huge() {
+    ## DeepSeek-R1-0528-671b
+    ## Llama-3_1-Nemotron-Ultra-253B-v1
+    ## Kimi K2 Thinking
 
-    true
-}
+    #true
+#}
 

@@ -135,11 +135,11 @@ Quantized Model, System Prompt, inherits Llama and NVIDIA licenses, obligations,
         ollama create Llama-3_1-Nemotron-Ultra-253B-v1-virtuoso -f Modelfile
         currentExitStatus="$?"
 
-        echo "FROM Llama-3_1-Nemotron-Ultra-253B-v1-virtuoso:latest" > Modelfile-128k
-        echo "PARAMETER num_ctx 131072" >> Modelfile-128k
-        echo "PARAMETER num_keep 131072" >> Modelfile-128k
-        echo "PARAMETER num_predict 180224" >> Modelfile-128k
-        ollama create Llama-3_1-Nemotron-Ultra-253B-v1-128k-virtuoso -f Modelfile-128k
+        #echo "FROM Llama-3_1-Nemotron-Ultra-253B-v1-virtuoso:latest" > Modelfile-128k
+        #echo "PARAMETER num_ctx 131072" >> Modelfile-128k
+        #echo "PARAMETER num_keep 131072" >> Modelfile-128k
+        #echo "PARAMETER num_predict 180224" >> Modelfile-128k
+        #ollama create Llama-3_1-Nemotron-Ultra-253B-v1-128k-virtuoso -f Modelfile-128k
 
         [[ "$?" == "0" ]] && [[ "$currentExitStatus" == "0" ]]
     )
