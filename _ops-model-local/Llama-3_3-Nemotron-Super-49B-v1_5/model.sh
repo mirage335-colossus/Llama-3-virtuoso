@@ -352,6 +352,8 @@ Quantized Model, System Prompt, inherits Llama and NVIDIA licenses, obligations,
         echo "PARAMETER num_gpu 999" >> Modelfile-40k
         ollama create Llama-3_3-Nemotron-Super-49B-v1_5-40k-virtuoso -f Modelfile-40k
 
+        # Agentic Server use cases should call this unless 24GB VRAM GPUs definitely are not available.
+        #
         # 2x24GB=48GB VRAM, OLLAMA_KV_CACHE_TYPE=q4_0
         #  Other configuration may be necessary.
         # Calling this model guarantees >80k context. Larger context limit, 80k, 96k, 128k, may be given if not known to exceed VRAM limits in the 2x24GB=48GB VRAM situation.
