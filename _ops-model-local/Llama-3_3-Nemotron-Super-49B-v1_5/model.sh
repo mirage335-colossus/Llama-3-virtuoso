@@ -158,6 +158,7 @@ _model-Llama-3_3-Nemotron-Super-49B-v1_5() {
         #)
 
         _messagePlain_probe 'copy...'
+        sudo -n -u ollama rsync --size-only -r -v "$current_OLLAMA_MODELS"/. "$current_user_OLLAMA_MODELS"/.
         rsync --size-only -r -v "$current_OLLAMA_MODELS"/. "$current_user_OLLAMA_MODELS"/.
         
         _messagePlain_probe 'while... ollama pull'
