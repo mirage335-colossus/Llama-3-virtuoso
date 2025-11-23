@@ -1,7 +1,7 @@
 
 # Default. Should be possible to override if VRAM/speed tradeoffs are appropriate.
-PARAMETER num_keep 81920
-PARAMETER num_ctx 81920
+PARAMETER num_keep 16384
+PARAMETER num_ctx 16384
 PARAMETER num_predict 180224
 
 

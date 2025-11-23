@@ -66,8 +66,8 @@ _model-Llama-3_1-Nemotron-Ultra-253B-v1() {
 
     fi
 
-    #rm -f "$scriptBundle"/ai_models/"$current_fileDir"/nvidia_Llama-3_1-Nemotron-Ultra-253B-v1-IQ2_XXS-00001-of-00002.gguf
-    #rm -f "$scriptBundle"/ai_models/"$current_fileDir"/nvidia_Llama-3_1-Nemotron-Ultra-253B-v1-IQ2_XXS-00002-of-00002.gguf
+    rm -f "$scriptBundle"/ai_models/"$current_fileDir"/nvidia_Llama-3_1-Nemotron-Ultra-253B-v1-IQ2_XXS-00001-of-00002.gguf
+    rm -f "$scriptBundle"/ai_models/"$current_fileDir"/nvidia_Llama-3_1-Nemotron-Ultra-253B-v1-IQ2_XXS-00002-of-00002.gguf
 
 
     rm -f "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
