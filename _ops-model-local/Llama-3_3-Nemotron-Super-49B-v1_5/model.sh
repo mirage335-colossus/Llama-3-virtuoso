@@ -341,10 +341,35 @@ Quantized Model, System Prompt, inherits Llama and NVIDIA licenses, obligations,
         echo "PARAMETER num_gpu 999" >> Modelfile-12k
         ollama create Llama-3_3-Nemotron-Super-49B-v1_5-12k-virtuoso -f Modelfile-12k
 
+        # 24GB VRAM, OLLAMA_KV_CACHE_TYPE=q4_0
+        # 2x16GB=32GB VRAM, OLLAMA_KV_CACHE_TYPE=q4_0
+        #  Other configuration may be necessary.
+        # Do NOT expect adding another 16GB VRAM GPu will allow any larger context.
+        echo "FROM Llama-3_3-Nemotron-Super-49B-v1_5-virtuoso" > Modelfile-40k
+        echo "PARAMETER num_ctx 40960" >> Modelfile-40k
+        echo "PARAMETER num_keep 40960" >> Modelfile-40k
+        echo "PARAMETER num_predict 49152" >> Modelfile-40k
+        echo "PARAMETER num_gpu 999" >> Modelfile-40k
+        ollama create Llama-3_3-Nemotron-Super-49B-v1_5-40k-virtuoso -f Modelfile-40k
+
+        # 2x24GB=48GB VRAM, OLLAMA_KV_CACHE_TYPE=q4_0
+        #  Other configuration may be necessary.
+        # Calling this model guarantees >80k context. Larger context limit, 80k, 96k, 128k, may be given if not known to exceed VRAM limits in the 2x24GB=48GB VRAM situation.
+        # As usual, intended to assure input prompt processing happens very quickly, ~300t/s or better, with 2x24GB=48GB VRAM .
+        # 81920 , 98304 , 131072
+        echo "FROM Llama-3_3-Nemotron-Super-49B-v1_5-virtuoso" > Modelfile-80k
+        echo "PARAMETER num_ctx 131072" >> Modelfile-80k
+        echo "PARAMETER num_keep 131072" >> Modelfile-80k
+        echo "PARAMETER num_predict 49152" >> Modelfile-80k
+        echo "PARAMETER num_gpu 999" >> Modelfile-80k
+        ollama create Llama-3_3-Nemotron-Super-49B-v1_5-80k-virtuoso -f Modelfile-80k
+
+        # WARNING: Experimental. Minimizes thermal load for indeterminate background processing use cases.
+        # May be deprecated.
         echo "FROM Llama-3_3-Nemotron-Super-49B-v1_5-virtuoso" > Modelfile-128k
         echo "PARAMETER num_ctx 131072" >> Modelfile-128k
         echo "PARAMETER num_keep 131072" >> Modelfile-128k
-        echo "PARAMETER num_predict 24576" >> Modelfile-128k
+        echo "PARAMETER num_predict 49152" >> Modelfile-128k
         echo "PARAMETER num_gpu 0" >> Modelfile-128k
         ollama create Llama-3_3-Nemotron-Super-49B-v1_5-128k-virtuoso -f Modelfile-128k
 
