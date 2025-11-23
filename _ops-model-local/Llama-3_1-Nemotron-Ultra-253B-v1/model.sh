@@ -36,7 +36,7 @@ _model-Llama-3_1-Nemotron-Ultra-253B-v1() {
         true
 
         local current_file='nvidia_Llama-3_1-Nemotron-Ultra-253B-v1-IQ2_XXS-00002-of-00002.gguf'
-        local current_URL='https://huggingface.co/bartowski/nvidia_Llama-3_1-Nemotron-Ultra-253B-v1-GGUF/blob/main/nvidia_Llama-3_1-Nemotron-Ultra-253B-v1-IQ2_XXS/nvidia_Llama-3_1-Nemotron-Ultra-253B-v1-IQ2_XXS-00002-of-00002.gguf'
+        local current_URL='https://huggingface.co/bartowski/nvidia_Llama-3_1-Nemotron-Ultra-253B-v1-GGUF/resolve/main/nvidia_Llama-3_1-Nemotron-Ultra-253B-v1-IQ2_XXS/nvidia_Llama-3_1-Nemotron-Ultra-253B-v1-IQ2_XXS-00002-of-00002.gguf'
         local current_sha256='ee88c90bbba346be6999f7e470b49328e8e5582a3a0289e19ab6d9ff1ad15c6c'
         local current_fileDir='Llama-3_1-Nemotron-Ultra-253B-v1'
 
