@@ -131,7 +131,17 @@ Quantized Model, System Prompt, inherits Llama and NVIDIA licenses, obligations,
     (
         _messagePlain_nominal "${FUNCNAME[0]}"': ollama create'
         cd "$scriptBundle"/ai_models/"$current_fileDir"
+        #ollama create -q q3_k_s mistral-small3.2:24b-instruct-2506-virtuoso -f Modelfile
         ollama create Llama-3_1-Nemotron-Ultra-253B-v1-virtuoso -f Modelfile
+        currentExitStatus="$?"
+
+        echo "FROM Llama-3_1-Nemotron-Ultra-253B-v1-virtuoso:latest" > Modelfile-128k
+        echo "PARAMETER num_ctx 131072" >> Modelfile-128k
+        echo "PARAMETER num_keep 131072" >> Modelfile-128k
+        echo "PARAMETER num_predict 180224" >> Modelfile-128k
+        ollama create Llama-3_1-Nemotron-Ultra-253B-v1-128k-virtuoso -f Modelfile-128k
+
+        [[ "$?" == "0" ]] && [[ "$currentExitStatus" == "0" ]]
     )
     
 }
