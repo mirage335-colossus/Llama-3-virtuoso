@@ -44,7 +44,21 @@ _model-Llama-3_1-Nemotron-Ultra-253B-v1() {
         true
 
 
-        cat "$scriptBundle"/ai_models/"$current_fileDir"/nvidia_Llama-3_1-Nemotron-Ultra-253B-v1-IQ2_XXS-00001-of-00002.gguf "$scriptBundle"/ai_models/"$current_fileDir"/nvidia_Llama-3_1-Nemotron-Ultra-253B-v1-IQ2_XXS-00002-of-00002.gguf > "$scriptBundle"/ai_models/"$current_fileDir"/nvidia_Llama-3_1-Nemotron-Ultra-253B-v1-IQ2_XXS.gguf
+        #cat "$scriptBundle"/ai_models/"$current_fileDir"/nvidia_Llama-3_1-Nemotron-Ultra-253B-v1-IQ2_XXS-00001-of-00002.gguf "$scriptBundle"/ai_models/"$current_fileDir"/nvidia_Llama-3_1-Nemotron-Ultra-253B-v1-IQ2_XXS-00002-of-00002.gguf > "$scriptBundle"/ai_models/"$current_fileDir"/nvidia_Llama-3_1-Nemotron-Ultra-253B-v1-IQ2_XXS.gguf
+
+        
+        rm -f "$scriptBundle"/ai_models/"$current_fileDir"/nvidia_Llama-3_1-Nemotron-Ultra-253B-v1-IQ2_XXS.gguf
+        if _if_cygwin
+        then
+            _userMSW "$scriptLib"/llama_cpp/llama-b7097-bin-win-cpu-x64/llama-gguf-split.exe --merge "$scriptBundle"/ai_models/"$current_fileDir"/nvidia_Llama-3_1-Nemotron-Ultra-253B-v1-IQ2_XXS-00001-of-00002.gguf "$scriptBundle"/ai_models/"$current_fileDir"/nvidia_Llama-3_1-Nemotron-Ultra-253B-v1-IQ2_XXS.gguf
+        fi
+
+        if ! _if_cygwin
+        then
+            chmod ugoa+x "$scriptLib"/llama_cpp/llama-b7097-bin-ubuntu-x64/build/bin/llama-gguf-split
+            "$scriptLib"/llama_cpp/llama-b7097-bin-ubuntu-x64/build/bin/llama-gguf-split --merge "$scriptBundle"/ai_models/"$current_fileDir"/nvidia_Llama-3_1-Nemotron-Ultra-253B-v1-IQ2_XXS-00001-of-00002.gguf "$scriptBundle"/ai_models/"$current_fileDir"/nvidia_Llama-3_1-Nemotron-Ultra-253B-v1-IQ2_XXS.gguf
+        fi
+
 
     else
 

@@ -63,7 +63,7 @@ _model-DeepSeek-R1-0528-671b() {
         rm -f "$scriptBundle"/ai_models/"$current_fileDir"/DeepSeek-R1-0528-UD-IQ2_XXS.gguf
         if _if_cygwin
         then
-            "$scriptLib"/llama_cpp/llama-b7097-bin-win-cpu-x64/llama-gguf-split.exe --merge "$scriptBundle"/ai_models/"$current_fileDir"/DeepSeek-R1-0528-UD-IQ2_XXS-00001-of-00005.gguf "$scriptBundle"/ai_models/"$current_fileDir"/DeepSeek-R1-0528-UD-IQ2_XXS.gguf
+            _userMSW "$scriptLib"/llama_cpp/llama-b7097-bin-win-cpu-x64/llama-gguf-split.exe --merge "$scriptBundle"/ai_models/"$current_fileDir"/DeepSeek-R1-0528-UD-IQ2_XXS-00001-of-00005.gguf "$scriptBundle"/ai_models/"$current_fileDir"/DeepSeek-R1-0528-UD-IQ2_XXS.gguf
         fi
 
         if ! _if_cygwin
