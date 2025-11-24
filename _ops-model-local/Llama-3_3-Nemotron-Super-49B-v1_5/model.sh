@@ -343,6 +343,7 @@ Quantized Model, System Prompt, inherits Llama and NVIDIA licenses, obligations,
 
         # 24GB VRAM, OLLAMA_KV_CACHE_TYPE=q4_0
         # 2x16GB=32GB VRAM, OLLAMA_KV_CACHE_TYPE=q4_0
+        # 32GB VRAM, OLLAMA_KV_CACHE_TYPE=q4_0
         #  Other configuration may be necessary.
         # Do NOT expect adding another 16GB VRAM GPu will allow any larger context.
         echo "FROM Llama-3_3-Nemotron-Super-49B-v1_5-virtuoso" > Modelfile-40k
