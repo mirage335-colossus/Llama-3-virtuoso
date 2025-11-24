@@ -29,5 +29,8 @@ export AI_acceleration='16GB_internal--11GB_eGPU--12t6pCore_8eCore'
 
 
 
-
+# Forces such possibly degrading defaults as q4 KV cache quantization, to ensure the usually merely optional long-context models are usable with reasonable VRAM, and also ensure prompts, etc, are developed to support that.
+export compute_devWorkstation='true'
+[[ "$compute_devWorkstation" == 'true' ]] && export compute_agenticServer='true'
+export compute_agenticServer='true'
 

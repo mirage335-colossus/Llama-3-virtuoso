@@ -39,7 +39,7 @@ _ub_cksum_special_derivativeScripts_contents() {
 #export ub_setScriptChecksum_disable='true'
 ( [[ -e "$0".nck ]] || [[ "${BASH_SOURCE[0]}" != "${0}" ]] || [[ "$1" == '--profile' ]] || [[ "$1" == '--script' ]] || [[ "$1" == '--call' ]] || [[ "$1" == '--return' ]] || [[ "$1" == '--devenv' ]] || [[ "$1" == '--shell' ]] || [[ "$1" == '--bypass' ]] || [[ "$1" == '--parent' ]] || [[ "$1" == '--embed' ]] || [[ "$1" == '--compressed' ]] || [[ "$0" == "/bin/bash" ]] || [[ "$0" == "-bash" ]] || [[ "$0" == "/usr/bin/bash" ]] || [[ "$0" == "bash" ]] ) && export ub_setScriptChecksum_disable='true'
 export ub_setScriptChecksum_header='3620520443'
-export ub_setScriptChecksum_contents='889080285'
+export ub_setScriptChecksum_contents='51262122'
 
 # CAUTION: Symlinks may cause problems. Disable this test for such cases if necessary.
 # WARNING: Performance may be crucial here.
@@ -51047,6 +51047,10 @@ _setupVirtuoso-server() {
     sudo -n chmod 644 /etc/systemd/system/ollama.service.d/override.conf
 }
 
+_if_virtuoso_KV_CACHE_TYPE() {
+    [[ "$compute_devWorkstation" != "true" ]] && [[ "$compute_agenticServer" != "true" ]]
+}
+
 # ATTENTION: Override with 'ops.sh' or similar. Maybe override with '.env' if actually appropriate.
 _setupVirtuoso() {
     _messageNormal "${FUNCNAME[0]}" "$objectName"
@@ -51065,6 +51069,10 @@ _setupVirtuoso() {
 
     ! grep virtuoso_hook "$HOME"/.bashrc > /dev/null 2>&1 && _messagePlain_probe "$virtuosoHookFile"' >> '"$HOME"/.bashrc && echo ". ""$virtuosoHookFile" >> "$HOME"/.bashrc
 	! grep virtuoso_hook "$HOME"/.bashrc > /dev/null 2>&1 && _messagePlain_bad 'missing: bashrc hook' && _messageFAIL && return 1
+
+    local current_KV_CACHE_TYPE
+    _if_virtuoso_KV_CACHE_TYPE && current_KV_CACHE_TYPE=q8_0
+    ! _if_virtuoso_KV_CACHE_TYPE && current_KV_CACHE_TYPE=q4_0
     
     if _if_cygwin && ( [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--6pCore_8eCore' ]] )
     then
@@ -51072,7 +51080,9 @@ _setupVirtuoso() {
         setx OLLAMA_NUM_THREADS 18
 
         setx OLLAMA_FLASH_ATTENTION 1 /m
-        setx OLLAMA_KV_CACHE_TYPE q8_0 /m
+        #setx OLLAMA_KV_CACHE_TYPE q8_0 /m
+        _if_virtuoso_KV_CACHE_TYPE && setx OLLAMA_KV_CACHE_TYPE q8_0 /m
+        ! _if_virtuoso_KV_CACHE_TYPE && setx OLLAMA_KV_CACHE_TYPE=q4_0 /m
         setx OLLAMA_NEW_ENGINE true /m
         setx OLLAMA_NOHISTORY true /m
         setx OLLAMA_NUM_PARALLEL 1 /m
@@ -51094,14 +51104,18 @@ _setupVirtuoso() {
     if _if_cygwin && ! ( [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--6pCore_8eCore' ]] )
     then
         setx OLLAMA_FLASH_ATTENTION 1 /m
-        setx OLLAMA_KV_CACHE_TYPE q8_0 /m
+        #setx OLLAMA_KV_CACHE_TYPE q8_0 /m
+        _if_virtuoso_KV_CACHE_TYPE && setx OLLAMA_KV_CACHE_TYPE q8_0 /m
+        ! _if_virtuoso_KV_CACHE_TYPE && setx OLLAMA_KV_CACHE_TYPE=q4_0 /m
         setx OLLAMA_NEW_ENGINE true /m
         setx OLLAMA_NOHISTORY true /m
         setx OLLAMA_NUM_PARALLEL 1 /m
         setx OLLAMA_SCHED_SPREAD 1 /m
 
         setx OLLAMA_FLASH_ATTENTION 1
-        setx OLLAMA_KV_CACHE_TYPE q8_0
+        #setx OLLAMA_KV_CACHE_TYPE q8_0
+        _if_virtuoso_KV_CACHE_TYPE && setx OLLAMA_KV_CACHE_TYPE q8_0
+        ! _if_virtuoso_KV_CACHE_TYPE && setx OLLAMA_KV_CACHE_TYPE=q4_0
         setx OLLAMA_NEW_ENGINE true
         setx OLLAMA_NOHISTORY true
         setx OLLAMA_NUM_PARALLEL 1
@@ -51121,7 +51135,7 @@ _setupVirtuoso() {
         echo '[Service]
         Environment="OLLAMA_NUM_THREADS=18"
         Environment="OLLAMA_FLASH_ATTENTION=1"
-        Environment="OLLAMA_KV_CACHE_TYPE=q8_0"
+        Environment="OLLAMA_KV_CACHE_TYPE='"$current_KV_CACHE_TYPE"'"
         Environment="OLLAMA_NEW_ENGINE=true"
         Environment="OLLAMA_NOHISTORY=true"
         Environment="OLLAMA_NUM_PARALLEL=1"
@@ -51136,7 +51150,7 @@ _setupVirtuoso() {
     then
         echo 'export OLLAMA_NUM_THREADS=18
         export OLLAMA_FLASH_ATTENTION=1
-        export OLLAMA_KV_CACHE_TYPE=q8_0
+        export OLLAMA_KV_CACHE_TYPE='"$current_KV_CACHE_TYPE"'"
         export OLLAMA_NEW_ENGINE=true
         export OLLAMA_NOHISTORY=true
         export OLLAMA_NUM_PARALLEL=1
@@ -51150,7 +51164,7 @@ _setupVirtuoso() {
 
         echo '[Service]
         Environment="OLLAMA_FLASH_ATTENTION=1"
-        Environment="OLLAMA_KV_CACHE_TYPE=q8_0"
+        Environment="OLLAMA_KV_CACHE_TYPE='"$current_KV_CACHE_TYPE"'""
         Environment="OLLAMA_NEW_ENGINE=true"
         Environment="OLLAMA_NOHISTORY=true"
         Environment="OLLAMA_NUM_PARALLEL=1"
@@ -51164,7 +51178,7 @@ _setupVirtuoso() {
     if ! ( [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--6pCore_8eCore' ]] )
     then
         echo 'export OLLAMA_FLASH_ATTENTION=1
-        export OLLAMA_KV_CACHE_TYPE=q8_0
+        export OLLAMA_KV_CACHE_TYPE='"$current_KV_CACHE_TYPE"'"
         export OLLAMA_NEW_ENGINE=true
         export OLLAMA_NOHISTORY=true
         export OLLAMA_NUM_PARALLEL=1
