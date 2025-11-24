@@ -69,7 +69,7 @@ _setupVirtuoso() {
         setx OLLAMA_NEW_ENGINE true /m
         setx OLLAMA_NOHISTORY true /m
         setx OLLAMA_NUM_PARALLEL 1 /m
-        setx OLLAMA_SCHED_SPREAD 1 /m
+        [[ "$compute_agenticServer" != "true" ]] && setx OLLAMA_SCHED_SPREAD 1 /m
 
         setx OLLAMA_FLASH_ATTENTION 1
         #setx OLLAMA_KV_CACHE_TYPE q8_0
@@ -78,13 +78,13 @@ _setupVirtuoso() {
         setx OLLAMA_NEW_ENGINE true
         setx OLLAMA_NOHISTORY true
         setx OLLAMA_NUM_PARALLEL 1
-        setx OLLAMA_SCHED_SPREAD 1
+        [[ "$compute_agenticServer" != "true" ]] && setx OLLAMA_SCHED_SPREAD 1
 
         setx OLLAMA_MAX_LOADED_MODELS 1 /m
         setx OLLAMA_MAX_LOADED_MODELS 1
 
-        setx OLLAMA_GPU_OVERHEAD 603979776 /m
-        setx OLLAMA_GPU_OVERHEAD 603979776
+        [[ "$compute_agenticServer" != "true" ]] && setx OLLAMA_GPU_OVERHEAD 603979776 /m
+        [[ "$compute_agenticServer" != "true" ]] && setx OLLAMA_GPU_OVERHEAD 603979776
     fi
     if _if_cygwin && ! ( [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--6pCore_8eCore' ]] )
     then
@@ -95,7 +95,7 @@ _setupVirtuoso() {
         setx OLLAMA_NEW_ENGINE true /m
         setx OLLAMA_NOHISTORY true /m
         setx OLLAMA_NUM_PARALLEL 1 /m
-        setx OLLAMA_SCHED_SPREAD 1 /m
+        [[ "$compute_agenticServer" != "true" ]] && setx OLLAMA_SCHED_SPREAD 1 /m
 
         setx OLLAMA_FLASH_ATTENTION 1
         #setx OLLAMA_KV_CACHE_TYPE q8_0
@@ -104,72 +104,76 @@ _setupVirtuoso() {
         setx OLLAMA_NEW_ENGINE true
         setx OLLAMA_NOHISTORY true
         setx OLLAMA_NUM_PARALLEL 1
-        setx OLLAMA_SCHED_SPREAD 1
+        [[ "$compute_agenticServer" != "true" ]] && setx OLLAMA_SCHED_SPREAD 1
 
         setx OLLAMA_MAX_LOADED_MODELS 1 /m
         setx OLLAMA_MAX_LOADED_MODELS 1
 
-        setx OLLAMA_GPU_OVERHEAD 603979776 /m
-        setx OLLAMA_GPU_OVERHEAD 603979776
+        [[ "$compute_agenticServer" != "true" ]] && setx OLLAMA_GPU_OVERHEAD 603979776 /m
+        [[ "$compute_agenticServer" != "true" ]] && setx OLLAMA_GPU_OVERHEAD 603979776
     fi
 
     if ! _if_cygwin && ( [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--6pCore_8eCore' ]] )
     then
         sudo -n mkdir -p /etc/systemd/system/ollama.service.d
 
-        echo '[Service]
+        ( echo '[Service]
         Environment="OLLAMA_NUM_THREADS=18"
         Environment="OLLAMA_FLASH_ATTENTION=1"
         Environment="OLLAMA_KV_CACHE_TYPE='"$current_KV_CACHE_TYPE"'"
         Environment="OLLAMA_NEW_ENGINE=true"
         Environment="OLLAMA_NOHISTORY=true"
         Environment="OLLAMA_NUM_PARALLEL=1"
-        Environment="OLLAMA_SCHED_SPREAD=1"
-        Environment="OLLAMA_MAX_LOADED_MODELS=1"
-        Environment="OLLAMA_GPU_OVERHEAD=603979776"' | sudo -n tee /etc/systemd/system/ollama.service.d/override.conf > /dev/null
+        Environment="OLLAMA_MAX_LOADED_MODELS=1"'
+        [[ "$compute_agenticServer" != "true" ]] && echo '        Environment="OLLAMA_SCHED_SPREAD=1"'
+        [[ "$compute_agenticServer" != "true" ]] && echo '        Environment="OLLAMA_GPU_OVERHEAD=603979776"'
+        ) | sudo -n tee /etc/systemd/system/ollama.service.d/override.conf > /dev/null
 
         sudo -n chmod 755 /etc/systemd/system/ollama.service.d
         sudo -n chmod 644 /etc/systemd/system/ollama.service.d/override.conf
     fi
     if ( [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--6pCore_8eCore' ]] )
     then
-        echo 'export OLLAMA_NUM_THREADS=18
+        ( echo '        export OLLAMA_NUM_THREADS=18
         export OLLAMA_FLASH_ATTENTION=1
         export OLLAMA_KV_CACHE_TYPE='"$current_KV_CACHE_TYPE"'"
         export OLLAMA_NEW_ENGINE=true
         export OLLAMA_NOHISTORY=true
         export OLLAMA_NUM_PARALLEL=1
-        export OLLAMA_SCHED_SPREAD=1
-        export OLLAMA_MAX_LOADED_MODELS=1
-        export OLLAMA_GPU_OVERHEAD=603979776' > "$virtuosoHookFile"
+        export OLLAMA_MAX_LOADED_MODELS=1'
+        [[ "$compute_agenticServer" != "true" ]] && echo '        export OLLAMA_SCHED_SPREAD=1'
+        [[ "$compute_agenticServer" != "true" ]] && echo '        export OLLAMA_GPU_OVERHEAD=603979776'
+        ) > "$virtuosoHookFile"
     fi
     if ! _if_cygwin && ! ( [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--6pCore_8eCore' ]] )
     then
         sudo -n mkdir -p /etc/systemd/system/ollama.service.d
 
-        echo '[Service]
+        ( echo '[Service]
         Environment="OLLAMA_FLASH_ATTENTION=1"
         Environment="OLLAMA_KV_CACHE_TYPE='"$current_KV_CACHE_TYPE"'""
         Environment="OLLAMA_NEW_ENGINE=true"
         Environment="OLLAMA_NOHISTORY=true"
         Environment="OLLAMA_NUM_PARALLEL=1"
-        Environment="OLLAMA_SCHED_SPREAD=1"
-        Environment="OLLAMA_MAX_LOADED_MODELS=1"
-        Environment="OLLAMA_GPU_OVERHEAD=603979776"' | sudo -n tee /etc/systemd/system/ollama.service.d/override.conf > /dev/null
+        Environment="OLLAMA_MAX_LOADED_MODELS=1"'
+        [[ "$compute_agenticServer" != "true" ]] && echo '        Environment="OLLAMA_SCHED_SPREAD=1"'
+        [[ "$compute_agenticServer" != "true" ]] && echo '        Environment="OLLAMA_GPU_OVERHEAD=603979776"'
+        ) | sudo -n tee /etc/systemd/system/ollama.service.d/override.conf > /dev/null
 
         sudo -n chmod 755 /etc/systemd/system/ollama.service.d
         sudo -n chmod 644 /etc/systemd/system/ollama.service.d/override.conf
     fi
     if ! ( [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--6pCore_8eCore' ]] )
     then
-        echo 'export OLLAMA_FLASH_ATTENTION=1
+        ( echo '        export OLLAMA_FLASH_ATTENTION=1
         export OLLAMA_KV_CACHE_TYPE='"$current_KV_CACHE_TYPE"'"
         export OLLAMA_NEW_ENGINE=true
         export OLLAMA_NOHISTORY=true
         export OLLAMA_NUM_PARALLEL=1
-        export OLLAMA_SCHED_SPREAD=1
-        export OLLAMA_MAX_LOADED_MODELS=1
-        export OLLAMA_GPU_OVERHEAD=603979776' > "$virtuosoHookFile"
+        export OLLAMA_MAX_LOADED_MODELS=1'
+        [[ "$compute_agenticServer" != "true" ]] && echo '        export OLLAMA_SCHED_SPREAD=1'
+        [[ "$compute_agenticServer" != "true" ]] && echo '        export OLLAMA_GPU_OVERHEAD=603979776'
+        ) > "$virtuosoHookFile"
     fi
 
     # DUBIOUS . More project-specific hook.
