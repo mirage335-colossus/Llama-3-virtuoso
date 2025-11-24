@@ -122,7 +122,7 @@ _setupVirtuoso() {
         ( echo '[Service]
         Environment="OLLAMA_NUM_THREADS=18"
         Environment="OLLAMA_FLASH_ATTENTION=1"
-        Environment="OLLAMA_KV_CACHE_TYPE='"$current_KV_CACHE_TYPE"'"
+        Environment="OLLAMA_KV_CACHE_TYPE="'"$current_KV_CACHE_TYPE"'"
         Environment="OLLAMA_NEW_ENGINE=true"
         Environment="OLLAMA_NOHISTORY=true"
         Environment="OLLAMA_NUM_PARALLEL=1"
@@ -138,7 +138,7 @@ _setupVirtuoso() {
     then
         ( echo '        export OLLAMA_NUM_THREADS=18
         export OLLAMA_FLASH_ATTENTION=1
-        export OLLAMA_KV_CACHE_TYPE='"$current_KV_CACHE_TYPE"'"
+        export OLLAMA_KV_CACHE_TYPE="'"$current_KV_CACHE_TYPE"'"
         export OLLAMA_NEW_ENGINE=true
         export OLLAMA_NOHISTORY=true
         export OLLAMA_NUM_PARALLEL=1
@@ -153,7 +153,7 @@ _setupVirtuoso() {
 
         ( echo '[Service]
         Environment="OLLAMA_FLASH_ATTENTION=1"
-        Environment="OLLAMA_KV_CACHE_TYPE='"$current_KV_CACHE_TYPE"'""
+        Environment="OLLAMA_KV_CACHE_TYPE="'"$current_KV_CACHE_TYPE"'"
         Environment="OLLAMA_NEW_ENGINE=true"
         Environment="OLLAMA_NOHISTORY=true"
         Environment="OLLAMA_NUM_PARALLEL=1"
@@ -168,7 +168,7 @@ _setupVirtuoso() {
     if ! ( [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--6pCore_8eCore' ]] )
     then
         ( echo '        export OLLAMA_FLASH_ATTENTION=1
-        export OLLAMA_KV_CACHE_TYPE='"$current_KV_CACHE_TYPE"'"
+        export OLLAMA_KV_CACHE_TYPE="'"$current_KV_CACHE_TYPE"'"
         export OLLAMA_NEW_ENGINE=true
         export OLLAMA_NOHISTORY=true
         export OLLAMA_NUM_PARALLEL=1
