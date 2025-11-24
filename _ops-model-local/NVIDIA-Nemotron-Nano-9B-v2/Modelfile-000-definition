@@ -10,14 +10,14 @@ TEMPLATE "{{ if .System }}<SPECIAL_10>System
 {{ end }}{{ if .Prompt }}_11>User
 {{ .Prompt }}
 {{ end }}<SPECIAL_11>Assistant
-<think>
-{{ .Response }}
-<SPECIAL_12>
 "
+#<think>
+#{{ .Response }}
+#<SPECIAL_12>
 
 PARAMETER stop <SPECIAL_10>
 PARAMETER stop <SPECIAL_11>
-PARAMETER stop <think>
+#PARAMETER stop <think>
 PARAMETER stop <SPECIAL_12>
 PARAMETER stop _11>User
 
