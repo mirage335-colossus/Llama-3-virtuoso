@@ -39,7 +39,7 @@ _ub_cksum_special_derivativeScripts_contents() {
 #export ub_setScriptChecksum_disable='true'
 ( [[ -e "$0".nck ]] || [[ "${BASH_SOURCE[0]}" != "${0}" ]] || [[ "$1" == '--profile' ]] || [[ "$1" == '--script' ]] || [[ "$1" == '--call' ]] || [[ "$1" == '--return' ]] || [[ "$1" == '--devenv' ]] || [[ "$1" == '--shell' ]] || [[ "$1" == '--bypass' ]] || [[ "$1" == '--parent' ]] || [[ "$1" == '--embed' ]] || [[ "$1" == '--compressed' ]] || [[ "$0" == "/bin/bash" ]] || [[ "$0" == "-bash" ]] || [[ "$0" == "/usr/bin/bash" ]] || [[ "$0" == "bash" ]] ) && export ub_setScriptChecksum_disable='true'
 export ub_setScriptChecksum_header='3620520443'
-export ub_setScriptChecksum_contents='3729479712'
+export ub_setScriptChecksum_contents='669799907'
 
 # CAUTION: Symlinks may cause problems. Disable this test for such cases if necessary.
 # WARNING: Performance may be crucial here.
@@ -51035,13 +51035,15 @@ _setupVirtuoso-server() {
 
     _if_cygwin && _messagePlain_bad 'bad: _setupVirtuoso-server does not support MSWindows, etc' && _messageFAIL && return 1
 
-    sed -i '/OLLAMA_NUM_PARALLEL/d' "$HOME"/.virtuoso/virtuoso_hook.sh
-    echo 'export OLLAMA_NUM_PARALLEL=4' >> "$HOME"/.virtuoso/virtuoso_hook.sh
+    # Discouraged.
+    #sed -i '/OLLAMA_NUM_PARALLEL/d' "$HOME"/.virtuoso/virtuoso_hook.sh
+    #echo 'export OLLAMA_NUM_PARALLEL=4' >> "$HOME"/.virtuoso/virtuoso_hook.sh
     
     sudo -n mkdir -p /etc/systemd/system/ollama.service.d
 
-    sed -i '/OLLAMA_NUM_PARALLEL/d' /etc/systemd/system/ollama.service.d/override.conf
-    echo 'Environment="OLLAMA_NUM_PARALLEL=4"' | sudo -n tee -a /etc/systemd/system/ollama.service.d/override.conf > /dev/null
+    # Discouraged.
+    #sed -i '/OLLAMA_NUM_PARALLEL/d' /etc/systemd/system/ollama.service.d/override.conf
+    #echo 'Environment="OLLAMA_NUM_PARALLEL=4"' | sudo -n tee -a /etc/systemd/system/ollama.service.d/override.conf > /dev/null
 
     sudo -n chmod 755 /etc/systemd/system/ollama.service.d
     sudo -n chmod 644 /etc/systemd/system/ollama.service.d/override.conf

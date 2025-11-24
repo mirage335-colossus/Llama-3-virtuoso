@@ -17,13 +17,15 @@ _setupVirtuoso-server() {
 
     _if_cygwin && _messagePlain_bad 'bad: _setupVirtuoso-server does not support MSWindows, etc' && _messageFAIL && return 1
 
-    sed -i '/OLLAMA_NUM_PARALLEL/d' "$HOME"/.virtuoso/virtuoso_hook.sh
-    echo 'export OLLAMA_NUM_PARALLEL=4' >> "$HOME"/.virtuoso/virtuoso_hook.sh
+    # Discouraged.
+    #sed -i '/OLLAMA_NUM_PARALLEL/d' "$HOME"/.virtuoso/virtuoso_hook.sh
+    #echo 'export OLLAMA_NUM_PARALLEL=4' >> "$HOME"/.virtuoso/virtuoso_hook.sh
     
     sudo -n mkdir -p /etc/systemd/system/ollama.service.d
 
-    sed -i '/OLLAMA_NUM_PARALLEL/d' /etc/systemd/system/ollama.service.d/override.conf
-    echo 'Environment="OLLAMA_NUM_PARALLEL=4"' | sudo -n tee -a /etc/systemd/system/ollama.service.d/override.conf > /dev/null
+    # Discouraged.
+    #sed -i '/OLLAMA_NUM_PARALLEL/d' /etc/systemd/system/ollama.service.d/override.conf
+    #echo 'Environment="OLLAMA_NUM_PARALLEL=4"' | sudo -n tee -a /etc/systemd/system/ollama.service.d/override.conf > /dev/null
 
     sudo -n chmod 755 /etc/systemd/system/ollama.service.d
     sudo -n chmod 644 /etc/systemd/system/ollama.service.d/override.conf
