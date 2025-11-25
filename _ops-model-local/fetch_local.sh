@@ -30,6 +30,16 @@ _fetch_local() {
     _model-Magistral-Small-2506
 
     _model-gpt-oss-20b
+
+    # Changes to KV Cache Quantization, etc, are now less of an issue. Shell script 'augment' functions will now detect if a larger quant 'virtuoso' model exists, as a workaround to get enough accuracy with both the default (smaller included model with more aggressive global settings) and after installation of both larger models and more memory efficient global settings, etc.
+    # New 'augment' prompts should still be tested with lower bit quant models, despite that plausible situations will be slightly more robust.
+    #
+    # These models exist to test especially constrained (ie. low bit quantization) plausible models to ensure such configuration changes as KV Cache Quantization do not break embedded AI use (ie. 'Llama-3-augment' used in place of 'grep', etc, in shell scripts, etc).
+    if [[ "$compute_devWorkstation"='true' ]]
+    then
+        _model-Llama-3-NeuralDaredevil-8B-abliterated-expLowQ
+        _model-Llama-3_1-8B-Instruct-abliterated-expLowQ
+    fi
 }
 
 # ATTENTION: NOTICE: VERY STRONGLY RECOMMENDED.
