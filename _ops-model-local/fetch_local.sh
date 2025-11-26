@@ -16,6 +16,7 @@ _fetch_local() {
     _model-Llama-3_3-distill-r1-1776-70b-abliterated
 
     _model-Llama-3_3-Valkyrie-49B-v1
+    _model-Llama-3_3-Valkyrie-49B-v1-INSTRUCT
 
     _model-Llama-3_3-Nemotron-Super-49B-v1_5
 
@@ -24,6 +25,8 @@ _fetch_local() {
     _model-Phi-4-mini-reasoning-abliterated
 
     _model-Qwen-2_5-VL-7B-Instruct
+
+    _model-Devstral-Small-2507
 
     _model-Mistral-Small-3_2-24B-Instruct-2506
 

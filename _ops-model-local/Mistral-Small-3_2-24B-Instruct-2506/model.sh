@@ -25,7 +25,7 @@ _model-Mistral-Small-3_2-24B-Instruct-2506() {
 
     local current_file='Mistral-Small-3.2-24B-Instruct-2506-UD-IQ3_XXS.gguf'
     local current_URL='https://huggingface.co/unsloth/Mistral-Small-3.2-24B-Instruct-2506-GGUF/resolve/main/Mistral-Small-3.2-24B-Instruct-2506-UD-IQ3_XXS.gguf'
-    local current_sha256='bc71d2c47a758fac13f3650a9fff7ddf3700bc73363d388c5ec21c0f2233fb3f'
+    local current_sha256='bbe9ab2e0090a73866422676d2b7fee43e5346c84dca50e265e2fa7c21379343'
     local current_fileDir='Mistral-Small-3_2-24B-Instruct-2506'
 
     ! _get_downloadModel-file-HuggingFace && _messageFAIL
@@ -34,7 +34,7 @@ _model-Mistral-Small-3_2-24B-Instruct-2506() {
 
     local current_file='mmproj-BF16.gguf'
     local current_URL='https://huggingface.co/unsloth/Mistral-Small-3.2-24B-Instruct-2506-GGUF/resolve/main/mmproj-BF16.gguf'
-    local current_sha256='a88b4880ee68c52ad58165e733509db69bdac0adeacd49e06a8f6a0f749ca2ca'
+    local current_sha256='fd1cc76c8bdfc97ffa0af7429505173aed97edfa8ad5cbd605a72812b6eb2a29'
     local current_fileDir='Mistral-Small-3_2-24B-Instruct-2506'
 
     ! _get_downloadModel-file-HuggingFace && _messageFAIL
