@@ -1,0 +1,9 @@
+
+What is the environment variable ubiquitousBashID set to?
+
+Please write this to a local text file.
+
+Please edit this file, changing references to T0 to the more colloquial T minus 0 T-0 .
+
+
+
