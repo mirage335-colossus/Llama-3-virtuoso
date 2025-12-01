@@ -1,0 +1,17 @@
+
+
+
+TEMPLATE {{ .Prompt }}
+RENDERER qwen3-coder
+PARSER qwen3-coder
+PARAMETER stop <|im_start|>
+PARAMETER stop <|im_end|>
+PARAMETER stop <|endoftext|>
+PARAMETER temperature 0.7
+PARAMETER top_k 20
+PARAMETER top_p 0.8
+PARAMETER repeat_penalty 1.05
+
+PARAMETER num_ctx 32768
+PARAMETER num_keep 32768
+PARAMETER num_predict 32768

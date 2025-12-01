@@ -34,6 +34,8 @@ _fetch_local() {
 
     _model-gpt-oss-20b
 
+    _model-Qwen3-Coder-30B-A3B-Instruct
+
     # Changes to KV Cache Quantization, etc, are now less of an issue. Shell script 'augment' functions will now detect if a larger quant 'virtuoso' model exists, as a workaround to get enough accuracy with both the default (smaller included model with more aggressive global settings) and after installation of both larger models and more memory efficient global settings, etc.
     # New 'augment' prompts should still be tested with lower bit quant models, despite that plausible situations will be slightly more robust.
     #
