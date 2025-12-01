@@ -61,6 +61,9 @@ _setupVirtuoso() {
     
     if _if_cygwin && ( [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--6pCore_8eCore' ]] )
     then
+        #setx OLLAMA_CONTEXT_LENGTH 32768 /m
+        #setx OLLAMA_CONTEXT_LENGTH 32768
+        
         setx OLLAMA_NUM_THREADS 18 /m
         setx OLLAMA_NUM_THREADS 18
 
@@ -90,6 +93,9 @@ _setupVirtuoso() {
     fi
     if _if_cygwin && ! ( [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--11GB_eGPU--6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--12t6pCore_8eCore' ]] || [[ "$AI_acceleration" == '16GB_internal--6pCore_8eCore' ]] )
     then
+        #setx OLLAMA_CONTEXT_LENGTH 32768 /m
+        #setx OLLAMA_CONTEXT_LENGTH 32768
+
         setx OLLAMA_FLASH_ATTENTION 1 /m
         #setx OLLAMA_KV_CACHE_TYPE q8_0 /m
         _if_virtuoso_KV_CACHE_TYPE && setx OLLAMA_KV_CACHE_TYPE q8_0 /m

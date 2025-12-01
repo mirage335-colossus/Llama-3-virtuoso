@@ -2,6 +2,9 @@
 
 FROM gpt-oss:20b
 
+#RENDERER gpt-oss:20b
+#PARSER   gpt-oss:20b
+
 # https://ollama.com/library/gpt-oss
 
 
