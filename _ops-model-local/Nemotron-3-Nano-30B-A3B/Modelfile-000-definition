@@ -1,28 +1,24 @@
-FROM nvidia_NVIDIA-Nemotron-Nano-9B-v2-Q6_K_L.gguf
+FROM Nemotron-3-Nano-30B-A3B-IQ4_NL.gguf
 
-# [Quantized Model, System Prompt, inherits Llama and NVIDIA licenses, obligations, etc .](https://huggingface.co/bartowski/nvidia_NVIDIA-Nemotron-Nano-9B-v2-GGUF)
-# https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-open-model-license/
+# [Quantized Model, System Prompt, inherits Llama and NVIDIA licenses, obligations, etc .](https://huggingface.co/unsloth/Nemotron-3-Nano-30B-A3B-GGUF)
+# https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-nemotron-open-model-license/
 
-SYSTEM "/think"
+TEMPLATE {{ .Prompt }}
+RENDERER nemotron-3-nano
+PARSER nemotron-3-nano
+#PARAMETER temperature 1
+#PARAMETER top_p 1
 
-TEMPLATE "{{ if .System }}<SPECIAL_10>System
-{{ .System }}
-{{ end }}{{ if .Prompt }}_11>User
-{{ .Prompt }}
-{{ end }}<SPECIAL_11>Assistant
-"
-#<think>
-#{{ .Response }}
-#<SPECIAL_12>
+# Claimed appropriate for REASONING (ie. enable_thinking=True) .
+##PARAMETER temperature 1
+##PARAMETER top_p 1
 
-PARAMETER stop <SPECIAL_10>
-PARAMETER stop <SPECIAL_11>
-#PARAMETER stop <think>
-PARAMETER stop <SPECIAL_12>
-PARAMETER stop _11>User
+# Claimed appropriate for tool calling.
+#PARAMETER temperature 0.6
+#PARAMETER top_p 0.95
 
-# Appropriate for REASONING (ie. /think) .
-PARAMETER temperature 0.6
+# Suggested. (increasing 'temperature' may be appropriate to ensure agentic systems get all details from a combination of many responses)
+PARAMETER temperature 0.8
 PARAMETER top_p 0.95
 #PARAMETER top_k 40
 
