@@ -105,6 +105,14 @@ fi
         echo "PARAMETER num_gpu 999" >> Modelfile-256k
         ollama create Nemotron-3-Nano-30B-A3B-256k-virtuoso -f Modelfile-256k
 
+        # 1M , 1024k
+        echo "FROM Nemotron-3-Nano-30B-A3B-virtuoso:latest" > Modelfile-1M
+        echo "PARAMETER num_ctx 1048576" >> Modelfile-1M
+        echo "PARAMETER num_keep 1048576" >> Modelfile-1M
+        echo "PARAMETER num_predict 1048576" >> Modelfile-1M
+        echo "PARAMETER num_gpu 999" >> Modelfile-1M
+        ollama create Nemotron-3-Nano-30B-A3B-1M-virtuoso -f Modelfile-1M
+
         [[ "$?" == "0" ]] && [[ "$currentExitStatus" == "0" ]]
     )
     
