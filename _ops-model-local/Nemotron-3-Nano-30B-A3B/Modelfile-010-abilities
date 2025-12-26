@@ -1,0 +1,15 @@
+
+# Default. Should be possible to override if VRAM/speed tradeoffs are appropriate.
+#PARAMETER num_keep 9216
+#PARAMETER num_ctx 9216
+#PARAMETER num_predict 16384
+
+# BEWARE . Unlike other similarly small models, long 'thinking budget' large context is strongly beneficial.
+# STRONGLY RECOMMENDED to configure this model by default for use only by computers with substantial VRAM (>>16GB, >16GB*2).
+# https://huggingface.co/nvidia/NVIDIA-Nemotron-Nano-12B-v2/blob/main/acc-vs-budget.png
+# https://huggingface.co/nvidia/NVIDIA-Nemotron-Nano-9B-v2/blob/main/acc-vs-budget.png
+#PARAMETER max_thinking_budget 32768
+PARAMETER num_keep 49152
+PARAMETER num_ctx 49152
+PARAMETER num_predict 65536
+

@@ -4,15 +4,17 @@
 
 
 
-# https://huggingface.co/nvidia/NVIDIA-Nemotron-Nano-9B-v2
-_model-NVIDIA-Nemotron-Nano-9B-v2() {
+# https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16
+# https://huggingface.co/unsloth/Nemotron-3-Nano-30B-A3B-GGUF
+# https://huggingface.co/unsloth/Nemotron-3-Nano-30B-A3B-GGUF/blob/main/Nemotron-3-Nano-30B-A3B-IQ4_NL.gguf
+_model-Nemotron-3-Nano-30B-A3B() {
     _messageNormal "${FUNCNAME[0]}"
 
 
-    local current_file='nvidia_NVIDIA-Nemotron-Nano-9B-v2-Q6_K_L.gguf'
-    local current_URL='https://huggingface.co/bartowski/nvidia_NVIDIA-Nemotron-Nano-9B-v2-GGUF/resolve/main/nvidia_NVIDIA-Nemotron-Nano-9B-v2-Q6_K_L.gguf'
-    local current_sha256='95ee1b5339df8b4c735564cc2297572c972f181222cced619e726ba428adfc83'
-    local current_fileDir='NVIDIA-Nemotron-Nano-9B-v2'
+    local current_file='Nemotron-3-Nano-30B-A3B-IQ4_NL.gguf'
+    local current_URL='https://huggingface.co/unsloth/Nemotron-3-Nano-30B-A3B-GGUF/resolve/main/Nemotron-3-Nano-30B-A3B-IQ4_NL.gguf'
+    local current_sha256='8f4b73f1d0e2d0bd810117f3a6198e7c2d1151fdbdbb821c825dbe8872cf6af4'
+    local current_fileDir='Nemotron-3-Nano-30B-A3B'
 
     mkdir -p "$scriptBundle"/ai_models/"$current_fileDir"
     local currentModelConfigDir=$(_getAbsoluteFolder "${BASH_SOURCE[0]}")
@@ -48,23 +50,23 @@ _model-NVIDIA-Nemotron-Nano-9B-v2() {
         cat "$currentModelConfigDir"/Modelfile-100-16GB_14core >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
     fi
 
-    echo 'LICENSE """Licensed by NVIDIA Corporation under the NVIDIA Open Model License
+    echo 'LICENSE """Licensed by NVIDIA Corporation under the NVIDIA Nemotron Model License.
 
-GOVERNING TERMS: Use of this model is governed by the NVIDIA Open Model License Agreement.
-https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-open-model-license/
+Governing Terms: Use of this model is governed by the NVIDIA Nemotron Open Model License.
+https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-nemotron-open-model-license/
 
-https://huggingface.co/nvidia/NVIDIA-Nemotron-Nano-9B-v2
-https://huggingface.co/nvidia/NVIDIA-Nemotron-Nano-12B-v2
+https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16
 
 
 ' >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
     #cat "$scriptAbsoluteFolder"/'license-nvidia/NVIDIA_Open_Model_License_Agreement-2025-06-16.txt' >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
-    cat "$scriptAbsoluteFolder"/'license-nvidia/NVIDIA_Open_Model_License_Agreement-2025-10-24.txt' >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
+    cat "$scriptAbsoluteFolder"/'license-nvidia/NVIDIA_Nemotron_Open_Model_License-2025-12-15.txt' >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
     echo '
 
 
 ' >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
-    cat "$scriptAbsoluteFolder"/'license-nvidia/NVIDIA_Agreements_Trustworthy_AI-2024-06-27.txt' >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
+    #cat "$scriptAbsoluteFolder"/'license-nvidia/NVIDIA_Agreements_Trustworthy_AI-2024-06-27.txt' >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
+    cat "$scriptAbsoluteFolder"/'license-nvidia/NVIDIA_Open_Model_License_Agreement-2025-10-24.txt' >> "$scriptBundle"/ai_models/"$current_fileDir"/Modelfile
 if false
 then
     echo '
@@ -86,15 +88,22 @@ fi
     (
         _messagePlain_nominal "${FUNCNAME[0]}"': ollama create'
         cd "$scriptBundle"/ai_models/"$current_fileDir"
-        ollama create NVIDIA-Nemotron-Nano-9B-v2-virtuoso -f Modelfile
+        ollama create Nemotron-3-Nano-30B-A3B-virtuoso -f Modelfile
         currentExitStatus="$?"
 
-        echo "FROM NVIDIA-Nemotron-Nano-9B-v2-virtuoso:latest" > Modelfile-128k
+        echo "FROM Nemotron-3-Nano-30B-A3B-virtuoso:latest" > Modelfile-128k
         echo "PARAMETER num_ctx 131072" >> Modelfile-128k
         echo "PARAMETER num_keep 131072" >> Modelfile-128k
         echo "PARAMETER num_predict 131072" >> Modelfile-128k
         echo "PARAMETER num_gpu 999" >> Modelfile-128k
-        ollama create NVIDIA-Nemotron-Nano-9B-v2-128k-virtuoso -f Modelfile-128k
+        ollama create Nemotron-3-Nano-30B-A3B-128k-virtuoso -f Modelfile-128k
+
+        echo "FROM Nemotron-3-Nano-30B-A3B-virtuoso:latest" > Modelfile-256k
+        echo "PARAMETER num_ctx 262144" >> Modelfile-256k
+        echo "PARAMETER num_keep 262144" >> Modelfile-256k
+        echo "PARAMETER num_predict 262144" >> Modelfile-256k
+        echo "PARAMETER num_gpu 999" >> Modelfile-256k
+        ollama create Nemotron-3-Nano-30B-A3B-256k-virtuoso -f Modelfile-256k
 
         [[ "$?" == "0" ]] && [[ "$currentExitStatus" == "0" ]]
     )
@@ -102,11 +111,11 @@ fi
 }
 ``
 
-_experiment-NVIDIA-Nemotron-Nano-9B-v2() {
+_experiment-Nemotron-3-Nano-30B-A3B() {
     _stopwatch curl -X POST http://localhost:11434/api/chat \
     -H "Content-Type: application/json" \
     -d '{
-        "model": "NVIDIA-Nemotron-Nano-9B-v2-virtuoso",
+        "model": "Nemotron-3-Nano-30B-A3B-virtuoso",
         "messages": [
         { "role": "user", "content": "Tell me about Canada." }
         ],

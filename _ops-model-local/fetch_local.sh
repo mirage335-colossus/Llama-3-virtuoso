@@ -13,6 +13,8 @@ _fetch_local() {
 
     _model-NVIDIA-Nemotron-Nano-9B-v2
 
+    _model-Nemotron-3-Nano-30B-A3B
+
     _model-Llama-3_3-distill-r1-1776-70b-abliterated
 
     _model-Llama-3_3-Valkyrie-49B-v1
