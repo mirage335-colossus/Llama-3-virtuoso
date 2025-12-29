@@ -10,7 +10,7 @@
 # https://huggingface.co/Qwen/Qwen3-VL-8B-Instruct
 # https://huggingface.co/Qwen/Qwen3-VL-30B-A3B-Thinking
 # https://huggingface.co/Qwen/Qwen3-VL-32B-Thinking
-_model-Qwen-3-VL-30B-A3B() {
+_model-Qwen-3-VL-8B-Instruct() {
     _messageNormal "${FUNCNAME[0]}"
 
     # https://ollama.com/library/qwen3-vl
@@ -21,7 +21,7 @@ _model-Qwen-3-VL-30B-A3B() {
     #  'License: apache-2.0'
 
 
-    local current_fileDir='Qwen-3-VL-30B-A3B'
+    local current_fileDir='Qwen-3-VL-8B-Instruct'
 
 
     mkdir -p "$scriptBundle"/ai_models/"$current_fileDir"
@@ -39,12 +39,12 @@ _model-Qwen-3-VL-30B-A3B() {
 
     if _if_cygwin
     then
-        _messagePlain_nominal '(cygwin)' ollama pull qwen3-vl:30b-a3b-thinking-q4_K_M
+        _messagePlain_nominal '(cygwin)' ollama pull qwen3-vl:8b-instruct-q8_0
 
         local current_user_OLLAMA_MODELS=$(cygpath -u "$USERPROFILE")
         current_user_OLLAMA_MODELS="$current_user_OLLAMA_MODELS"/.ollama/models
 
-        [[ -e "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl/30b-a3b-thinking-q4_K_M ]] && current_origModelInstalled='true' && echo current_origModelInstalled
+        [[ -e "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl/8b-instruct-q8_0 ]] && current_origModelInstalled='true' && echo current_origModelInstalled
 
         local current_OLLAMA_MODELS_msw=$(cygpath -w "$current_OLLAMA_MODELS")
 
@@ -67,19 +67,19 @@ _model-Qwen-3-VL-30B-A3B() {
         _messagePlain_probe 'copy...'
         rsync --size-only -r -v "$current_OLLAMA_MODELS"/. "$current_user_OLLAMA_MODELS"/.
 
-        ollama ls qwen3-vl:30b-a3b-thinking-q4_K_M
+        ollama ls qwen3-vl:8b-instruct-q8_0
         
         _messagePlain_probe 'while... ollama pull'
         local currentIteration=0
-        #while ( [[ ! -e "$current_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl/30b-a3b-thinking-q4_K_M ]] || [[ ! -e "$current_OLLAMA_MODELS"/get_qwen3vl30b ]] ) && ( ! env OLLAMA_MODELS="$current_OLLAMA_MODELS_msw" ollama pull qwen3-vl:30b-a3b-thinking-q4_K_M || ! env OLLAMA_MODELS="$current_OLLAMA_MODELS_msw" ollama ls | grep -i 'qwen3-vl:30b-a3b-thinking-q4_K_M' )
-        while ( [[ ! -e "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl/30b-a3b-thinking-q4_K_M ]] || [[ ! -e "$current_user_OLLAMA_MODELS"/get_qwen3vl30b ]] ) && ( ! ollama pull qwen3-vl:30b-a3b-thinking-q4_K_M || ! ollama ls | grep -i 'qwen3-vl:30b-a3b-thinking-q4_K_M' )
+        #while ( [[ ! -e "$current_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl/8b-instruct-q8_0 ]] || [[ ! -e "$current_OLLAMA_MODELS"/get_qwen3vl8b ]] ) && ( ! env OLLAMA_MODELS="$current_OLLAMA_MODELS_msw" ollama pull qwen3-vl:8b-instruct-q8_0 || ! env OLLAMA_MODELS="$current_OLLAMA_MODELS_msw" ollama ls | grep -i 'qwen3-vl:8b-instruct-q8_0' )
+        while ( [[ ! -e "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl/8b-instruct-q8_0 ]] || [[ ! -e "$current_user_OLLAMA_MODELS"/get_qwen3vl8b ]] ) && ( ! ollama pull qwen3-vl:8b-instruct-q8_0 || ! ollama ls | grep -i 'qwen3-vl:8b-instruct-q8_0' )
         do
             _messagePlain_probe 'iteration'
             (( currentIteration++ ))
 
             if [[ "$currentIteration" -gt 3 ]]
             then
-                _messagePlain_bad 'bad: ''ollama pull qwen3-vl:30b-a3b-thinking-q4_K_M'
+                _messagePlain_bad 'bad: ''ollama pull qwen3-vl:8b-instruct-q8_0'
                 _messageFAIL
                 #return 1
             fi
@@ -88,11 +88,11 @@ _model-Qwen-3-VL-30B-A3B() {
             sleep 1
             [[ "$currentIteration" -gt 0 ]] && sleep 1
         done
-        [[ -e "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl/30b-a3b-thinking-q4_K_M ]] && mkdir -p "$current_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl && rsync --size-only -r -v "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl/. "$current_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl/.
-        [[ ! -e "$current_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl/30b-a3b-thinking-q4_K_M ]] && _messageFAIL
+        [[ -e "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl/8b-instruct-q8_0 ]] && mkdir -p "$current_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl && rsync --size-only -r -v "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl/. "$current_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl/.
+        [[ ! -e "$current_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl/8b-instruct-q8_0 ]] && _messageFAIL
 
         local currentBlobHash
-        grep -aoE 'sha256:[0-9a-f]{64}' "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl/30b-a3b-thinking-q4_K_M | tr ':' '-' | while IFS= read -r currentBlobHash; do
+        grep -aoE 'sha256:[0-9a-f]{64}' "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl/8b-instruct-q8_0 | tr ':' '-' | while IFS= read -r currentBlobHash; do
         if [[ -e "$current_user_OLLAMA_MODELS"/blobs/"$currentBlobHash" ]]
         then
             ! mkdir -p "$current_OLLAMA_MODELS"/blobs && _messageFAIL
@@ -122,14 +122,14 @@ _model-Qwen-3-VL-30B-A3B() {
         )
         
         _messagePlain_probe 'ls...'
-        ! ollama ls | grep -i 'qwen3-vl:30b-a3b-thinking-q4_K_M' && _messageFAIL
+        ! ollama ls | grep -i 'qwen3-vl:8b-instruct-q8_0' && _messageFAIL
     fi
 
 
     # WARNING: May be untested.
     if ! _if_cygwin
     then
-        _messagePlain_nominal ollama pull qwen3-vl:30b-a3b-thinking-q4_K_M
+        _messagePlain_nominal ollama pull qwen3-vl:8b-instruct-q8_0
 
         local current_user_OLLAMA_MODELS
         [[ -e "$HOME"/.ollama/models ]] && current_user_OLLAMA_MODELS="$HOME"/.ollama/models
@@ -139,7 +139,7 @@ _model-Qwen-3-VL-30B-A3B() {
         sudo -n -u ollama mkdir -p "$current_user_OLLAMA_MODELS"
         mkdir -p "$current_user_OLLAMA_MODELS"
 
-        [[ -e "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl/30b-a3b-thinking-q4_K_M ]] && current_origModelInstalled='true' && echo current_origModelInstalled
+        [[ -e "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl/8b-instruct-q8_0 ]] && current_origModelInstalled='true' && echo current_origModelInstalled
 
         #sudo -n systemctl stop ollama
         #sudo -n pkill ollama
@@ -166,15 +166,15 @@ _model-Qwen-3-VL-30B-A3B() {
         
         _messagePlain_probe 'while... ollama pull'
         local currentIteration=0
-        #while ( [[ ! -e "$current_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl/30b-a3b-thinking-q4_K_M ]] || [[ ! -e "$current_OLLAMA_MODELS"/get_qwen3vl30b ]] ) && ( ! env OLLAMA_MODELS="$current_OLLAMA_MODELS" ollama pull qwen3-vl:30b-a3b-thinking-q4_K_M || ! env OLLAMA_MODELS="$current_OLLAMA_MODELS" ollama ls | grep -i 'qwen3-vl:30b-a3b-thinking-q4_K_M' )
-        while ( [[ ! -e "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl/30b-a3b-thinking-q4_K_M ]] || [[ ! -e "$current_user_OLLAMA_MODELS"/get_qwen3vl30b ]] ) && ( ! ollama pull qwen3-vl:30b-a3b-thinking-q4_K_M || ! ollama ls | grep -i 'qwen3-vl:30b-a3b-thinking-q4_K_M' )
+        #while ( [[ ! -e "$current_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl/8b-instruct-q8_0 ]] || [[ ! -e "$current_OLLAMA_MODELS"/get_qwen3vl8b ]] ) && ( ! env OLLAMA_MODELS="$current_OLLAMA_MODELS" ollama pull qwen3-vl:8b-instruct-q8_0 || ! env OLLAMA_MODELS="$current_OLLAMA_MODELS" ollama ls | grep -i 'qwen3-vl:8b-instruct-q8_0' )
+        while ( [[ ! -e "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl/8b-instruct-q8_0 ]] || [[ ! -e "$current_user_OLLAMA_MODELS"/get_qwen3vl8b ]] ) && ( ! ollama pull qwen3-vl:8b-instruct-q8_0 || ! ollama ls | grep -i 'qwen3-vl:8b-instruct-q8_0' )
         do
             _messagePlain_probe 'iteration'
             (( currentIteration++ ))
 
             if [[ "$currentIteration" -gt 3 ]]
             then
-                _messagePlain_bad 'bad: ''ollama pull qwen3-vl:30b-a3b-thinking-q4_K_M'
+                _messagePlain_bad 'bad: ''ollama pull qwen3-vl:8b-instruct-q8_0'
                 _messageFAIL
                 #return 1
             fi
@@ -183,11 +183,11 @@ _model-Qwen-3-VL-30B-A3B() {
             sleep 1
             [[ "$currentIteration" -gt 0 ]] && sleep 1
         done
-        [[ -e "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl/30b-a3b-thinking-q4_K_M ]] && mkdir -p "$current_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl && rsync --size-only -r -v "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl/. "$current_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl/.
-        [[ ! -e "$current_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl/30b-a3b-thinking-q4_K_M ]] && _messageFAIL
+        [[ -e "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl/8b-instruct-q8_0 ]] && mkdir -p "$current_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl && rsync --size-only -r -v "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl/. "$current_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl/.
+        [[ ! -e "$current_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl/8b-instruct-q8_0 ]] && _messageFAIL
 
         local currentBlobHash
-        grep -aoE 'sha256:[0-9a-f]{64}' "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl/30b-a3b-thinking-q4_K_M | tr ':' '-' | while IFS= read -r currentBlobHash; do
+        grep -aoE 'sha256:[0-9a-f]{64}' "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl/8b-instruct-q8_0 | tr ':' '-' | while IFS= read -r currentBlobHash; do
         if [[ -e "$current_user_OLLAMA_MODELS"/blobs/"$currentBlobHash" ]]
         then
             ! mkdir -p "$current_OLLAMA_MODELS"/blobs && _messageFAIL
@@ -224,13 +224,13 @@ _model-Qwen-3-VL-30B-A3B() {
         )
         
         _messagePlain_probe 'ls...'
-        ! ollama ls | grep -i 'qwen3-vl:30b-a3b-thinking-q4_K_M' && _messageFAIL
+        ! ollama ls | grep -i 'qwen3-vl:8b-instruct-q8_0' && _messageFAIL
     fi
     
 
 
 
-    _messagePlain_nominal 'ollama create Qwen-3-VL-30B-A3B-virtuoso'
+    _messagePlain_nominal 'ollama create Qwen-3-VL-8B-Instruct-virtuoso'
 
     _messagePlain_probe 'write...'
 
@@ -262,22 +262,22 @@ _model-Qwen-3-VL-30B-A3B() {
     (
         _messagePlain_nominal "${FUNCNAME[0]}"': ollama create'
         cd "$scriptBundle"/ai_models/"$current_fileDir"
-        ollama create Qwen-3-VL-30B-A3B-virtuoso -f Modelfile && echo > "$current_user_OLLAMA_MODELS"/get_qwen3vl30b
+        ollama create Qwen-3-VL-8B-Instruct-virtuoso -f Modelfile && echo > "$current_user_OLLAMA_MODELS"/get_qwen3vl8b
     )
 
 
-    [[ "$current_origModelInstalled" != "true" ]] && ollama rm qwen3-vl:30b-a3b-thinking-q4_K_M
-    #rm -f "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl/30b-a3b-thinking-q4_K_M
+    [[ "$current_origModelInstalled" != "true" ]] && ollama rm qwen3-vl:8b-instruct-q8_0
+    #rm -f "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/library/qwen3-vl/8b-instruct-q8_0
 
     true
 }
 
 
-_experiment-Qwen-3-VL-30B-A3B() {
+_experiment-Qwen-3-VL-8B-Instruct() {
     _stopwatch curl -X POST http://localhost:11434/api/chat \
     -H "Content-Type: application/json" \
     -d '{
-        "model": "Qwen-3-VL-30B-A3B-virtuoso",
+        "model": "Qwen-3-VL-8B-Instruct-virtuoso",
         "messages": [
         { "role": "user", "content": "Tell me about Canada." }
         ],

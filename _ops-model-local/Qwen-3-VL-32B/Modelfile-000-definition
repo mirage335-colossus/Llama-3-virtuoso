@@ -1,0 +1,12 @@
+
+
+FROM qwen3-vl:32b-thinking-q4_K_M
+
+# https://ollama.com/library/qwen3-vl
+# https://ollama.com/adelnazmy2002/Qwen3-VL-8B-Instruct
+# https://huggingface.co/Qwen/Qwen3-VL-8B-Instruct
+# https://huggingface.co/Qwen/Qwen3-VL-30B-A3B-Thinking
+# https://huggingface.co/Qwen/Qwen3-VL-32B-Thinking
+
+
+

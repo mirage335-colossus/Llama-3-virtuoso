@@ -26,7 +26,10 @@ _fetch_local() {
 
     _model-Phi-4-mini-reasoning-abliterated
 
-    _model-Qwen-2_5-VL-7B-Instruct
+    #_model-Qwen-2_5-VL-7B-Instruct
+    _model-Qwen-3-VL-8B-Instruct
+    _model-Qwen-3-VL-30B-A3B
+    _model-Qwen-3-VL-32B
 
     _model-Devstral-Small-2507
 
