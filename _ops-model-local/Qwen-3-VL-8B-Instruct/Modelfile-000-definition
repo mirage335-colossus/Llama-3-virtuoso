@@ -1,0 +1,8 @@
+
+
+FROM qwen2.5vl:7b-q4_K_M
+
+# https://ollama.com/library/qwen2.5vl
+
+
+
