@@ -262,6 +262,8 @@ _model-Qwen-3-VL-8B-Instruct() {
 
     [[ "$current_origModelInstalled" != "true" ]] && ollama rm adelnazmy2002/Qwen3-VL-8B-Instruct
     #rm -f "$current_user_OLLAMA_MODELS"/manifests/registry.ollama.ai/adelnazmy2002/Qwen3-VL-8B-Instruct/latest
+
+    true
 }
 
 
